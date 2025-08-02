@@ -14,29 +14,73 @@
             data-en="Dmitry Galyuk"
             data-ru="Дмитрий Галюк">Dmitry Galyuk</h1>
         <ul class="services">
-          <li data-en="Web Development" data-ru="Веб-разработка">Web Development</li>
-          <li data-en="UI/UX Design" data-ru="Дизайн UI/UX">UI/UX Design</li>
-          <li data-en="Cloud Solutions" data-ru="Облачные решения">Cloud Solutions</li>
-          <li data-en="Consulting" data-ru="Консалтинг">Consulting</li>
+          <li data-en="Weight reduction" data-ru="Похудение">Web Development</li>
+          <li data-en="Energy, sleep" data-ru="Энергия, здоровый сон">UI/UX Design</li>
+          <li data-en="Systematic approach" data-ru="Системный поход">Cloud Solutions</li>
         </ul>
       </div>
-      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dmitry Galyuk" class="avatar">
+      <img src="images/dima_sofia.jpg" alt="Dmitry Galyuk" class="avatar">
     </div>
     <div class="socials">
-      <a class="social-link" href="https://github.com/dmitrygalyuk" target="_blank">
-        <span class="social-logo">🐙</span> <!-- GitHub Octopus Emoji -->
-        <span data-en="dmitrygalyuk" data-ru="dmitrygalyuk">dmitrygalyuk</span>
+      <a class="social-link" 
+         data-en-href="https://t.me/Dmitry_Galyuk" 
+         data-ru-href="https://t.me/Dmitry_Galyuk" 
+         href="https://t.me/Dmitry_Galyuk" target="_blank">
+        <img src="images/telegram.svg" class="social-logo" alt="Telegram">
       </a>
-      <a class="social-link" href="https://linkedin.com/in/dmitrygalyuk" target="_blank">
-        <span class="social-logo">🔗</span> <!-- LinkedIn Link Emoji -->
-        <span data-en="dmitrygalyuk" data-ru="dmitrygalyuk">dmitrygalyuk</span>
+      <a class="social-link" 
+         data-en-href="https://wa.me/48453548301" 
+         data-ru-href="https://wa.me/48453548301" 
+         href="https://wa.me/48453548301" target="_blank">
+        <img src="images/whatsapp.svg" class="social-logo" alt="Whatsapp">
       </a>
-      <a class="social-link" href="https://twitter.com/dmitrygalyuk" target="_blank">
-        <span class="social-logo">🐦</span> <!-- Twitter Bird Emoji -->
-        <span data-en="@dmitrygalyuk" data-ru="@dmitrygalyuk">@dmitrygalyuk</span>
+      <a class="social-link instagram-link" 
+         data-en-href="" 
+         data-ru-href="https://instagram.com/galyukdmitry" 
+         href="https://instagram.com/galyukdmitry" target="_blank">
+        <img src="images/instagram.svg" class="social-logo" alt="Instagram">
+      </a>
+      <a class="social-link" 
+         data-en-href="https://www.tiktok.com/@dmitry.galyuk.en" 
+         data-ru-href="https://www.tiktok.com/@dmitry.galyuk" 
+         href="https://www.tiktok.com/@dmitry.galyuk" target="_blank">
+        <img src="images/tiktok2.svg" class="social-logo" alt="TikTok">
+      </a>
+      <a class="social-link" 
+         data-en-href="https://www.youtube.com/@DmitryGalyuk-en" 
+         data-ru-href="https://www.youtube.com/@DmitryGalyuk" 
+         href="https://www.youtube.com/@DmitryGalyuk" target="_blank">
+        <img src="images/youtube.svg" class="social-logo" alt="YouTube">
       </a>
     </div>
   </div>
 </body>
 <script src="scripts.js"></script>
+<script>
+  function getLangFromDomain() {
+    const host = window.location.hostname;
+    if (/^en\./.test(host)) return 'en';
+    return 'ru';
+  }
+  function applyTranslations(lang) {
+    document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+      el.textContent = el.getAttribute('data-' + lang);
+    });
+    // Update hrefs for language-sensitive links
+    document.querySelectorAll('.social-link').forEach(link => {
+      const href = link.getAttribute('data-' + lang + '-href');
+      if (href !== null && href !== undefined && href !== '') {
+        link.setAttribute('href', href);
+        link.style.display = '';
+      } else if (link.classList.contains('instagram-link')) {
+        // Hide Instagram if no href for this lang
+        link.style.display = 'none';
+      }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    const lang = getLangFromDomain();
+    applyTranslations(lang);
+  });
+</script>
 </html>
