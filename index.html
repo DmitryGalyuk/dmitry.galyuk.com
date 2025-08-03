@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dmitry Galyuk - Business Card</title>
+    <title id="page-title" data-en="Dmitry Galyuk - Weight reduction" data-ru="Дмитрий Галюк — похудение">Dmitry Galyuk - Business Card</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/jpeg" href="images/dima_sofia.jpg">
 </head>
@@ -149,6 +149,11 @@
         document.querySelectorAll('[data-' + lang + ']').forEach(el => {
             el.textContent = el.getAttribute('data-' + lang);
         });
+        // Update page title
+        var titleEl = document.getElementById('page-title');
+        if (titleEl && titleEl.hasAttribute('data-' + lang)) {
+            document.title = titleEl.getAttribute('data-' + lang);
+        }
         // Update hrefs for language-sensitive links
         document.querySelectorAll('.social-link').forEach(link => {
             const href = link.getAttribute('data-' + lang + '-href');
