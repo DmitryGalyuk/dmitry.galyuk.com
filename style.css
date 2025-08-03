@@ -42,7 +42,7 @@ body {
   min-width: 0;
 }
 .avatar {
-  width: 10em;
+  width: clamp(6em, 25vw, 10em);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   object-fit: cover;
@@ -122,14 +122,15 @@ h1 {
 }
 @media (max-width: 600px) {
   .info-row {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.7rem;
   }
   .avatar {
-    margin-left: 0;
-    margin-bottom: 0.5rem;
-    order: -1;
+    margin-left: 0.7rem;
+    margin-bottom: 0;
+    order: 1;
+    align-self: flex-start;
   }
   .card {
     padding: 1.2rem 0.5rem;
