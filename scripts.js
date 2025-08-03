@@ -2,8 +2,8 @@
 function getAnalyticsIdForLang(lang) {
   // Map language to GA ID
   // Example: English and Russian, add more as needed
-  if (lang === 'en') return 'G-0C1BGJ3HC2';
-  if (lang === 'ru') return 'G-XXXXXXXXXXX'; // Replace with your RU property ID
+  if (lang === 'ru') return 'G-0C1BGJ3HC2';
+  if (lang === 'en') return 'G-XXXXXXXXXXX'; // Replace with your RU property ID
   return 'G-0C1BGJ3HC2'; // fallback
 }
 
