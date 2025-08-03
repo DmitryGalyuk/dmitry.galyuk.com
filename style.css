@@ -17,7 +17,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 .card {
   background: var(--card-bg);
@@ -132,9 +132,7 @@ h1 {
     order: 1;
     align-self: flex-start;
   }
-  .card {
-    padding: 1.2rem 0.5rem;
-  }
+
   h1 {
     font-size: 1.2rem;
   }
