@@ -3,6 +3,9 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    flex-direction: column;
+    max-width: 70%;
+    align-items: center;
 }
 
 .gallery-img {
@@ -111,6 +114,7 @@
 }
 
 .filter-button {
+    font-size: 1.2em;
     padding: 0.1em 0.7em;
     margin: 0.2em;
     border: none;

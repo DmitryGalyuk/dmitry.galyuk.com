@@ -37,13 +37,6 @@ function renderFilterButtons(galleryData, lang) {
     const filterContainer = document.querySelector(".gallery .filter");
     filterContainer.innerHTML = ''; // Clear existing buttons  
 
-    // Create "All" button
-    const allButton = document.createElement("button");
-    allButton.className = "filter-button active";
-    allButton.setAttribute("data-filter", "all");
-    allButton.textContent = (lang === "ru" ? "все" : "all");
-    filterContainer.appendChild(allButton);
-
     // Create buttons for each tag
     galleryData.tags.forEach(tag => {
         const button = document.createElement("button");

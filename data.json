@@ -1,6 +1,11 @@
 {
     "tags": [
         {
+            "tag": "all",
+            "ru": "все",
+            "en": "all"
+        },
+        {
             "tag": "allergy",
             "ru": "аллергия",
             "en": "allergy"
@@ -99,7 +104,39 @@
     {
         "videoid": "ZHC8W8u3AGM",
         "alt-ru": "Дмитрий, 12 лет была аллергия весной на цветение, после прохождения colo vada симптомы аллергии в цветущем саду минимальны, только сухость в глазах",
-        "alt-en": "Dmitry, had spring pollen allergy for 12 years. After completing Colo Vada, allergy symptoms in a blooming garden are minimal, only dryness in the eyes."
+        "alt-en": "Dmitry, had spring pollen allergy for 12 years. After completing Colo Vada, allergy symptoms in a blooming garden became minimal, only dry eyes remained.",
+        "tag": "allergy"
+    },
+    {
+        "videoid": "rNxL21bVcMk",
+        "alt-ru": "Аллергия у ребёнка прошла после прохождения противопаразитарной программы",
+        "alt-en": "A child's allergy disappeared after completing the antiparasitic program.",
+        "tag": "allergy"
+    },
+    {
+        "videoid": "NDj7GhQHJo0",
+        "alt-ru": "Воспаление позвоночной грыжи",
+        "alt-en": "Inflammation of a spinal hernia.",
+        "tag": "hernia"
+    },
+    {
+        "videoid": "CMwgvqpJ0EM",
+        "alt-ru": "Новообразования, отёки, лишний вес, прибавилось энергии",
+        "alt-en": "Tumors, swelling, excess weight, gained more energy.",
+        "tag": "cancer weight energy"
+    },
+    {
+        "videoid": "1QT_NPvLUcY",
+        "alt-ru": "Неприятный запах изо рта и горечь",
+        "alt-en": "Bad breath and bitterness in the mouth.",
+        "tag": "gastro"
+    },
+    {
+        "videoid": "7cQFl5d1nAc",
+        "alt-ru": "Профессор кардиологии Подхомутников Владимир Матвеевич, составитель программы #коралдетоксплюс о своем результате #почки #камни #концепцияздоровья",
+        "alt-en": "Professor of Cardiology Vladimir Matveevich Podkhomutnikov, author of the Coral Detox Plus program, sharing his results (#kidneys #stones #healthconcept).",
+        "tag": "kidneys"
     }
-    ]
+]
+
 }

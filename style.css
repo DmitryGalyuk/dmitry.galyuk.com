@@ -8,6 +8,16 @@ html {
   --card-bg: light-dark(#fff, #23272a);
   --contact-link: light-dark(#0077cc, #4aa3ff);
   --contact-link-hover: light-dark(#005fa3, #1da1f2);
+
+    --background-color: light-dark(#f4f4f4, #121212);
+    --text-color: light-dark(#000, #fff);
+    --card-background: light-dark(#fff, #1e1e1e);
+    --card-shadow: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+    --profession-color: light-dark(#777, #bbb);
+    --filter-active-color: light-dark(#888, #777);
+    --filter-inactive-color: light-dark(#eee, #444);
+    --filter-hover-color: light-dark(#777, #999);
+    --filter-text-color: light-dark(#000, #fff);
 }
 body {
   margin: 0;
@@ -15,9 +25,11 @@ body {
   font-family: 'Segoe UI', Arial, sans-serif;
   background: var(--background);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100dvh;
+  gap: 2rem;
 }
 .card {
   background: var(--card-bg);
