@@ -1,0 +1,105 @@
+{
+    "tags": [
+        {
+            "tag": "allergy",
+            "ru": "аллергия",
+            "en": "allergy"
+        },
+        {
+            "tag": "weight",
+            "ru": "вес",
+            "en": "weight"
+        },
+        {
+            "tag": "skin",
+            "ru": "кожа",
+            "en": "skin"
+        },
+        {
+            "tag": "gastro",
+            "ru": "жкт",
+            "en": "gastro"
+        },
+        {
+            "tag": "hernia",
+            "ru": "грыжа",
+            "en": "hernia"
+        },
+        {
+            "tag": "cancer",
+            "ru": "рак",
+            "en": "cancer"
+        },
+        {
+            "tag": "energy",
+            "ru": "энергия",
+            "en": "energy"
+        },
+        {
+            "tag": "kidneys",
+            "ru": "почки",
+            "en": "kidneys"
+        }
+    ],
+    "results": [
+    {
+        "tag": "skin",
+        "src": "kate.jpeg",
+        "alt-ru": "Екатерина. Были проблемы с кожей, высыпания.",
+        "alt-en": "Ekaterina. Had skin problems, breakouts."
+    },
+    {
+        "tag": "weight",
+        "src": "lesya.jpeg",
+        "alt-ru": "Похудение, сбросила 18 кг",
+        "alt-en": "Weight loss, lost 18 kg."
+    },
+    {
+        "tag": "weight",
+        "src": "dima_weight.jpeg",
+        "alt-ru": "Похудение, сбросил 10 кг за полтора месяца",
+        "alt-en": "Weight loss, lost 10 kg in a month and a half."
+    },
+    {
+        "tag": "skin",
+        "src": "olga.jpeg",
+        "alt-ru": "Ольга, 44 года. Выпадали волосы прямо клоками. Ходила к трихологам, лечилась, не помогало. После прохождения концепции здоровья совместно с коллагеном, волосы не только вернулись в прежнее состояние, но и стали ещё гуще.",
+        "alt-en": "Olga, 44 years old. Her hair was falling out in clumps. She went to trichologists, tried treatments, but nothing helped. After following the health concept together with collagen, her hair not only returned to its former state but became even thicker."
+    },
+    {
+        "tag": "",
+        "src": "babushka.jpeg",
+        "alt-ru": "Активное долголетие. В возрасте 65 вместе с внучками в горах перебирается через забор",
+        "alt-en": "Active longevity. At the age of 65, climbing over a fence in the mountains together with her granddaughters."
+    },
+    {
+        "tag": "allergy weight",
+        "src": "tanya2.jpeg",
+        "alt-ru": "Татьяна избавилась от гормональных уколов от алергии, сбросила вес",
+        "alt-en": "Tatyana got rid of hormonal allergy injections and lost weight."
+    },
+    {
+        "tag": "weight",
+        "src": "vlad.jpeg",
+        "alt-ru": "Похудение, сбросил 16 кг",
+        "alt-en": "Weight loss, lost 16 kg."
+    },
+    {
+        "tag": "skin",
+        "src": "pigment.jpeg",
+        "alt-ru": "Ушла пигментация на коже",
+        "alt-en": "Skin pigmentation disappeared."
+    },
+    {
+        "tag": "skin",
+        "src": "nadya.jpeg",
+        "alt-ru": "Были отиты, кандидоз, разросшиеся миндалины. Больше не прогуливает школу по здоровью",
+        "alt-en": "Used to have ear infections, candidiasis, enlarged tonsils. No longer misses school because of health issues."
+    },
+    {
+        "videoid": "ZHC8W8u3AGM",
+        "alt-ru": "Дмитрий, 12 лет была аллергия весной на цветение, после прохождения colo vada симптомы аллергии в цветущем саду минимальны, только сухость в глазах",
+        "alt-en": "Dmitry, had spring pollen allergy for 12 years. After completing Colo Vada, allergy symptoms in a blooming garden are minimal, only dryness in the eyes."
+    }
+    ]
+}

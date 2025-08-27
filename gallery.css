@@ -1,0 +1,132 @@
+/* Gallery styles */
+.gallery {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.gallery-img {
+    cursor: pointer;
+    display: inline-block;
+    margin: 5px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.gallery-video {
+    cursor: pointer;
+    display: inline-block;
+    margin: 5px;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.gallery-video-thumbnail {
+    cursor: pointer;
+    display: inline-block;
+    margin: 5px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Dialog styles */
+.image-dialog {
+    border: none;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    display: none; /* Ensure the dialog is hidden by default */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Show the dialog only when it is open */
+.image-dialog[open] {
+    display: flex; /* Use flexbox layout when the dialog is open */
+}
+
+/* Darken the backdrop behind the dialog */
+.image-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.7); /* Make the backdrop darker */
+}
+
+/* Ensure the dialog fits the size of the image */
+.image-dialog img {
+    width: auto; /* Allow the image to scale dynamically */
+    height: auto;
+    max-width: 90vw; /* Ensure the image fits within 90% of the viewport width */
+    max-height: 90vh; /* Ensure the image fits within 90% of the viewport height */
+    object-fit: contain; /* Maintain aspect ratio while scaling */
+    border-radius: 10px;
+}
+
+.image-dialog iframe {
+    width: 90vw;
+    height: 50vh;
+    border-radius: 10px;
+}
+
+.dialog-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+.dialog-content-wrapper img,
+.dialog-content-wrapper iframe {
+    flex: 1 1 auto;
+    max-width: 100%;
+    max-height: 70vh; /* leave space for caption */
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.dialog-caption {
+    margin-top: 1em;
+    text-align: center;
+    color: #fff;
+    max-width: 90vw;
+    font-size: 1em;
+    line-height: 1.4;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    flex-shrink: 0; /* Prevent shrinking */
+    background: none;
+}
+
+.gallery-filter {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.filter-button {
+    padding: 0.1em 0.7em;
+    margin: 0.2em;
+    border: none;
+    background-color: var(--filter-inactive-color);
+    color: var(--filter-text-color);
+    cursor: pointer;
+    border-radius: 1em;
+    transition: background-color 0.3s;
+}
+
+.filter-button.active {
+    background-color: var(--filter-active-color);
+    color: white;
+}
+
+.filter-button:hover {
+    background-color: var(--filter-hover-color);
+    color: white;
+}
