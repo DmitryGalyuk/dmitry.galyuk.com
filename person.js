@@ -1,6 +1,6 @@
 // Fetch person data from contacts.json and update index.html tags
 async function updatePersonData() {
-	const hostname = (window.location.hostname.includes("127.0.0.1") || window.location.hostname.includes(".local")) ? 'elena.galyuk.com' : window.location.hostname;
+	const hostname = (window.location.hostname.includes("127.0.0.1") || window.location.hostname.includes(".local")) ? 'dmitry.galyuk.com' : window.location.hostname;
 	const pathname = window.location.pathname;
 	const lang = pathname.startsWith('/en') ? 'en' : 'ru';
 
