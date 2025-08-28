@@ -1,9 +1,7 @@
 // Fetch person data from contacts.json and update index.html tags
 async function updatePersonData() {
-    const hostname = 'elena.galyuk.com'// window.location.hostname.replace(/^www\./, '');
-    
-    
-    
+    const hostname = window.location.hostname.includes("127.0.0.1") ? 'dmitry.galyuk.com' : window.location.hostname;
+
 	try {
         const response = await fetch('contacts.json');
 		const data = await response.json();
