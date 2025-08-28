@@ -2,10 +2,7 @@ document.addEventListener("DOMContentLoaded", main);
 
 async function main() {
 
-      const host = window.location.hostname;
-    // en.galyuk.com for English, galyuk.com for Russian
-    const lang = (/^en\./.test(host)) ? 'en' : 'ru';
-    
+    const lang = location.pathname.startsWith('/en') ? 'en' : 'ru';
 
     const galleryData = await loadGalleryData();
     renderFilterButtons(galleryData, lang);

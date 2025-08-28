@@ -1,112 +1,152 @@
-{
-    "elena.galyuk.com": {
-        "name": "Елена Галюк",
-        "name-en": "Elena Galyuk",
-        "profession": "Нутрициолог",
+[
+    {
+        "domain": "elena.galyuk.com",
         "photo": "lena.jpeg",
-        "meta": {
-            "title": "Нутрициолог Елена Галюк",
-            "description": "Елена Галюк - Нутрициолог. Специалист по детскому, женскому и мужскому здоровью, ЖКТ, аллергиям, акне, похудению и активному долголетию.",
-            "keywords": "Нутрициолог, Елена Галюк, детское здоровье, женское здоровье, мужское здоровье, ЖКТ, запоры, вздутие, аллергия, акне, высыпания, похудение, активное долголетие",
-            "author": "Елена Галюк",
-            "og:title": "Нутрициолог Елена Галюк",
-            "og:description": "Елена Галюк - Нутрициолог. Специалист по детскому, женскому и мужскому здоровью, ЖКТ, аллергиям, акне, похудению и активному долголетию.",
-            "og:image": "lena.jpeg",
-            "og:url": "https://elena.galyuk.com",
-            "twitter:card": "summary_large_image",
-            "twitter:title": "Нутрициолог Елена Галюк",
-            "twitter:description": "Елена Галюк - Нутрициолог. Специалист по детскому, женскому и мужскому здоровью, ЖКТ, аллергиям, акне, похудению и активному долголетию.",
-            "twitter:image": "lena.jpeg"
+        "ru": {
+            "name": "Елена Галюк",
+            "profession": "Нутрициолог",
+            "meta": {
+                "title": "Нутрициолог Елена Галюк",
+                "description": "Елена Галюк - Нутрициолог. Специалист по детскому, женскому и мужскому здоровью, ЖКТ, аллергиям, акне, похудению и активному долголетию.",
+                "keywords": "Нутрициолог, Елена Галюк, детское здоровье, женское здоровье, мужское здоровье, ЖКТ, запоры, вздутие, аллергия, акне, высыпания, похудение, активное долголетие",
+                "author": "Елена Галюк",
+                "og:title": "Нутрициолог Елена Галюк",
+                "og:description": "Елена Галюк - Нутрициолог. Специалист по детскому, женскому и мужскому здоровью, ЖКТ, аллергиям, акне, похудению и активному долголетию.",
+                "og:image": "lena.jpeg",
+                "og:url": "https://elena.galyuk.com",
+                "twitter:card": "summary_large_image",
+                "twitter:title": "Нутрициолог Елена Галюк",
+                "twitter:description": "Елена Галюк - Нутрициолог. Специалист по детскому, женскому и мужскому здоровью, ЖКТ, аллергиям, акне, похудению и активному долголетию.",
+                "twitter:image": "lena.jpeg"
+            },
+            "services": [
+                "детское, женское и мужское здоровье",
+                "ЖКТ: запоры, вздутие",
+                "аллергия",
+                "акне, высыпания",
+                "похудение",
+                "активное долголетие"
+            ],
+            "contacts": {
+                "phone": "+48 453 548 300",
+                "email": "elena.galyuk@gmail.com"
+            },
+            "socials": {
+                "instagram": "https://www.instagram.com/galyukelena/",
+                "whatsapp": "https://wa.me/48453548300",
+                "telegram": "https://t.me/ElenaGalyuk",
+                "viber": "viber://chat/?number=%2B48453548300"
+            }
         },
-        "services": [
-            "детское, женское и мужское здоровье",
-            "ЖКТ: запоры, вздутие",
-            "аллергия",
-            "акне, высыпания",
-            "похудение",
-            "активное долголетие"
-        ],
-        "contacts": {
-            "phone": "+48 453 548 300",
-            "email": "elena.galyuk@gmail.com"
-        },
-        "socials": {
-            "instagram": "https://www.instagram.com/galyukelena/",
-            "whatsapp": "https://wa.me/48453548300",
-            "telegram": "https://t.me/ElenaGalyuk",
-            "viber": "viber://chat/?number=%2B48453548300"
+        "en": {
+            "name": "Elena Galyuk",
+            "profession": "Nutritionist",
+            "meta": {
+                "title": "Elena Galyuk - Nutritionist",
+                "description": "Elena Galyuk - Nutritionist. Specialist in children's, women's and men's health, GI tract, allergies, acne, weight loss and active longevity.",
+                "keywords": "Nutritionist, Elena Galyuk, children's health, women's health, men's health, GI tract, constipation, bloating, allergy, acne, rash, weight loss, active longevity",
+                "author": "Elena Galyuk",
+                "og:title": "Elena Galyuk - Nutritionist",
+                "og:description": "Elena Galyuk - Nutritionist. Specialist in children's, women's and men's health, GI tract, allergies, acne, weight loss and active longevity.",
+                "og:image": "lena.jpeg",
+                "og:url": "https://elena.galyuk.com/en",
+                "twitter:card": "summary_large_image",
+                "twitter:title": "Elena Galyuk - Nutritionist",
+                "twitter:description": "Elena Galyuk - Nutritionist. Specialist in children's, women's and men's health, GI tract, allergies, acne, weight loss and active longevity.",
+                "twitter:image": "lena.jpeg"
+            },
+            "services": [
+                "Children's, women's and men's health",
+                "GI tract: constipation, bloating",
+                "Allergy",
+                "Acne, rash",
+                "Weight loss",
+                "Active longevity"
+            ],
+            "contacts": {
+                "phone": "+48 453 548 300",
+                "email": "elena.galyuk@gmail.com"
+            },
+            "socials": {
+                "instagram": "https://www.instagram.com/galyukelena/",
+                "whatsapp": "https://wa.me/48453548300",
+                "telegram": "https://t.me/ElenaGalyuk",
+                "viber": "viber://chat/?number=%2B48453548300"
+            }
         }
     },
-    "dmitry.galyuk.com": {
-        "name": "Дмитрий Галюк",
-        "profession": "",
+    {
+        "domain": "dmitry.galyuk.com",
         "photo": "dima_sofia.jpg",
-        "meta": {
-            "title": "Дмитрий Галюк - похудение",
-            "description": "Дмитрий Галюк - похудение, энергия, здоровый сон, системный подход",
-            "keywords": "Дмитрий Галюк, похудение, энергия, здоровый сон, системный подход",
-            "author": "Дмитрий Галюк",
-            "og:title": "Дмитрий Галюк - похудение",
-            "og:description": "Дмитрий Галюк - похудение, энергия, здоровый сон, системный подход",
-            "og:image": "dima_sofia.jpeg",
-            "og:url": "https://dmitry.galyuk.com",
-            "twitter:card": "summary_large_image",
-            "twitter:title": "Дмитрий Галюк - похудение",
-            "twitter:description": "Дмитрий Галюк - похудение, энергия, здоровый сон, системный подход",
-            "twitter:image": "dima_sofia.jpeg"
+        "ru": {
+            "name": "Дмитрий Галюк",
+            "profession": "",
+            "meta": {
+                "title": "Дмитрий Галюк - похудение",
+                "description": "Дмитрий Галюк - похудение, энергия, здоровый сон, системный подход",
+                "keywords": "Дмитрий Галюк, похудение, энергия, здоровый сон, системный подход",
+                "author": "Дмитрий Галюк",
+                "og:title": "Дмитрий Галюк - похудение",
+                "og:description": "Дмитрий Галюк - похудение, энергия, здоровый сон, системный подход",
+                "og:image": "dima_sofia.jpg",
+                "og:url": "https://dmitry.galyuk.com",
+                "twitter:card": "summary_large_image",
+                "twitter:title": "Дмитрий Галюк - похудение",
+                "twitter:description": "Дмитрий Галюк - похудение, энергия, здоровый сон, системный подход",
+                "twitter:image": "dima_sofia.jpg"
+            },
+            "services": [
+                "Похудение",
+                "Энергия, здоровый сон",
+                "Системный поход"
+            ],
+            "contacts": {
+                "phone": "+48 453 548 301",
+                "email": "dmitry@galyuk.com"
+            },
+            "socials": {
+                "instagram": "https://instagram.com/galyukdmitry",
+                "whatsapp": "https://wa.me/48453548301",
+                "telegram": "https://t.me/Dmitry_Galyuk",
+                "viber": "viber://chat/?number=%2B48453548301",
+                "tiktok": "https://www.tiktok.com/@dmitry.galyuk",
+                "youtube": "https://www.youtube.com/@DmitryGalyuk"
+            }
         },
-        "services": [
-            "Похудение",
-            "Энергия, здоровый сон",
-            "Системный поход"
-        ],
-        "contacts": {
-            "phone": "+48 453 548 301",
-            "email": "dmitry@galyuk.com"
-        },
-        "socials": {
-            "instagram": "https://instagram.com/galyukdmitry",
-            "whatsapp": "https://wa.me/48453548301",
-            "telegram": "https://t.me/Dmitry_Galyuk",
-            "viber": "viber://chat/?number=%2B48453548301",
-            "tiktok": "https://www.tiktok.com/@dmitry.galyuk",
-            "youtube": "https://www.youtube.com/@DmitryGalyuk"
-        }
-    },
-     "en.galyuk.com": {
-        "name": "Dmitry Galyuk",
-        "profession": "Weight Loss Coach",
-        "photo": "dima_sofia.jpg",
-        "meta": {
-            "title": "Dmitry Galyuk - Weight Loss",
-            "description": "Dmitry Galyuk - Weight loss, energy, healthy sleep, systematic approach",
-            "keywords": "Dmitry Galyuk, weight loss, energy, healthy sleep, systematic approach",
-            "author": "Dmitry Galyuk",
-            "og:title": "Dmitry Galyuk - Weight Loss",
-            "og:description": "Dmitry Galyuk - Weight loss, energy, healthy sleep, systematic approach",
-            "og:image": "dima_sofia.jpg",
-            "og:url": "https://en.galyuk.com",
-            "twitter:card": "summary_large_image",
-            "twitter:title": "Dmitry Galyuk - Weight Loss",
-            "twitter:description": "Dmitry Galyuk - Weight loss, energy, healthy sleep, systematic approach",
-            "twitter:image": "dima_sofia.jpg"
-        },
-        "services": [
-            "Weight loss",
-            "Energy, healthy sleep",
-            "Systematic approach"
-        ],
-        "contacts": {
-            "phone": "+48 453 548 301",
-            "email": "dmitry@galyuk.com"
-        },
-        "socials": {
-            "instagram": "https://instagram.com/galyukdmitry",
-            "whatsapp": "https://wa.me/48453548301",
-            "telegram": "https://t.me/Dmitry_Galyuk",
-            "viber": "viber://chat/?number=%2B48453548301",
-            "tiktok": "https://www.tiktok.com/@dmitry.galyuk.en",
-            "youtube": "https://www.youtube.com/@DmitryGalyuk-en"
+        "en": {
+            "name": "Dmitry Galyuk",
+            "profession": "Weight Loss Coach",
+            "meta": {
+                "title": "Dmitry Galyuk - Weight Loss",
+                "description": "Dmitry Galyuk - Weight loss, energy, healthy sleep, systematic approach",
+                "keywords": "Dmitry Galyuk, weight loss, energy, healthy sleep, systematic approach",
+                "author": "Dmitry Galyuk",
+                "og:title": "Dmitry Galyuk - Weight Loss",
+                "og:description": "Dmitry Galyuk - Weight loss, energy, healthy sleep, systematic approach",
+                "og:image": "dima_sofia.jpg",
+                "og:url": "https://dmitry.galyuk.com/en",
+                "twitter:card": "summary_large_image",
+                "twitter:title": "Dmitry Galyuk - Weight Loss",
+                "twitter:description": "Dmitry Galyuk - Weight loss, energy, healthy sleep, systematic approach",
+                "twitter:image": "dima_sofia.jpg"
+            },
+            "services": [
+                "Weight loss",
+                "Energy, healthy sleep",
+                "Systematic approach"
+            ],
+            "contacts": {
+                "phone": "+48 453 548 301",
+                "email": "dmitry@galyuk.com"
+            },
+            "socials": {
+                "instagram": "https://instagram.com/galyukdmitry",
+                "whatsapp": "https://wa.me/48453548301",
+                "telegram": "https://t.me/Dmitry_Galyuk",
+                "viber": "viber://chat/?number=%2B48453548301",
+                "tiktok": "https://www.tiktok.com/@dmitry.galyuk.en",
+                "youtube": "https://www.youtube.com/@DmitryGalyuk-en"
+            }
         }
     }
-}
+]
