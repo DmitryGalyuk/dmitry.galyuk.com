@@ -1,20 +1,21 @@
 // Fetch person data from contacts.json and update index.html tags
 async function updatePersonData() {
-	const hostname = 'elena.galyuk.com'// window.location.hostname.replace(/^www\./, '');
-
+    const hostname = 'elena.galyuk.com'// window.location.hostname.replace(/^www\./, '');
+    
+    
+    
 	try {
-		const response = await fetch('contacts.json');
+        const response = await fetch('contacts.json');
 		const data = await response.json();
 		const person = data[hostname];
-		if (!person) return;
-
-		// Name
+        
+        // Name
 		const nameLabel = document.getElementById('name-label');
-		if (nameLabel) nameLabel.textContent = person.name;
+		if (nameLabel && person.name) nameLabel.textContent = person.name;
 
 		// Photo
 		const avatar = document.querySelector('.avatar');
-		if (avatar && person.photo) avatar.src = 'persons/' + person.photo;
+		if (avatar && person.photo) avatar.src = person.photo.startsWith('http') ? person.photo : 'persons/' + person.photo;
 
 		// Services
 		const servicesList = document.querySelector('.services');
@@ -26,8 +27,8 @@ async function updatePersonData() {
 				servicesList.appendChild(li);
 			});
 		}
-
-		// Contacts
+        
+        // Contacts
 		const contactItems = document.querySelectorAll('.contact-item');
 		if (contactItems.length >= 2 && person.contacts) {
 			// Phone
@@ -60,9 +61,31 @@ async function updatePersonData() {
 			});
 		}
 
-		// Meta tags (title)
-		if (person.meta && person.meta.title) {
-			document.title = person.meta.title;
+		// SEO meta tags (always use person photo for images and favicon)
+		if (person.meta) {
+			if (person.meta.title) document.title = person.meta.title;
+			const setMeta = (selector, value) => {
+				const el = document.querySelector(selector);
+				if (el && value) el.setAttribute('content', value);
+			};
+			setMeta('meta[name="description"]', person.meta.description);
+			setMeta('meta[name="keywords"]', person.meta.keywords);
+			setMeta('meta[name="author"]', person.meta.author);
+			setMeta('meta[property="og:title"]', person.meta['og:title'] || person.meta.title);
+			setMeta('meta[property="og:description"]', person.meta['og:description'] || person.meta.description);
+			const photoPath = person.photo ? (person.photo.startsWith('http') ? person.photo : 'persons/' + person.photo) : '';
+			setMeta('meta[property="og:image"]', photoPath);
+			setMeta('meta[name="twitter:image"]', photoPath);
+			// Favicon
+			const iconEl = document.querySelector('link[rel="icon"]');
+			if (iconEl && photoPath) iconEl.href = photoPath;
+			setMeta('meta[property="og:url"]', person.meta['og:url']);
+			setMeta('meta[name="twitter:card"]', person.meta['twitter:card']);
+			setMeta('meta[name="twitter:title"]', person.meta['twitter:title'] || person.meta.title);
+			setMeta('meta[name="twitter:description"]', person.meta['twitter:description'] || person.meta.description);
+			// Also update <title> tag text
+			const titleEl = document.getElementById('page-title');
+			if (titleEl && person.meta.title) titleEl.textContent = person.meta.title;
 		}
 	} catch (e) {
 		console.error('Failed to load person data:', e);
