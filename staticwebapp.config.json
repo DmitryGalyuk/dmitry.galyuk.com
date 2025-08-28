@@ -1,28 +1,12 @@
 {
-<<<<<<< HEAD
-    "routes": [
-        {
-            "route": "/*",
-            "serve": "/index.html",
-            "statusCode": 200
-        }
-    ],
-    "navigationFallback": {
-        "rewrite": "/index.html",
-        "exclude": [
-            "/api/*"
-        ]
-    }
-=======
   "routes": [
     {
-      "route": "/en",
-      "methods": [
-        "get"
-      ],
+      "route": "/*",
       "serve": "/index.html",
       "statusCode": 200
     }
-  ]
->>>>>>> 444fd02b2c8b1bf094f404e5835e17efb98f93fb
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html"
+  }
 }
