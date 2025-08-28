@@ -1,0 +1,60 @@
+{
+    "elena.galyuk.com": {
+        "name": "Елена Галюк",
+        "name-en": "Elena Galyuk",
+        "profession": "Нутрициолог",
+        "photo": "lena.jpeg",
+        "meta": {
+            "title": "Нутрициолог Елена Галюк",
+            "description": "Елена Галюк - Нутрициолог. Специалист по детскому, женскому и мужскому здоровью, ЖКТ, аллергиям, акне, похудению и активному долголетию.",
+            "keywords": "Нутрициолог, Елена Галюк, детское здоровье, женское здоровье, мужское здоровье, ЖКТ, запоры, вздутие, аллергия, акне, высыпания, похудение, активное долголетие",
+            "author": "Елена Галюк"
+        },
+        "services": [
+            "детское, женское и мужское здоровье",
+            "ЖКТ: запоры, вздутие",
+            "аллергия",
+            "акне, высыпания",
+            "похудение",
+            "активное долголетие"
+        ],
+        "contacts": {
+            "phone": "+48 453 548 300",
+            "email": "elena.galyuk@gmail.com"
+        },
+        "socials": {
+            "instagram": "https://www.instagram.com/galyukelena/",
+            "whatsapp": "https://wa.me/48453548300",
+            "telegram": "https://t.me/ElenaGalyuk",
+            "viber": "viber://chat/?number=%2B48453548300"
+        }
+    },
+    "dmitry.galyuk.com": {
+        "name": "Дмитрий Галюк",
+        "profession": "",
+        "photo": "dima_sofia.jpg",
+        "meta": {
+            "title": "Дмитрий Галюк - похудение",
+            "description": "Дмитрий Галюк - похудение, энергия, здоровый сон, системный подход",
+            "keywords": "Дмитрий Галюк, похудение, энергия, здоровый сон, системный подход",
+            "author": "Дмитрий Галюк"
+        },
+        "services": [
+            "похудение",
+            "Энергия, здоровый сон",
+            "Системный поход"
+        ],
+        "contacts": {
+            "phone": "+48 453 548 301",
+            "email": "dmitry@galyuk.com"
+        },
+        "socials": {
+            "instagram": "https://instagram.com/galyukdmitry",
+            "whatsapp": "https://wa.me/48453548301",
+            "telegram": "https://t.me/Dmitry_Galyuk",
+            "viber": "viber://chat/?number=%2B48453548301",
+            "tiktok": "https://www.tiktok.com/@dmitry.galyuk",
+            "youtube": "https://www.youtube.com/@DmitryGalyuk"
+        }
+    }
+}
