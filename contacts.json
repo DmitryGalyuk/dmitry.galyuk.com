@@ -72,5 +72,41 @@
             "tiktok": "https://www.tiktok.com/@dmitry.galyuk",
             "youtube": "https://www.youtube.com/@DmitryGalyuk"
         }
+    },
+     "en.galyuk.com": {
+        "name": "Dmitry Galyuk",
+        "profession": "Weight Loss Coach",
+        "photo": "dima_sofia.jpg",
+        "meta": {
+            "title": "Dmitry Galyuk - Weight Loss",
+            "description": "Dmitry Galyuk - Weight loss, energy, healthy sleep, systematic approach",
+            "keywords": "Dmitry Galyuk, weight loss, energy, healthy sleep, systematic approach",
+            "author": "Dmitry Galyuk",
+            "og:title": "Dmitry Galyuk - Weight Loss",
+            "og:description": "Dmitry Galyuk - Weight loss, energy, healthy sleep, systematic approach",
+            "og:image": "dima_sofia.jpg",
+            "og:url": "https://en.galyuk.com",
+            "twitter:card": "summary_large_image",
+            "twitter:title": "Dmitry Galyuk - Weight Loss",
+            "twitter:description": "Dmitry Galyuk - Weight loss, energy, healthy sleep, systematic approach",
+            "twitter:image": "dima_sofia.jpg"
+        },
+        "services": [
+            "Weight loss",
+            "Energy, healthy sleep",
+            "Systematic approach"
+        ],
+        "contacts": {
+            "phone": "+48 453 548 301",
+            "email": "dmitry@galyuk.com"
+        },
+        "socials": {
+            "instagram": "https://instagram.com/galyukdmitry",
+            "whatsapp": "https://wa.me/48453548301",
+            "telegram": "https://t.me/Dmitry_Galyuk",
+            "viber": "viber://chat/?number=%2B48453548301",
+            "tiktok": "https://www.tiktok.com/@dmitry.galyuk.en",
+            "youtube": "https://www.youtube.com/@DmitryGalyuk-en"
+        }
     }
 }

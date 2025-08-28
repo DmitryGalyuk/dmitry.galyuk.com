@@ -111,7 +111,7 @@ h1 {
   gap: 1.2em;
   margin-top: 1.2rem;
 }
-.social-link {
+.social {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
@@ -121,7 +121,7 @@ h1 {
   transition: color 0.2s;
   line-height: 1.2;
 }
-.social-link:hover {
+.social:hover {
   color: var(--social-link-hover);
 }
 .social-logo {
