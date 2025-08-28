@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "routes": [
         {
             "route": "/*",
@@ -12,4 +13,16 @@
             "/api/*"
         ]
     }
+=======
+  "routes": [
+    {
+      "route": "/en",
+      "methods": [
+        "get"
+      ],
+      "serve": "/index.html",
+      "statusCode": 200
+    }
+  ]
+>>>>>>> 444fd02b2c8b1bf094f404e5835e17efb98f93fb
 }
