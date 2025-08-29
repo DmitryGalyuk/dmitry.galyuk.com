@@ -1,11 +1,21 @@
 /* Gallery styles */
 .gallery {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
     flex-direction: column;
-    max-width: 70%;
     align-items: center;
+    justify-content: center;
+    max-width: 70%;
+    margin: 0 auto;
+}
+.gallery .cards,
+.gallery .filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.gallery-item {
+    margin: 5px;
 }
 
 .gallery-img {
@@ -109,7 +119,10 @@
 }
 
 .gallery-filter {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
     margin-bottom: 20px;
 }
 
