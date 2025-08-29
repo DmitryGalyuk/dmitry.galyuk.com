@@ -44,6 +44,26 @@
             "tag": "kidneys",
             "ru": "почки",
             "en": "kidneys"
+        },
+        {
+            "tag": "diabetes",
+            "ru": "диабет",
+            "en": "diabetes"
+        },
+        {
+            "tag": "gout",
+            "ru": "подагра",
+            "en": "gout"
+        },
+        {
+            "tag": "fatty-liver",
+            "ru": "гепатоз",
+            "en": "fatty-liver"
+        },
+        {
+            "tag": "brain",
+            "ru": "мозг",
+            "en": "brain"
         }
     ],
     "results": [
@@ -136,6 +156,30 @@
         "alt-ru": "Профессор кардиологии Подхомутников Владимир Матвеевич, составитель программы #коралдетоксплюс о своем результате #почки #камни #концепцияздоровья",
         "alt-en": "Professor of Cardiology Vladimir Matveevich Podkhomutnikov, author of the Coral Detox Plus program, sharing his results (#kidneys #stones #healthconcept).",
         "tag": "kidneys"
+    },
+    {
+        "videoid": "_68qGedTmSI",
+        "alt-ru": "Павел Степанович Аленкович. 44 года.Диабет первого типа и подагра остались в прошлом. Кто-то скажет это невозможно? Но невозможное возможно, если мы возьмём ответственность за свое здоровье в свои руки. Концепция здоровья Coral Club и осознанное пищевое поведение творят чудеса. Вы знаете, кому отправить этот отзыв. Кому-то он может спасти жизнь! 2023 год",
+        "alt-en": "Pavel Stepanovich Alenkovich, 44 years old. Type 1 diabetes and gout are a thing of the past. Some may say it's impossible, but the impossible is possible when we take responsibility for our health into our own hands. The Coral Club Health Concept and conscious eating habits work wonders. You know who to share this review with; it might save someone's life! 2023.",
+        "tag": "diabetes gout"
+    },
+    {
+        "videoid": "1o0V1u62ED8",
+        "alt-ru": "Анатолий Ким, Астана. Жировой #гепатоз 20 лет, #инсулинорезистентность, #аллергия 15 лет, #артроз коленных суставов (была показана операция) и #артриты всех суставов 15 лет, межпозвоночные #грыжи (была показана операция), #гайморит, #простатит, #расстройства #ЖКТ, лишний вес 40 кг. Все это в прошлом. Сейчас ему 47, никаких операций, никаких болезней, последние три года абсолютное здоровье.",
+        "alt-en": "Anatoly Kim, Astana. Fatty liver disease for 20 years, insulin resistance, allergies for 15 years, knee osteoarthritis (surgery was indicated) and arthritis of all joints for 15 years, intervertebral hernias (surgery was indicated), sinusitis, prostatitis, gastrointestinal disorders, excess weight of 40 kg. All this is in the past. Now he is 47, no operations, no diseases, absolute health for the last three years.",
+        "tag": "fatty-liver weight diabetes hernia"
+    },
+    {
+        "videoid": "dxHVPnMlnKE",
+        "alt-ru": "У Ларисы #подагра. Два года лечилась в больницах, ездила на курорт, но облегчение было только временное. Решила попробовать систему #программа90 дней. И через 4 месяца получила результат. И бонусом скинула 20 кг",
+        "alt-en": "Larisa has #gout. She was treated in hospitals for two years, went to a resort, but the relief was only temporary. She decided to try the #90dayprogram system. And after 4 months she got results. And as a bonus, she lost 20 kg.",
+        "tag": "gout weight"
+    },
+    {
+        "videoid": "Wn8CEWVa6CE",
+        "alt-ru": "Ребёнок 5 лет, задержка речевого развития. Сочетание противопаразитарной программы и mental force -- ребёнок заговорил.",
+        "alt-en": "A 5-year-old child with speech development delay. The combination of the antiparasitic program and mental force helped the child to speak.",
+        "tag": "brain"
     }
 ]
 
