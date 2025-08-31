@@ -1,4 +1,3 @@
-
 html {
   color-scheme: light dark;
 }
@@ -90,6 +89,13 @@ h1 {
   font-size: 1.6rem;
   margin: 0 0 0.5rem 0;
   color: var(--main-text);
+}
+.profession {
+  font-size: 1.1rem;
+  color: var(--main-text);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  margin-top: -0.3rem;
 }
 .services {
   list-style: disc inside;

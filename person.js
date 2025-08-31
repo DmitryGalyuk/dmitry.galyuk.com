@@ -1,6 +1,6 @@
 // Fetch person data from contacts.json and update index.html tags
 async function updatePersonData() {
-	const hostname = (window.location.hostname.includes("127.0.0.1") || window.location.hostname.includes(".local")) ? 'elena.galyuk.com' : window.location.hostname;
+	const hostname = (window.location.hostname.includes("127.0.0.1") || window.location.hostname.includes(".local")) ? 'dmitry.galyuk.com' : window.location.hostname;
 	const pathname = window.location.pathname;
 	const lang = pathname.startsWith('/en') ? 'en' : 'ru';
 
@@ -15,6 +15,13 @@ async function updatePersonData() {
 		// Name
 		const nameLabel = document.getElementById('name-label');
 		if (nameLabel && translation.name) nameLabel.textContent = translation.name;
+
+		// Profession
+		const professionLabel = document.getElementById('profession-label');
+		if (professionLabel) {
+			professionLabel.textContent = translation.profession || '';
+			professionLabel.style.display = translation.profession ? '' : 'none';
+		}
 
 		// Photo
 		const avatar = document.querySelector('.avatar');

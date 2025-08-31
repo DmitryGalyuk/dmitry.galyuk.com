@@ -80,7 +80,7 @@
         "photo": "dima_sofia.jpg",
         "ru": {
             "name": "Дмитрий Галюк",
-            "profession": "",
+            "profession": "Системный подход к здоровью",
             "meta": {
                 "title": "Дмитрий Галюк - похудение",
                 "description": "Дмитрий Галюк - похудение, энергия, здоровый сон, системный подход",
@@ -97,8 +97,8 @@
             },
             "services": [
                 "Похудение",
-                "Энергия, здоровый сон",
-                "Системный поход"
+                "Энергия",
+                "Здоровый сон"
             ],
             "contacts": {
                 "phone": "+48 453 548 301",
@@ -115,25 +115,25 @@
         },
         "en": {
             "name": "Dmitry Galyuk",
-            "profession": "Weight Loss Coach",
+            "profession": "Holistic health",
             "meta": {
-                "title": "Dmitry Galyuk - Weight Loss",
-                "description": "Dmitry Galyuk - Weight loss, energy, healthy sleep, systematic approach",
-                "keywords": "Dmitry Galyuk, weight loss, energy, healthy sleep, systematic approach",
+                "title": "Dmitry Galyuk - Holistic health",
+                "description": "Dmitry Galyuk - Holistic health, weight loss, energy, healthy sleep, systematic approach",
+                "keywords": "Dmitry Galyuk, Holistic health, weight loss, energy, healthy sleep, systematic approach",
                 "author": "Dmitry Galyuk",
-                "og:title": "Dmitry Galyuk - Weight Loss",
-                "og:description": "Dmitry Galyuk - Weight loss, energy, healthy sleep, systematic approach",
+                "og:title": "Dmitry Galyuk - Holistic health",
+                "og:description": "Dmitry Galyuk - Holistic health, weight loss, energy, healthy sleep, systematic approach",
                 "og:image": "dima_sofia.jpg",
                 "og:url": "https://dmitry.galyuk.com/en",
                 "twitter:card": "summary_large_image",
-                "twitter:title": "Dmitry Galyuk - Weight Loss",
-                "twitter:description": "Dmitry Galyuk - Weight loss, energy, healthy sleep, systematic approach",
+                "twitter:title": "Dmitry Galyuk - Holistic health",
+                "twitter:description": "Dmitry Galyuk - Holistic health, weight loss, energy, healthy sleep, systematic approach",
                 "twitter:image": "dima_sofia.jpg"
             },
             "services": [
                 "Weight loss",
-                "Energy, healthy sleep",
-                "Systematic approach"
+                "Energy",
+                "Healthy sleep"
             ],
             "contacts": {
                 "phone": "+48 453 548 301",
