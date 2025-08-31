@@ -1,3 +1,24 @@
+/* Bubble for card count on filter buttons */
+.filter-count-bubble {
+    position: absolute;
+    top: -0.6em;
+    right: -0.7em;
+    background: var(--filter-inactive-color);
+    color: var(--main-text);
+    font-size: 0.5em;
+    font-weight: bold;
+    border-radius: 1em;
+    padding: 0.15em 0.5em;
+    min-width: 1em;
+    text-align: center;
+    pointer-events: none;
+    box-shadow: 0 1px 4px var(--card-shadow);
+    display: none;
+}
+
+.filter-button {
+    position: relative;
+}
 /* Gallery styles */
 .gallery {
     display: flex;

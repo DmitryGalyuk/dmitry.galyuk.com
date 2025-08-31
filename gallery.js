@@ -32,19 +32,44 @@ function loadGalleryData() {
 
 function renderFilterButtons(galleryData, lang) {
     const filterContainer = document.querySelector(".gallery .filter");
-    filterContainer.innerHTML = ''; // Clear existing buttons  
+    filterContainer.innerHTML = '';
 
-    // Create buttons for each tag
-    galleryData.tags.forEach(tag => {
+    // Count cards for each tag
+    const tagCounts = {};
+    galleryData.tags.forEach(tagObj => {
+        if (tagObj.tag === 'all') {
+            tagCounts['all'] = galleryData.results.length;
+        } else {
+            tagCounts[tagObj.tag] = galleryData.results.filter(item => {
+                const itemTags = (item.tag || '').split(' ');
+                return itemTags.includes(tagObj.tag);
+            }).length;
+        }
+    });
+
+    // Sort tags by count (descending)
+    const sortedTags = [...galleryData.tags].sort((a, b) => {
+        return tagCounts[b.tag] - tagCounts[a.tag];
+    });
+
+    // Create buttons for each tag in sorted order
+    sortedTags.forEach(tag => {
         const button = document.createElement("button");
         button.className = "filter-button";
         button.setAttribute("data-filter", tag.tag);
         button.textContent = tag[lang];
+
+        if (tag.tag !== 'all') {
+            const bubble = document.createElement('span');
+            bubble.className = 'filter-count-bubble';
+            bubble.textContent = tagCounts[tag.tag];
+            button.appendChild(bubble);
+        }
         filterContainer.appendChild(button);
 
         button.addEventListener("pointerup", () => {
             const filter = button.getAttribute("data-filter");
-            handleFiltering(filter); // Apply the filter when the button is clicked
+            handleFiltering(filter);
         });
     });
 
