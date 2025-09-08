@@ -1,41 +1,66 @@
-// Function to get a flat list of articles in TOC order
-function getFlatArticleList() {
-    const flatList = [];
+// Function to build ordered list of articles based on hierarchy
+function getOrderedArticleList() {
+    const orderedList = [];
+    const articleMap = new Map();
+    const allArticles = document.querySelectorAll('main article');
     
-    function traverse(ul) {
-        const items = ul.children;
-        for (const item of items) {
-            const link = item.querySelector(':scope > a');
-            if (link) {
-                const articleId = link.getAttribute('href').substring(1);
-                flatList.push(articleId);
-            }
-            const subList = item.querySelector(':scope > ul');
-            if (subList) {
-                traverse(subList);
-            }
+    // First pass: create map entries for all articles
+    allArticles.forEach(article => {
+        articleMap.set(article.dataset.id, {
+            element: article,
+            children: [],
+            isChild: false
+        });
+    });
+
+    // Second pass: establish parent-child relationships
+    allArticles.forEach(article => {
+        const subTopics = article.querySelector('.sub-topics');
+        if (subTopics) {
+            const links = subTopics.querySelectorAll('a');
+            links.forEach(link => {
+                const childId = link.getAttribute('href').replace('/school/', '');
+                if (articleMap.has(childId)) {
+                    articleMap.get(article.dataset.id).children.push(childId);
+                    articleMap.get(childId).isChild = true;
+                }
+            });
         }
+    });
+
+    // Build ordered list by traversing hierarchy
+    function addToList(articleId) {
+        orderedList.push(articleId);
+        const article = articleMap.get(articleId);
+        article.children.forEach(childId => {
+            addToList(childId);
+        });
     }
 
-    const mainList = document.querySelector('.toc > ul');
-    if (mainList) {
-        traverse(mainList);
-    }
-    return flatList;
+    // Start with root articles
+    const rootArticles = Array.from(articleMap.entries())
+        .filter(([_, data]) => !data.isChild)
+        .map(([id, _]) => id);
+
+    rootArticles.forEach(articleId => {
+        addToList(articleId);
+    });
+
+    return orderedList;
 }
 
 // Function to add "Next Article" links
 function addNextArticleLinks() {
-    const articleList = getFlatArticleList();
+    const articleList = getOrderedArticleList();
     
     articleList.forEach((articleId, index) => {
-        const article = document.getElementById(articleId);
+        const article = document.querySelector(`article[data-id="${articleId}"]`);
         if (article && index < articleList.length - 1) {
             const nextArticleId = articleList[index + 1];
-            const nextArticle = document.getElementById(nextArticleId);
+            const nextArticle = document.querySelector(`article[data-id="${nextArticleId}"]`);
             if (nextArticle) {
                 const nextLink = document.createElement('a');
-                nextLink.href = '#' + nextArticleId;
+                nextLink.href = `/school/${nextArticleId}`;
                 nextLink.className = 'next-article';
                 nextLink.textContent = 'Next: ' + nextArticle.querySelector('h1').textContent;
                 article.appendChild(nextLink);
@@ -51,38 +76,46 @@ function updateActiveTOCItem() {
         link.classList.remove('active');
     });
 
-    // Get the current hash
-    const hash = window.location.hash;
+    // Get the current path
+    const path = window.location.pathname;
+    let articleId = path.replace('/school/', '');
     
-    // Update page title based on current article
-    let currentTitle = 'School Articles';
-    if (hash) {
-        const article = document.querySelector(hash);
-        if (article) {
-            const articleTitle = article.querySelector('h1').textContent;
-            currentTitle = `${articleTitle} - School Articles`;
-            // Find and highlight the corresponding TOC link
-            const activeLink = document.querySelector(`.toc a[href="${hash}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
+    // Handle root path
+    if (path === '/school' || path === '/school/') {
+        articleId = 'intro';
+    }
+    
+    // Update page title and visibility based on current article
+    let currentArticle = null;
+    document.querySelectorAll('article').forEach(article => {
+        if (article.dataset.id === articleId) {
+            article.style.display = 'block';
+            currentArticle = article;
+        } else {
+            article.style.display = 'none';
+        }
+    });
+
+    // Update page title and active link
+    if (currentArticle) {
+        const articleTitle = currentArticle.querySelector('h1').textContent;
+        document.title = `${articleTitle} - School Articles`;
+        const activeLink = document.querySelector(`.toc a[href="/school/${currentArticle.dataset.id}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
         }
     } else {
-        // If no hash, highlight the first article's link
-        const firstLink = document.querySelector('.toc a');
-        if (firstLink) {
-            firstLink.classList.add('active');
-            // Set title to the first article
-            const firstArticleId = firstLink.getAttribute('href');
-            const firstArticle = document.querySelector(firstArticleId);
-            if (firstArticle) {
-                const articleTitle = firstArticle.querySelector('h1').textContent;
-                currentTitle = `${articleTitle} - School Articles`;
+        // If no article is found or invalid ID, show intro
+        const introArticle = document.querySelector('article[data-id="intro"]');
+        if (introArticle) {
+            introArticle.style.display = 'block';
+            document.title = `${introArticle.querySelector('h1').textContent} - School Articles`;
+            const firstLink = document.querySelector(`.toc a[href="/school/intro"]`);
+            if (firstLink) {
+                firstLink.classList.add('active');
             }
         }
     }
-    // Update the page title
-    document.title = currentTitle;
 }
 
 // Function to recursively generate TOC from articles
@@ -97,7 +130,7 @@ function generateTOC() {
     
     // First pass: create map entries for all articles
     allArticles.forEach(article => {
-        articleMap.set(article.id, {
+        articleMap.set(article.dataset.id, {
             element: article,
             children: [],
             isChild: false
@@ -110,9 +143,9 @@ function generateTOC() {
         if (subTopics) {
             const links = subTopics.querySelectorAll('a');
             links.forEach(link => {
-                const childId = link.getAttribute('href').substring(1); // Remove #
+                const childId = link.getAttribute('href').replace('/school/', '');
                 if (articleMap.has(childId)) {
-                    articleMap.get(article.id).children.push(childId);
+                    articleMap.get(article.dataset.id).children.push(childId);
                     articleMap.get(childId).isChild = true;
                 }
             });
@@ -125,7 +158,7 @@ function generateTOC() {
 
         const li = document.createElement('li');
         const link = document.createElement('a');
-        link.href = '#' + articleId;
+        link.href = `/school/${articleId}`;
         link.textContent = article.element.querySelector('h1').textContent;
         li.appendChild(link);
 
@@ -163,7 +196,9 @@ function generateTOC() {
 }
 
 // Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', generateTOC);
+document.addEventListener('DOMContentLoaded', () => {
+    generateTOC();
+});
 
-// Update active state when hash changes
-window.addEventListener('hashchange', updateActiveTOCItem);
+// Handle initial load
+window.addEventListener('load', updateActiveTOCItem);

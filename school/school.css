@@ -21,15 +21,6 @@ article {
     display: none;
 }
 
-article:target {
-    display: block;
-}
-
-/* Show first article only when no article is targeted */
-main > article:first-of-type:not(:target):not(:has(~ article:target)) {
-    display: block;
-}
-
 .toc ul {
     list-style: none;
     padding: 0;

@@ -1,6 +1,9 @@
 {
     "liveServer.settings.mount": [
         ["/en", "./index.html"],
+        ["/school/school.css", "./school/school.css"],
+        ["/school/school.js", "./school/school.js"],
+        ["/school/*", "./school/index.html"],
     ],
     "liveServer.settings.donotShowInfoMsg": true,
     "liveServer.settings.donotVerifyTags": true
