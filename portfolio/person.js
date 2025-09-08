@@ -5,7 +5,7 @@ async function updatePersonData() {
 	const lang = pathname.startsWith('/en') ? 'en' : 'ru';
 
 	try {
-		const response = await fetch('contacts.json');
+		const response = await fetch('portfolio/contacts.json');
 		const data = await response.json();
 		const person = data.find(p => p.domain === hostname);
 		if (!person) throw new Error('Person not found for domain: ' + hostname);
