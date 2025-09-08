@@ -5,7 +5,7 @@ async function updatePersonData() {
 	const lang = pathname.startsWith('/en') ? 'en' : 'ru';
 
 	try {
-		const response = await fetch('portfolio/contacts.json');
+		const response = await fetch('contacts.json');
 		const data = await response.json();
 		const person = data.find(p => p.domain === hostname);
 		if (!person) throw new Error('Person not found for domain: ' + hostname);
@@ -25,7 +25,7 @@ async function updatePersonData() {
 
 		// Photo
 		const avatar = document.querySelector('.avatar');
-		if (avatar && person.photo) avatar.src = person.photo.startsWith('http') ? person.photo : 'persons/' + person.photo;
+		if (avatar && person.photo) avatar.src = person.photo.startsWith('http') ? person.photo : 'portfolio/persons/' + person.photo;
 
 		// Services
 		const servicesList = document.querySelector('.services');
