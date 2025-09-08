@@ -44,7 +44,7 @@ function addNextArticleLinks() {
     });
 }
 
-// Function to update active state in TOC
+// Function to update active state in TOC and page title
 function updateActiveTOCItem() {
     // Remove active class from all links
     document.querySelectorAll('.toc a').forEach(link => {
@@ -54,19 +54,35 @@ function updateActiveTOCItem() {
     // Get the current hash
     const hash = window.location.hash;
     
+    // Update page title based on current article
+    let currentTitle = 'School Articles';
     if (hash) {
-        // Find and highlight the corresponding TOC link
-        const activeLink = document.querySelector(`.toc a[href="${hash}"]`);
-        if (activeLink) {
-            activeLink.classList.add('active');
+        const article = document.querySelector(hash);
+        if (article) {
+            const articleTitle = article.querySelector('h1').textContent;
+            currentTitle = `${articleTitle} - School Articles`;
+            // Find and highlight the corresponding TOC link
+            const activeLink = document.querySelector(`.toc a[href="${hash}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
         }
     } else {
         // If no hash, highlight the first article's link
         const firstLink = document.querySelector('.toc a');
         if (firstLink) {
             firstLink.classList.add('active');
+            // Set title to the first article
+            const firstArticleId = firstLink.getAttribute('href');
+            const firstArticle = document.querySelector(firstArticleId);
+            if (firstArticle) {
+                const articleTitle = firstArticle.querySelector('h1').textContent;
+                currentTitle = `${articleTitle} - School Articles`;
+            }
         }
     }
+    // Update the page title
+    document.title = currentTitle;
 }
 
 // Function to recursively generate TOC from articles
