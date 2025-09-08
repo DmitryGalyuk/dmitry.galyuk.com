@@ -1,0 +1,126 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.toc {
+    width: 250px;
+    padding: 20px;
+    background: #f5f5f5;
+    height: 100vh;
+    position: fixed;
+}
+
+.content {
+    margin-left: 290px;
+    padding: 20px;
+}
+
+article {
+    display: none;
+}
+
+article:target {
+    display: block;
+}
+
+/* Show first article only when no article is targeted */
+main > article:first-of-type:not(:target):not(:has(~ article:target)) {
+    display: block;
+}
+
+.toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc ul ul {
+    padding-left: 20px;
+    margin: 5px 0 10px;
+}
+
+.toc li {
+    margin: 8px 0;
+}
+
+.toc a {
+    display: block;
+    padding: 5px 0;
+    text-decoration: none;
+    color: #333;
+}
+
+.toc a:hover {
+    color: #0066cc;
+}
+
+.toc a.active {
+    color: #0066cc;
+    background: #e6f0fa;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.next-article {
+    display: block;
+    margin-top: 30px;
+    padding: 15px;
+    background: #f8f8f8;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.next-article:hover {
+    background: #e6f0fa;
+    border-color: #0066cc;
+    color: #0066cc;
+}
+
+.next-article::after {
+    content: " →";
+    font-family: system-ui;
+}
+
+.toc a.active {
+    color: #0066cc;
+    font-weight: 500;
+    background: #e6f0fa;
+    border-radius: 4px;
+}
+
+article > h1 {
+    font-size: 1.2em;
+    margin: 0 0 15px 0;
+}
+
+.sub-topics {
+    background: #f8f8f8;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    padding: 10px 15px;
+    margin: 0 0 20px 0;
+}
+
+.sub-topics-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.sub-topics-row a {
+    display: inline-block;
+    padding: 4px 12px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.sub-topics-row a:hover {
+    background: #f0f0f0;
+    text-decoration: none;
+}
