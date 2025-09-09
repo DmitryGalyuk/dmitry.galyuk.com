@@ -2,13 +2,11 @@
   "routes": [
   {
       "route": "/school/*",
-      "rewrite": "/school.html",
-      "statusCode": 200
+      "rewrite": "/school.html"
     },
     {
       "route": "/en",
-      "rewrite": "/index.html",
-      "statusCode": 200
+      "rewrite": "/index.html"
     }
   ],
   "navigationFallback": {
