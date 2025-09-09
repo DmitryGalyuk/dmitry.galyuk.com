@@ -2,12 +2,12 @@
   "routes": [
   {
       "route": "/school/*",
-      "serve": "/school.html",
+      "rewrite": "/school.html",
       "statusCode": 200
     },
     {
       "route": "/en",
-      "serve": "/index.html",
+      "rewrite": "/index.html",
       "statusCode": 200
     }
   ],
