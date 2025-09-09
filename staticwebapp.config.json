@@ -1,24 +1,10 @@
 {
   "routes": [
-    {
-      "route": "/school/*.{js,css}",
-      "serve": "."
-    },
-    {
-      "route": "/school",
-      "serve": "/school/index.html",
-      "statusCode": 200
-    },
-    {
-      "route": "/school/",
-      "serve": "/school/index.html",
-      "statusCode": 200
-    },
-    {
+  {
       "route": "/school/*",
-      "serve": "/school/index.html",
+      "serve": "/school.html",
       "statusCode": 200,
-      "rewrite": "/school/index.html"
+      "rewrite": "/school.html"
     },
     {
       "route": "/*",
@@ -28,6 +14,6 @@
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*", "/css/*", "/js/*", "*.js", "*.css", "/school/*.js", "/school/*.css"]
+    "exclude": ["/images/*", "/css/*", "/js/*", "*.js", "*.css"]
   }
 }
