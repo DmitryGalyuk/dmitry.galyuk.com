@@ -3,17 +3,12 @@
   {
       "route": "/school/*",
       "serve": "/school.html",
-      "statusCode": 200,
-      "rewrite": "/school.html"
+      "statusCode": 200
     },
     {
-      "route": "/*",
+      "route": "/en",
       "serve": "/index.html",
       "statusCode": 200
     }
-  ],
-  "navigationFallback": {
-    "rewrite": "/index.html",
-    "exclude": ["portfolio/*", "/images/*", "/css/*", "/js/*", "*.js", "*.css"]
-  }
+  ]
 }
