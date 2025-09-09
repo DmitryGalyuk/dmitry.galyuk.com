@@ -22,7 +22,7 @@ async function main() {
 }
 
 function loadGalleryData() {
-    return fetch('portfolio/data.json')
+    return fetch('data.json')
         .then(response => response.json())
         .catch(error => {
             console.error('Error loading gallery data:', error);
@@ -189,7 +189,7 @@ function renderGalleryItems(galleryData, lang) {
 
         } else if (src) {
             // Create img element for images
-            thumbnail.src = `portfolio/results/${src}`;
+            thumbnail.src = `/results/${src}`;
             thumbnail.classList.add("gallery-img");
             thumbnail.setAttribute("data-tag", tag);
 
