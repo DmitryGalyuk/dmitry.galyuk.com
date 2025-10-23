@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивный Опросник</title>
+    <!-- Tailwind CSS link for modern, responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Font and background settings */
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
+        /* Custom styles for centering and shadow */
+        .quiz-card {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 5px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+        .answer-option {
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+        }
+        .answer-option:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        /* Style for selected answers (checkbox/radio logic) */
+        input:checked + .answer-label {
+            border-color: #3b82f6; /* border-blue-500 */
+            background-color: #eff6ff; /* bg-blue-50 */
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- Main application container -->
+    <div id="app-container" class="w-full max-w-xl">
+
+        <!-- Quiz Card -->
+        <div id="quiz-container" class="quiz-card bg-white p-6 md:p-8 rounded-xl">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-3">Оценка Самочувствия</h1>
+            <div id="questions-area" class="space-y-8">
+                <!-- Questions will be generated here -->
+            </div>
+            
+            <div id="error-message" class="text-red-500 mt-4 hidden">Пожалуйста, ответьте на все обязательные вопросы.</div>
+
+            <button id="submit-quiz" 
+                    class="w-full mt-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150 shadow-md shadow-blue-300">
+                Завершить и Получить Результаты
+            </button>
+        </div>
+
+        <!-- Results Card (Hidden by default) -->
+        <div id="results-container" class="quiz-card bg-white p-6 md:p-8 rounded-xl hidden">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b pb-2">Ваши Результаты</h1>
+            
+            <div id="global-score-section" class="mb-6 p-4 bg-gray-100 rounded-lg">
+                <p class="text-sm font-medium text-gray-600">Общий Индекс Самочувствия:</p>
+                <p id="final-score" class="text-4xl font-extrabold text-blue-600 mt-1">...</p>
+                <div id="global-recommendation" class="text-lg mt-2 text-gray-700">...</div>
+            </div>
+
+            <div id="specific-recommendations-section">
+                <h2 class="text-xl font-bold text-red-700 mb-3 border-b-2 border-red-100 pb-1">Обнаруженные Проблемные Области</h2>
+                <ul id="recommendations-list" class="space-y-3">
+                    <!-- Specific recommendations will be generated here -->
+                </ul>
+                <p id="no-problems" class="text-green-600 font-medium hidden">Отлично! Специфических проблемных областей не обнаружено.</p>
+            </div>
+
+            <button id="reset-quiz" 
+                    class="w-full mt-8 py-2 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 transition duration-150">
+                Начать Снова
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Hidden Template Area for Recommendations Content (New structure) -->
+    <div id="template-area" class="hidden">
+        
+        <!-- === GLOBAL RECOMMENDATION TEMPLATES === -->
+        
+        <div id="global-rec-high">
+            <h3 class="text-lg font-semibold mb-2">1--9 баллов: Базовый уровень гармонии.</h3>
+            <p class="text-base font-medium">Организм в целом справляется, достаточно профилактических шагов и лёгкой поддержки.</p>
+        </div>
+
+        <div id="global-rec-medium">
+            <h3 class="text-lg font-semibold mb-2">10--20 баллов: Необходим первый шаг.</h3>
+            <p class="text-base font-medium">Организм сигналит о перегрузке. Рекомендуется пройти Сoral Detox-Plus.</p>
+        </div>
+        
+        <div id="global-rec-low">
+            <h3 class="text-lg font-semibold mb-2">21--40 баллов: Необходима полная программа.</h3>
+            <p class="text-base font-medium">Организм прямо просит о комплексной заботе. Лучший вариант — пройти всю Концепцию здоровья 2.0 последовательно для восстановления баланса и энергии .</p>
+        </div>
+
+        <!-- === SPECIFIC RECOMMENDATION TEMPLATES === -->
+
+        <div id="rec-SLEEP_HYGIENE">
+            <strong class="text-lg text-red-700">Гигиена сна:</strong>
+            <p class="mt-1">Для улучшения качества сна:</p>
+            <ul class="list-disc ml-6 mt-1 text-sm">
+                <li>Соблюдайте строгий режим, ложась и вставая в одно и то же время.</li>
+                <li>Исключите использование гаджетов за час до сна.</li>
+            </ul>
+        </div>
+        
+        <div id="rec-STRESS_REDUCTION">
+            <strong class="text-lg text-red-700">Снижение стресса:</strong>
+            <p class="mt-1">Для управления тревожностью:</p>
+            <ul class="list-disc ml-6 mt-1 text-sm">
+                <li>Рекомендуем освоить техники глубокого дыхания или медитацию.</li>
+                <li>Выделяйте 15 минут в день на полное расслабление.</li>
+            </ul>
+        </div>
+
+        <div id="rec-CAFFEINE_LIMIT">
+            <strong class="text-lg text-red-700">Ограничение кофеина:</strong>
+            <p class="mt-1">Избыток кофеина влияет на сон и нервную систему:</p>
+            <ul class="list-disc ml-6 mt-1 text-sm">
+                <li>Попробуйте заменить послеобеденный кофе травяным чаем.</li>
+                <li>Установите лимит на 2 чашки в день.</li>
+            </ul>
+        </div>
+
+        <div id="rec-SUGAR_REDUCTION">
+            <strong class="text-lg text-red-700">Ограничение сахара:</strong>
+            <p class="mt-1">Газированные напитки содержат много скрытого сахара:</p>
+            <ul class="list-disc ml-6 mt-1 text-sm">
+                <li>Постепенно заменяйте их на чистую воду или воду с лимоном.</li>
+                <li>Изучите этикетки продуктов на предмет скрытого сахара.</li>
+            </ul>
+        </div>
+
+        <div id="rec-DIET_BALANCE">
+            <strong class="text-lg text-red-700">Сбалансированное питание:</strong>
+            <p class="mt-1">Для улучшения пищеварения и здоровья:</p>
+            <ul class="list-disc ml-6 mt-1 text-sm">
+                <li>Увеличьте долю свежих овощей и фруктов в ежедневном рационе.</li>
+                <li>Следите за регулярным потреблением клетчатки.</li>
+            </ul>
+        </div>
+
+        <div id="rec-STOMACH_HEALTH">
+            <strong class="text-lg text-red-700">Пищеварение:</strong>
+            <p class="mt-1">Кишечник -- второй мозг:</p>
+            <ul class="list-disc ml-6 mt-1 text-sm">
+                <li>Старайтесь выпивать не менее 8 стаканов воды в день.</li>
+                <li>Ассимилятор и суперфлора</li>
+            </ul>
+
+    </div>
+
+    <script>
+        // === 1. QUIZ DATA ===
+        // The main quiz structure
+        const quizData = [
+            {
+                id: 'q1',
+                questionText: 'Чувствуете ли вы, что у вас не хватает энергии в течение дня?',
+                type: 'single', // Single choice (radio)
+                category: 'SLEEP',
+                answers: [
+                    { text: 'Никогда', value: 0, recommendationTag: null },
+                    { text: 'Редко', value: 1, recommendationTag: null },
+                    { text: 'Часто', value: 2, recommendationTag: 'SLEEP_HYGIENE' },
+                    { text: 'Постоянно', value: 3, recommendationTag: 'SLEEP_HYGIENE' },
+                ]
+            },
+            {
+                id: 'q2',
+                questionText: 'Как часто Вы сталкиваетесь с трудностями пробуждения утром?',
+                type: 'single',
+                category: 'MENTAL',
+                answers: [
+                    { text: 'Никогда', value: 0, recommendationTag: null },
+                    { text: 'Редко', value: 1, recommendationTag: null },
+                    { text: 'Часто', value: 2, recommendationTag: 'SLEEP_HYGIENE' },
+                    { text: 'Постоянно', value: 3, recommendationTag: 'SLEEP_HYGIENE' },
+                ]
+            },
+            {
+                id: 'q3',
+                questionText: 'Есть ли ощущение, что вы не полностью восстанавливаетеcь даже после отдыха?',
+                type: 'single',
+                category: 'MENTAL',
+                answers: [
+                    { text: 'Никогда', value: 0, recommendationTag: null },
+                    { text: 'Редко', value: 1, recommendationTag: null },
+                    { text: 'Часто', value: 2, recommendationTag: 'SLEEP_HYGIENE' },
+                    { text: 'Постоянно', value: 3, recommendationTag: 'SLEEP_HYGIENE' },
+                ]
+            },
+            {
+                id: 'q4',
+                questionText: 'Как часто после приёма пищи вы чувствуете внутренний дискомфорт??',
+                type: 'single',
+                category: 'MENTAL',
+                answers: [
+                    { text: 'Никогда', value: 0, recommendationTag: null },
+                    { text: 'Редко', value: 1, recommendationTag: null },
+                    { text: 'Часто', value: 2, recommendationTag: 'STOMACH_HEALTH' },
+                    { text: 'Постоянно', value: 3, recommendationTag: 'STOMACH_HEALTH' },
+                ]
+            },
+            {
+                id: 'q5',
+                questionText: 'Бывает ли, что уровень вашей концентрации или ясности ума снижен?',
+                type: 'single',
+                category: 'MENTAL',
+                answers: [
+                    { text: 'Никогда', value: 0, recommendationTag: null },
+                    { text: 'Редко', value: 1, recommendationTag: null },
+                    { text: 'Часто', value: 2, recommendationTag: null },
+                    { text: 'Постоянно', value: 3, recommendationTag: null },
+                ]
+            },
+            {
+                id: 'q6',
+                questionText: 'Как часто в течение недели вы ощущаете неустойчивое эмоциональное состояние?',
+                type: 'single',
+                category: 'MENTAL',
+                answers: [
+                    { text: 'Никогда', value: 0, recommendationTag: null },
+                    { text: 'Редко', value: 1, recommendationTag: null },
+                    { text: 'Часто', value: 2, recommendationTag: null },
+                    { text: 'Постоянно', value: 3, recommendationTag: null },
+                ]
+            },
+            {
+                id: 'q7',
+                questionText: 'Как часто вы чувствуете напряжение в теле?',
+                type: 'single',
+                category: 'MENTAL',
+                answers: [
+                    { text: 'Никогда', value: 0, recommendationTag: null },
+                    { text: 'Редко', value: 1, recommendationTag: null },
+                    { text: 'Часто', value: 2, recommendationTag: null },
+                    { text: 'Постоянно', value: 3, recommendationTag: null },
+                ]
+            },
+            {
+                id: 'q8',
+                questionText: 'Насколько часто вы ощущаете себя дискомфортно в своём теле?',
+                type: 'single',
+                category: 'MENTAL',
+                answers: [
+                    { text: 'Никогда', value: 0, recommendationTag: null },
+                    { text: 'Редко', value: 1, recommendationTag: null },
+                    { text: 'Часто', value: 2, recommendationTag: null },
+                    { text: 'Постоянно', value: 3, recommendationTag: null },
+                ]
+            },
+            {
+                id: 'q9',
+                questionText: 'Бывает ли у вас ощущение, что организму нужна «перезагрузка» или обновление?',
+                type: 'single',
+                category: 'MENTAL',
+                answers: [
+                    { text: 'Никогда', value: 0, recommendationTag: null },
+                    { text: 'Редко', value: 1, recommendationTag: null },
+                    { text: 'Часто', value: 2, recommendationTag: null },
+                    { text: 'Постоянно', value: 3, recommendationTag: null },
+                ]
+            },
+            {
+                id: 'q10',
+                questionText: 'Сколько воды вы выпиваете за день?',
+                type: 'single',
+                category: 'MENTAL',
+                answers: [
+                    { text: 'Никогда', value: 0, recommendationTag: null },
+                    { text: 'Редко', value: 1, recommendationTag: null },
+                    { text: 'Часто', value: 2, recommendationTag: null },
+                    { text: 'Постоянно', value: 3, recommendationTag: null },
+                ]
+            },
+ 
+        ];
+
+        // Global score configuration, linking score ranges to template IDs
+        const globalScoreConfig = [
+            // Sorted descending by minPercentage
+            {
+                minPercentage: 66,
+                colorClass: 'text-green-600',
+                templateId: 'global-rec-high'
+            },
+            {
+                minPercentage: 33,
+                colorClass: 'text-yellow-600',
+                templateId: 'global-rec-medium'
+            },
+            // Default/Lowest range
+            {
+                minPercentage: 0,
+                colorClass: 'text-red-600',
+                templateId: 'global-rec-low'
+            }
+        ];
+
+        // Recommendation map, linking problem tags to template IDs
+        const recommendationMap = {
+            'SLEEP_HYGIENE': 'rec-SLEEP_HYGIENE',
+            'STRESS_REDUCTION': 'rec-STRESS_REDUCTION',
+            'CAFFEINE_LIMIT': 'rec-CAFFEINE_LIMIT',
+            'SUGAR_REDUCTION': 'rec-SUGAR_REDUCTION',
+            'DIET_BALANCE': 'rec-DIET_BALANCE',
+            'HYDRATION': 'rec-HYDRATION',
+            'STOMACH_HEALTH': 'rec-STOMACH_HEALTH',
+        };
+
+        // === 2. ELEMENT REFERENCES ===
+        const questionsArea = document.getElementById('questions-area');
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const submitButton = document.getElementById('submit-quiz');
+        const resetButton = document.getElementById('reset-quiz');
+        const errorMessage = document.getElementById('error-message');
+        const finalScoreDisplay = document.getElementById('final-score');
+        const globalRecommendationDisplay = document.getElementById('global-recommendation');
+        const recommendationsList = document.getElementById('recommendations-list');
+        const noProblemsMessage = document.getElementById('no-problems');
+        const templateArea = document.getElementById('template-area');
+
+
+        // === 3. RENDERING FUNCTIONS ===
+
+        // Function to render all quiz questions
+        function renderQuiz() {
+            questionsArea.innerHTML = '';
+            quizData.forEach(q => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-block p-4 bg-gray-50 rounded-lg border border-gray-200';
+                questionElement.id = q.id;
+                
+                const title = `<h3 class="text-lg font-semibold text-gray-800 mb-3">${q.questionText}</h3>`;
+                let answersHtml = '';
+                
+                q.answers.forEach((a) => {
+                    const inputType = q.type === 'single' ? 'radio' : 'checkbox';
+                    // We use q.id for the name attribute for both types to facilitate querying
+                    
+                    answersHtml += `
+                        <label class="answer-option block mb-2">
+                            <input type="${inputType}" name="${q.id}" data-points="${a.value}" ${a.recommendationTag ? `data-tag="${a.recommendationTag}"` : ''} class="hidden">
+                            <div class="answer-label p-3 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">
+                                ${a.text}
+                            </div>
+                        </label>
+                    `;
+                });
+
+                questionElement.innerHTML = title + answersHtml;
+                questionsArea.appendChild(questionElement);
+            });
+        }
+
+        // === 4. LOGIC FUNCTIONS ===
+
+        // Validates that all questions have at least one answer selected
+        function validateQuiz() {
+            let isValid = true;
+            quizData.forEach(q => {
+                // Check if any element with the question's name is checked
+                const selected = document.querySelectorAll(`input[name="${q.id}"]:checked`);
+                const questionBlock = document.getElementById(q.id);
+                
+                if (selected.length === 0) {
+                    isValid = false;
+                    questionBlock.classList.add('border-red-400', 'border-2'); // Highlight problem block
+                } else {
+                    questionBlock.classList.remove('border-red-400', 'border-2');
+                }
+            });
+            return isValid;
+        }
+
+        // Calculates total score, max possible score, and collects unique problem tags
+        function calculateResults() {
+            let totalScore = 0;
+            const uniqueRecommendations = new Set();
+            let maxPossibleScore = 0;
+
+            quizData.forEach(q => {
+                let questionMaxScore = 0;
+
+                // Calculate max possible score for the question
+                if (q.type === 'single') {
+                    // For single-select, max score is the maximum value among all answers
+                    q.answers.forEach(a => { questionMaxScore = Math.max(questionMaxScore, a.value); });
+                } else if (q.type === 'multi') {
+                    // For multi-select, max score is the sum of all positive values (assuming they are additive)
+                    q.answers.forEach(a => { questionMaxScore += a.value > 0 ? a.value : 0; });
+                }
+
+                maxPossibleScore += questionMaxScore;
+
+                // Sum selected answers and collect tags
+                const selectedAnswers = document.querySelectorAll(`input[name="${q.id}"]:checked`);
+                
+                selectedAnswers.forEach(input => {
+                    const points = parseInt(input.getAttribute('data-points'), 10);
+                    totalScore += points;
+
+                    const tag = input.getAttribute('data-tag');
+                    if (tag) {
+                        uniqueRecommendations.add(tag);
+                    }
+                });
+            });
+
+            return { totalScore, maxPossibleScore, recommendations: Array.from(uniqueRecommendations) };
+        }
+
+        // Displays the calculated results on the screen
+        function displayResults(results) {
+            quizContainer.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+
+            const scorePercentage = (results.totalScore / results.maxPossibleScore) * 100;
+
+            // 1. Global Recommendation Logic (using globalScoreConfig)
+            const globalRecConfig = globalScoreConfig.find(config => scorePercentage >= config.minPercentage);
+
+            // Clean up existing colors on final score display
+            finalScoreDisplay.classList.remove('text-green-600', 'text-yellow-600', 'text-red-600', 'text-gray-600');
+            
+            if (globalRecConfig) {
+                finalScoreDisplay.classList.add(globalRecConfig.colorClass);
+                
+                // Get HTML content from the hidden template area
+                const templateElement = document.getElementById(globalRecConfig.templateId);
+                globalRecommendationDisplay.innerHTML = templateElement ? templateElement.innerHTML : 'Template error.';
+            } else {
+                // Should not happen if minPercentage is 0
+                finalScoreDisplay.classList.add('text-gray-600');
+                globalRecommendationDisplay.textContent = 'Calculation error.';
+            }
+
+            finalScoreDisplay.textContent = `${results.totalScore} / ${results.maxPossibleScore} (${scorePercentage.toFixed(0)}%)`;
+
+
+            // 2. Display Specific Recommendations
+            recommendationsList.innerHTML = '';
+            
+            if (results.recommendations.length > 0) {
+                noProblemsMessage.classList.add('hidden');
+                
+                results.recommendations.forEach(tag => {
+                    const templateId = recommendationMap[tag];
+                    const recElement = document.getElementById(templateId);
+
+                    const listItem = document.createElement('li');
+                    listItem.className = 'p-3 bg-red-50 border-l-4 border-red-500 rounded-lg text-gray-700';
+
+                    if (recElement) {
+                        listItem.innerHTML = recElement.innerHTML; // Use innerHTML to render formatted HTML
+                    } else {
+                        listItem.textContent = 'Unknown recommendation tag: ' + tag;
+                    }
+                    recommendationsList.appendChild(listItem);
+                });
+            } else {
+                noProblemsMessage.classList.remove('hidden');
+            }
+        }
+
+        // === 5. EVENT HANDLERS ===
+
+        // Quiz submission handler
+        submitButton.addEventListener('click', () => {
+            if (validateQuiz()) {
+                errorMessage.classList.add('hidden');
+                const results = calculateResults();
+                displayResults(results);
+            } else {
+                errorMessage.classList.remove('hidden');
+                // Scroll to the first unanswered question
+                const firstInvalid = document.querySelector('.question-block.border-red-400');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+
+        // Quiz reset handler
+        resetButton.addEventListener('click', () => {
+            resultsContainer.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            // Simple way to reset state
+            window.location.reload(); 
+        });
+        
+        // Initialization on window load
+        window.onload = renderQuiz;
+
+    </script>
+</body>
+</html>
