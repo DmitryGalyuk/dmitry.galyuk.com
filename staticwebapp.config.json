@@ -1,9 +1,5 @@
 {
   "routes": [
-  {
-      "route": "/school/*",
-      "rewrite": "/school.html"
-    },
     {
       "route": "/en",
       "rewrite": "/index.html"
