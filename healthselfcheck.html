@@ -81,7 +81,7 @@
         <!-- === GLOBAL RECOMMENDATION TEMPLATES === -->
         
         <div id="global-rec-high">
-            <h3 class="text-lg font-semibold mb-2">1--9 баллов: Базовый уровень гармонии.</h3>
+            <h3 class="text-lg font-semibold mb-2">21+ баллов: Базовый уровень гармонии.</h3>
             <p class="text-base font-medium">Организм в целом справляется, достаточно профилактических шагов и лёгкой поддержки.</p>
         </div>
 
@@ -91,7 +91,7 @@
         </div>
         
         <div id="global-rec-low">
-            <h3 class="text-lg font-semibold mb-2">21--40 баллов: Необходима полная программа.</h3>
+            <h3 class="text-lg font-semibold mb-2">0--9 баллов: Необходима полная программа.</h3>
             <p class="text-base font-medium">Организм прямо просит о комплексной заботе. Лучший вариант — пройти всю Концепцию здоровья 2.0 последовательно для восстановления баланса и энергии .</p>
         </div>
 
@@ -157,15 +157,21 @@
         // The main quiz structure
         const quizData = [
             {
+                id: 'q0',
+                questionText: 'Ваше имя',
+                type: 'text',
+                answers: []
+            },
+            {
                 id: 'q1',
                 questionText: 'Чувствуете ли вы, что у вас не хватает энергии в течение дня?',
                 type: 'single', // Single choice (radio)
                 category: 'SLEEP',
                 answers: [
-                    { text: 'Никогда', value: 0, recommendationTag: null },
-                    { text: 'Редко', value: 1, recommendationTag: null },
-                    { text: 'Часто', value: 2, recommendationTag: 'SLEEP_HYGIENE' },
-                    { text: 'Постоянно', value: 3, recommendationTag: 'SLEEP_HYGIENE' },
+                    { text: 'Никогда', value: 3, recommendationTag: null },
+                    { text: 'Редко', value: 2, recommendationTag: null },
+                    { text: 'Часто', value: 1, recommendationTag: 'SLEEP_HYGIENE' },
+                    { text: 'Постоянно', value: 0, recommendationTag: 'SLEEP_HYGIENE' },
                 ]
             },
             {
@@ -174,10 +180,10 @@
                 type: 'single',
                 category: 'MENTAL',
                 answers: [
-                    { text: 'Никогда', value: 0, recommendationTag: null },
-                    { text: 'Редко', value: 1, recommendationTag: null },
-                    { text: 'Часто', value: 2, recommendationTag: 'SLEEP_HYGIENE' },
-                    { text: 'Постоянно', value: 3, recommendationTag: 'SLEEP_HYGIENE' },
+                    { text: 'Никогда', value: 3, recommendationTag: null },
+                    { text: 'Редко', value: 2, recommendationTag: null },
+                    { text: 'Часто', value: 1, recommendationTag: 'SLEEP_HYGIENE' },
+                    { text: 'Постоянно', value: 0, recommendationTag: 'SLEEP_HYGIENE' },
                 ]
             },
             {
@@ -186,10 +192,10 @@
                 type: 'single',
                 category: 'MENTAL',
                 answers: [
-                    { text: 'Никогда', value: 0, recommendationTag: null },
-                    { text: 'Редко', value: 1, recommendationTag: null },
-                    { text: 'Часто', value: 2, recommendationTag: 'SLEEP_HYGIENE' },
-                    { text: 'Постоянно', value: 3, recommendationTag: 'SLEEP_HYGIENE' },
+                    { text: 'Никогда', value: 3, recommendationTag: null },
+                    { text: 'Редко', value: 2, recommendationTag: null },
+                    { text: 'Часто', value: 1, recommendationTag: 'SLEEP_HYGIENE' },
+                    { text: 'Постоянно', value: 0, recommendationTag: 'SLEEP_HYGIENE' },
                 ]
             },
             {
@@ -198,10 +204,10 @@
                 type: 'single',
                 category: 'MENTAL',
                 answers: [
-                    { text: 'Никогда', value: 0, recommendationTag: null },
-                    { text: 'Редко', value: 1, recommendationTag: null },
-                    { text: 'Часто', value: 2, recommendationTag: 'STOMACH_HEALTH' },
-                    { text: 'Постоянно', value: 3, recommendationTag: 'STOMACH_HEALTH' },
+                    { text: 'Никогда', value: 3, recommendationTag: null },
+                    { text: 'Редко', value: 2, recommendationTag: null },
+                    { text: 'Часто', value: 1, recommendationTag: 'STOMACH_HEALTH' },
+                    { text: 'Постоянно', value: 0, recommendationTag: 'STOMACH_HEALTH' },
                 ]
             },
             {
@@ -210,10 +216,10 @@
                 type: 'single',
                 category: 'MENTAL',
                 answers: [
-                    { text: 'Никогда', value: 0, recommendationTag: null },
-                    { text: 'Редко', value: 1, recommendationTag: null },
-                    { text: 'Часто', value: 2, recommendationTag: null },
-                    { text: 'Постоянно', value: 3, recommendationTag: null },
+                    { text: 'Никогда', value: 3, recommendationTag: null },
+                    { text: 'Редко', value: 2, recommendationTag: null },
+                    { text: 'Часто', value: 1, recommendationTag: null },
+                    { text: 'Постоянно', value: 0, recommendationTag: null },
                 ]
             },
             {
@@ -222,10 +228,10 @@
                 type: 'single',
                 category: 'MENTAL',
                 answers: [
-                    { text: 'Никогда', value: 0, recommendationTag: null },
-                    { text: 'Редко', value: 1, recommendationTag: null },
-                    { text: 'Часто', value: 2, recommendationTag: null },
-                    { text: 'Постоянно', value: 3, recommendationTag: null },
+                    { text: 'Никогда', value: 3, recommendationTag: null },
+                    { text: 'Редко', value: 2, recommendationTag: null },
+                    { text: 'Часто', value: 1, recommendationTag: null },
+                    { text: 'Постоянно', value: 0, recommendationTag: null },
                 ]
             },
             {
@@ -234,10 +240,10 @@
                 type: 'single',
                 category: 'MENTAL',
                 answers: [
-                    { text: 'Никогда', value: 0, recommendationTag: null },
-                    { text: 'Редко', value: 1, recommendationTag: null },
-                    { text: 'Часто', value: 2, recommendationTag: null },
-                    { text: 'Постоянно', value: 3, recommendationTag: null },
+                    { text: 'Никогда', value: 3, recommendationTag: null },
+                    { text: 'Редко', value: 2, recommendationTag: null },
+                    { text: 'Часто', value: 1, recommendationTag: null },
+                    { text: 'Постоянно', value: 0, recommendationTag: null },
                 ]
             },
             {
@@ -246,10 +252,10 @@
                 type: 'single',
                 category: 'MENTAL',
                 answers: [
-                    { text: 'Никогда', value: 0, recommendationTag: null },
-                    { text: 'Редко', value: 1, recommendationTag: null },
-                    { text: 'Часто', value: 2, recommendationTag: null },
-                    { text: 'Постоянно', value: 3, recommendationTag: null },
+                    { text: 'Никогда', value: 3, recommendationTag: null },
+                    { text: 'Редко', value: 2, recommendationTag: null },
+                    { text: 'Часто', value: 1, recommendationTag: null },
+                    { text: 'Постоянно', value: 0, recommendationTag: null },
                 ]
             },
             {
@@ -258,10 +264,10 @@
                 type: 'single',
                 category: 'MENTAL',
                 answers: [
-                    { text: 'Никогда', value: 0, recommendationTag: null },
-                    { text: 'Редко', value: 1, recommendationTag: null },
-                    { text: 'Часто', value: 2, recommendationTag: null },
-                    { text: 'Постоянно', value: 3, recommendationTag: null },
+                    { text: 'Никогда', value: 3, recommendationTag: null },
+                    { text: 'Редко', value: 2, recommendationTag: null },
+                    { text: 'Часто', value: 1, recommendationTag: null },
+                    { text: 'Постоянно', value: 0, recommendationTag: null },
                 ]
             },
             {
@@ -270,10 +276,10 @@
                 type: 'single',
                 category: 'MENTAL',
                 answers: [
-                    { text: 'Никогда', value: 0, recommendationTag: null },
-                    { text: 'Редко', value: 1, recommendationTag: null },
-                    { text: 'Часто', value: 2, recommendationTag: null },
-                    { text: 'Постоянно', value: 3, recommendationTag: null },
+                    { text: 'Никогда', value: 3, recommendationTag: null },
+                    { text: 'Редко', value: 2, recommendationTag: null },
+                    { text: 'Часто', value: 1, recommendationTag: null },
+                    { text: 'Постоянно', value: 0, recommendationTag: null },
                 ]
             },
  
@@ -321,7 +327,7 @@
         const finalScoreDisplay = document.getElementById('final-score');
         const globalRecommendationDisplay = document.getElementById('global-recommendation');
         const recommendationsList = document.getElementById('recommendations-list');
-        const noProblemsMessage = document.getElementById('no-problems');
+        const suggestionsContainer = document.getElementById('specific-recommendations-section');
         const templateArea = document.getElementById('template-area');
 
 
@@ -329,6 +335,11 @@
 
         // Function to render all quiz questions
         function renderQuiz() {
+            const questionType2inputType = {
+                'single': 'radio',
+                'multi': 'checkbox',
+                'text': 'text'
+            };
             questionsArea.innerHTML = '';
             quizData.forEach(q => {
                 const questionElement = document.createElement('div');
@@ -338,19 +349,26 @@
                 const title = `<h3 class="text-lg font-semibold text-gray-800 mb-3">${q.questionText}</h3>`;
                 let answersHtml = '';
                 
-                q.answers.forEach((a) => {
-                    const inputType = q.type === 'single' ? 'radio' : 'checkbox';
-                    // We use q.id for the name attribute for both types to facilitate querying
-                    
+                if (q.type == 'text') {
                     answersHtml += `
-                        <label class="answer-option block mb-2">
-                            <input type="${inputType}" name="${q.id}" data-points="${a.value}" ${a.recommendationTag ? `data-tag="${a.recommendationTag}"` : ''} class="hidden">
-                            <div class="answer-label p-3 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">
-                                ${a.text}
-                            </div>
-                        </label>
+                        <input type="${questionType2inputType[q.type]}" name="${q.id}" class="w-full p-3 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100" placeholder="Введите ваш ответ здесь">
                     `;
-                });
+                } else if (q.type == 'single' || q.type == 'multi'){
+                    q.answers.forEach((a) => {
+                        const inputType = questionType2inputType[q.type] || 'text';
+                        // We use q.id for the name attribute for both types to facilitate querying
+
+                    answersHtml += `
+                            <label class="answer-option block mb-2">
+                                <input type="${inputType}" name="${q.id}" data-points="${a.value}" ${a.recommendationTag ? `data-tag="${a.recommendationTag}"` : ''} class="hidden">
+                                <div class="answer-label p-3 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">
+                                    ${a.text}
+                                </div>
+                            </label>
+                        `;
+                    }
+                );
+                }
 
                 questionElement.innerHTML = title + answersHtml;
                 questionsArea.appendChild(questionElement);
@@ -363,15 +381,30 @@
         function validateQuiz() {
             let isValid = true;
             quizData.forEach(q => {
-                // Check if any element with the question's name is checked
-                const selected = document.querySelectorAll(`input[name="${q.id}"]:checked`);
-                const questionBlock = document.getElementById(q.id);
-                
-                if (selected.length === 0) {
-                    isValid = false;
-                    questionBlock.classList.add('border-red-400', 'border-2'); // Highlight problem block
-                } else {
-                    questionBlock.classList.remove('border-red-400', 'border-2');
+                switch (q.type) {
+                    case 'text': 
+                        const textInput = document.querySelector(`input[name="${q.id}"]`);
+                        if (!textInput.value.trim()) {
+                            isValid = false;
+                            textInput.classList.add('border-red-400', 'border-2'); // Highlight problem input
+                        } else {
+                            textInput.classList.remove('border-red-400', 'border-2');
+                        }
+                        break;
+                    case 'single':
+                    case 'multi':
+                        // Check if any element with the question's name is checked
+                        const selected = document.querySelectorAll(`input[name="${q.id}"]:checked`);
+                        const questionBlock = document.getElementById(q.id);
+                        
+                        if (selected.length === 0) {
+                            isValid = false;
+                            questionBlock.classList.add('border-red-400', 'border-2'); // Highlight problem block
+                        } else {
+                            questionBlock.classList.remove('border-red-400', 'border-2');
+                        }
+                        break;
+
                 }
             });
             return isValid;
@@ -446,7 +479,7 @@
             recommendationsList.innerHTML = '';
             
             if (results.recommendations.length > 0) {
-                noProblemsMessage.classList.add('hidden');
+                suggestionsContainer.classList.remove('hidden');
                 
                 results.recommendations.forEach(tag => {
                     const templateId = recommendationMap[tag];
@@ -463,7 +496,7 @@
                     recommendationsList.appendChild(listItem);
                 });
             } else {
-                noProblemsMessage.classList.remove('hidden');
+                suggestionsContainer.classList.add('hidden');
             }
         }
 
