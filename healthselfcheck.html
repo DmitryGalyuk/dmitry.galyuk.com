@@ -89,7 +89,7 @@
                     не обнаружено.</p>
             </div>
 
-            <!-- New Sharing Buttons -->
+            <!-- New Sharing Buttons (Print button removed) -->
             <div class="mt-8 pt-4 border-t border-gray-200 print-hidden">
                 <div id="share-status" class="text-sm text-center mb-3 text-green-600 hidden"></div>
 
@@ -103,17 +103,6 @@
                         <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" />
                     </svg>
                     Скопировать текст
-                </button>
-
-                <button id="print-results"
-                    class="w-full mb-4 py-3 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-800 transition duration-150 shadow-md shadow-gray-300 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M5 4v2H3V4a2 2 0 012-2h10a2 2 0 012 2v2h-2V4H5zm10 4H5v7a2 2 0 002 2h6a2 2 0 002-2V8zm-5 4a1 1 0 100-2 1 1 0 000 2z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    Печать / Сохранить в PDF
                 </button>
             </div>
 
@@ -427,7 +416,7 @@
         
         // New element references for sharing
         const copyResultsButton = document.getElementById('copy-results');
-        const printResultsButton = document.getElementById('print-results');
+        // printResultsButton - REMOVED
         const shareStatus = document.getElementById('share-status');
 
         // Global variable to store raw answers after submission for use in sharing
@@ -796,19 +785,19 @@
                 if (successful) {
                     showShareStatus('Результаты скопированы в буфер обмена! Просто вставьте их в мессенджер.');
                 } else {
-                    showShareStatus('Ошибка копирования. Попробуйте "Печать в PDF".', true);
+                    // Updated error message as PDF print is removed
+                    showShareStatus('Ошибка копирования. Используйте сочетание клавиш Ctrl+C / Cmd+C.', true);
                 }
             } catch (err) {
                 console.error('Fallback: Copy command failed', err);
-                showShareStatus('Ошибка копирования. Попробуйте "Печать в PDF".', true);
+                // Updated error message as PDF print is removed
+                showShareStatus('Ошибка копирования. Используйте сочетание клавиш Ctrl+C / Cmd+C.', true);
             }
             document.body.removeChild(tempTextArea);
         }
 
-        // Triggers the browser's native print dialog
-        function printResults() {
-            window.print();
-        }
+        // printResults() function REMOVED
+
 
         // Display temporary success/error messages after sharing attempts
         function showShareStatus(message, isError = false) {
@@ -852,8 +841,7 @@
         // Copy Results Handler
         copyResultsButton.addEventListener('click', copyResultsToClipboard);
 
-        // Print Results Handler
-        printResultsButton.addEventListener('click', printResults);
+        // Print Results Handler REMOVED
 
 
         // Quiz reset handler
