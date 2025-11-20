@@ -811,6 +811,9 @@
                 // 3. Display results to user (Client side)
                 displayResults(results);
 
+                // scroll to top of results
+                resultsContainer.scrollIntoView({ behavior: 'smooth' });
+
             } else {
                 errorMessage.classList.remove('hidden');
                 // Scroll to the first unanswered question
