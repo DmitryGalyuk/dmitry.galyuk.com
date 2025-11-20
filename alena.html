@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ru">
+<!-- 
+собрать
+дату рождения
+телеграм для обратной связи
+
+сообщение
+Насчёт по если вы заинтересованы в там в дисконте на продуктах которые упомянуты в рекомендациях зарегистрируйтесь по такой-то ссылке и мы даем твою ссылку а по вопросам связанным с цифровой психологии с рекомендациями основанные на дате вашего рождения я с вами свяжусь по телеграмму который вы оставили в-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивный Опросник</title>
+    <!-- Tailwind CSS link for modern, responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Font and background settings */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+
+        /* Custom styles for centering and shadow */
+        .quiz-card {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 5px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .answer-option {
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+        }
+
+        .answer-option:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Style for selected answers (checkbox/radio logic) */
+        input:checked+.answer-label {
+            border-color: #3b82f6;
+            /* border-blue-500 */
+            background-color: #eff6ff;
+            /* bg-blue-50 */
+        }
+        a.recommendationsection {
+            color: #2563eb;
+            /* text-blue-600 */
+            text-decoration: underline;
+        }
+        p.recommendationsection {
+            margin-top: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+    </style>
+    <script src="google-analytics.js"></script>
+</head>
+
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- Main application container -->
+    <div id="app-container" class="w-full max-w-xl">
+
+        <!-- Quiz Card -->
+        <div id="quiz-container" class="quiz-card bg-white p-6 md:p-8 rounded-xl">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-3">Оценка Самочувствия</h1>
+            <div id="questions-area" class="space-y-8">
+                <!-- Questions will be generated here -->
+            </div>
+
+            <div id="error-message" class="text-red-500 mt-4 hidden">Пожалуйста, ответьте на все обязательные вопросы.
+            </div>
+
+            <button id="submit-quiz"
+                class="w-full mt-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150 shadow-md shadow-blue-300">
+                Завершить и Получить Результаты
+            </button>
+        </div>
+
+        <!-- Results Card (Hidden by default) -->
+        <div id="results-container" class="quiz-card bg-white p-6 md:p-8 rounded-xl hidden">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b pb-2">Ваши Результаты</h1>
+
+            <div id="global-score-section" class="mb-6 p-4 bg-gray-100 rounded-lg">
+                <p class="text-sm font-medium text-gray-600">Общий Индекс Самочувствия:</p>
+                <p id="final-score" class="text-4xl font-extrabold text-blue-600 mt-1">...</p>
+                <div id="global-recommendation" class="text-lg mt-2 text-gray-700">...</div>
+            </div>
+
+            <!-- Section for Detailed Answers -->
+            <div id="detailed-answers-section" class="mb-8" style="display: none;">
+                <h2 class="text-xl font-bold text-gray-800 mb-3 border-b-2 border-gray-200 pb-1">Подробные Ответы</h2>
+                <ul id="answers-list" class="space-y-4 text-gray-700 text-sm">
+                    <!-- Detailed answers will be generated here -->
+                </ul>
+            </div>
+
+            <div id="specific-recommendations-section">
+                <h2 class="text-xl font-bold text-red-700 mb-3 border-b-2 border-red-100 pb-1">Обнаруженные Проблемные
+                    Области</h2>
+                <ul id="recommendations-list" class="space-y-3">
+                    <!-- Specific recommendations will be generated here -->
+                </ul>
+                <p id="no-problems-message" class="text-green-600 font-medium hidden">Отлично! Специфических проблемных областей не обнаружено.</p>
+            </div>
+
+            <!-- New Sharing Buttons (Print button removed) -->
+            <div class="mt-8 pt-4 border-t border-gray-200 print-hidden recommendationsection>
+                <div id="share-status" class="text-sm text-center mb-3 text-green-600 hidden"></div>
+                <p class="recommendationsection">Что бы получить дисконт 20% на продукты, указынные в рекомендациях, зарегистрируйтесь по <a href="https://coral.club/7688524.html" target="_blank" class="recommendationsection">моей реферальной ссылке</a>.</p>
+                <p class="recommendationsection">Если вы хотите получить персональные рекомендации по здоровью, основанные на дате вашего рождения, скопируйте результаты этого тест кнопкой ниже и напишите мне в личный телеграм: <a href="https://t.me/filatova123" target="_blank" class="recommendationsection">@filatova123</a></p>
+                <p class="text-sm text-gray-600 mb-3 font-medium">Поделиться результатами с консультантом:</p>
+
+                <button id="copy-results"
+                    class="w-full mb-3 py-3 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 transition duration-150 shadow-md shadow-indigo-300 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
+                        <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" />
+                    </svg>
+                    Скопировать текст
+                </button>
+            </div>
+
+            <button id="reset-quiz"
+                class="w-full mt-8 py-2 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 transition duration-150">
+                Начать Снова
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Hidden Template Area for Recommendations Content (New structure) -->
+    <div id="template-area" class="hidden">
+
+        <!-- === GLOBAL RECOMMENDATION TEMPLATES === -->
+        <div id="global-rec-high">
+            <h3 class="text-lg font-semibold mb-2">21+ баллов: Базовый уровень гармонии.</h3>
+            <p class="text-base font-medium">Организм в целом справляется, достаточно профилактических шагов и лёгкой поддержки.</p>
+        </div>
+
+        <div id="global-rec-medium">
+            <h3 class="text-lg font-semibold mb-2">10--20 баллов: Необходим первый шаг.</h3>
+            <p class="text-base font-medium">Организм сигналит о перегрузке. Рекомендуется пройти Сoral Detox-Plus.</p>
+        </div>
+
+        <div id="global-rec-low">
+            <h3 class="text-lg font-semibold mb-2">0--9 баллов: Необходима полная программа.</h3>
+            <p class="text-base font-medium">Организм прямо просит о комплексной заботе. Лучший вариант — пройти всю Концепцию здоровья 2.0 последовательно для восстановления баланса и энергии .</p>
+        </div>
+
+        <!-- === SPECIFIC RECOMMENDATION TEMPLATES === -->
+
+
+        <div id="rec-ENERGY">
+            <strong class="text-lg text-orange-700">Поддержка энергии и мозга:</strong>
+            <p class="mt-1">Для повышения тонуса и концентрации:</p>
+            <ul class="list-disc ml-6 mt-1 text-sm">
+                <li>💊 <b>H-500</b> (Антиоксидант): Помогает бороться со свободными радикалами и повышает выработку клеточной энергии.</li>
+                <li>💊 <b>B-Prime Direct</b> (Витамины группы Б): Необходимы для нормальной работы нервной системы и энергетического обмена.</li>
+                <li>💧 <b>ПентаКан</b>: Поддерживает калиево-натриевый баланс, жизненно важный для клеточной энергии.
+                </li>
+            </ul>
+        </div>
+
+        <div id="rec-SLEEP_STRESS">
+            <strong class="text-lg text-orange-700">Антистресс и здоровый сон:</strong>
+            <p class="mt-1">Для улучшения сна, снижения тревожности и напряжения:</p>
+            <ul class="list-disc ml-6 mt-1 text-sm">
+                <li>💊 <b>Корал Магний</b> (Coral Magnesium): Необходим для расслабления мышц и нервной системы.</li>
+                <li>💊 <b>Гриффония</b> (Griffonia): Источник 5-HTP, предшественника серотонина, помогает улучшить настроение и сон.</li>
+                <li>💊 <b>Вечерняя формула</b> (Evening Formula): Комплекс для естественной регуляции сна.</li>
+            </ul>
+        </div>
+
+        <div id="rec-DIGEST_DISCOMF">
+            <strong class="text-lg text-orange-700">Помощь пищеварению:</strong>
+            <p class="mt-1">При вздутии, тяжести и дискомфорте после еды:</p>
+            <ul class="list-disc ml-6 mt-1 text-sm">
+                <li>💊 <b>Ассимилятор</b> (Assimilator): Комплекс пищеварительных ферментов, который помогает расщеплять пищу и снимать тяжесть.</li>
+                <li>💊 <b>Корал Артишок</b> (Coral Artichoke): Поддерживает печень и отток желчи, улучшая пищеварение.
+                </li>
+            </ul>
+        </div>
+
+        <div id="rec-DIGEST_CONSTIP">
+            <strong class="text-lg text-orange-700">Нормализация стула и микрофлоры:</strong>
+            <p class="mt-1">При проблемах со стулом (запоры):</p>
+            <ul class="list-disc ml-6 mt-1 text-sm">
+                <li>💊 <b>Супер-Флора</b> (Super-Flora): Комплекс пробиотиков и пребиотиков для восстановления здоровой микрофлоры кишечника.</li>
+                <li>💊 <b>Корал Бурдок Рут</b> (Coral Burdock Root): Помогает мягко очищать кишечник и улучшать детоксикационную функцию.</li>
+            </ul>
+        </div>
+
+        <div id="rec-IMMUNITY">
+            <strong class="text-lg text-orange-700">Поддержка иммунитета:</strong>
+            <p class="mt-1">При частых простудах и проблемах с кожей:</p>
+            <ul class="list-disc ml-6 mt-1 text-sm">
+                <li>💊 <b>Кора Муравьиного Дерева</b> (Pau D'Arco): Природный антисептик с противовирусным и противогрибковым действием.</li>
+                <li>💊 <b>Жир печени акулы</b> (Shark Liver Oil): Источник алкилглицеролов, стимулирующих иммунную систему.</li>
+                <li>💧 <b>Коллоидное Серебро</b> (Silver-Max): Мощное средство для борьбы с патогенами.</li>
+            </ul>
+        </div>
+
+        <div id="rec-WATER_LIFESTYLE">
+            <strong class="text-lg text-orange-700">Водный баланс и движение:</strong>
+            <p class="mt-1">Базовые факторы для общего здоровья:</p>
+            <ul class="list-disc ml-6 mt-1 text-sm">
+                <li>💧 <b>Coral-Mine</b>: Регулярное употребление для улучшения качества, структуры и минерализации питьевой воды.</li>
+                <li>🏃 <b>Физическая активность</b>: Начните с ежедневных 30-минутных прогулок для стимуляции лимфотока и обмена веществ.</li>
+            </ul>
+        </div>
+
+        <div id="rec-BILIARY">
+            <strong class="text-lg text-orange-700">Поддержка желчеоттока (ЖКТ):</strong>
+            <p class="mt-1">При наличии проблем с желчным пузырем:</p>
+            <ul class="list-disc ml-6 mt-1 text-sm">
+                <li>💊 <b>Корал Лецитин</b> (Coral Lecithin): Необходим для нормального качества желчи и защиты печени.</li>
+                <li>💊 <b>Корал Артишок</b> (Coral Artichoke): Улучшает отток желчи и обладает гепатопротекторным действием.</li>
+            </ul>
+        </div>
+
+        <script>
+            // === 1. QUIZ DATA ===
+            // The main quiz structure
+            const quizData = [
+                // --- БЛОК: ЭНЕРГИЯ, СОН, СТРЕСС ---
+
+                {
+                    id: 'q1',
+                    questionText: 'Чувствуете ли Вы недостаток энергии, усталость или разбитость в течение дня?',
+                    type: 'single',
+                    category: 'ENERGY',
+                    answers: [
+                        { text: 'Никогда или крайне редко', value: 3, recommendationTag: null },
+                        { text: 'Редко (несколько раз в месяц)', value: 2, recommendationTag: null },
+                        { text: 'Иногда (несколько раз в неделю)', value: 1, recommendationTag: 'ENERGY' },
+                        { text: 'Часто (постоянно/почти каждый день)', value: 0, recommendationTag: 'ENERGY' }
+                    ]
+                },
+                {
+                    id: 'q2',
+                    questionText: 'Как часто Вы испытываете трудности с пробуждением или ощущаете, что не восстановились после сна?',
+                    type: 'single',
+                    category: 'SLEEP',
+                    answers: [
+                        { text: 'Никогда или крайне редко', value: 3, recommendationTag: null },
+                        { text: 'Редко (несколько раз в месяц)', value: 2, recommendationTag: null },
+                        { text: 'Иногда (несколько раз в неделю)', value: 1, recommendationTag: 'SLEEP_STRESS' },
+                        { text: 'Часто (постоянно/почти каждый день)', value: 0, recommendationTag: 'SLEEP_STRESS' }
+                    ]
+                },
+                {
+                    id: 'q3',
+                    questionText: 'Как часто Вы ощущаете напряжение в теле, эмоциональную неустойчивость или повышенную тревожность?',
+                    type: 'single',
+                    category: 'STRESS',
+                    answers: [
+                        { text: 'Никогда или крайне редко', value: 3, recommendationTag: null },
+                        { text: 'Редко (несколько раз в месяц)', value: 2, recommendationTag: null },
+                        { text: 'Иногда (несколько раз в неделю)', value: 1, recommendationTag: 'SLEEP_STRESS' },
+                        { text: 'Часто (постоянно/почти каждый день)', value: 0, recommendationTag: 'SLEEP_STRESS' }
+                    ]
+                },
+                // --- БЛОК: ПИЩЕВАРЕНИЕ И ДЕТОКС ---
+                {
+                    id: 'q4',
+                    questionText: 'Как часто после приёма пищи Вы чувствуете дискомфорт, тяжесть, вздутие или изжогу?',
+                    type: 'single',
+                    category: 'DIGESTION',
+                    answers: [
+                        { text: 'Никогда или крайне редко', value: 3, recommendationTag: null },
+                        { text: 'Редко (несколько раз в месяц)', value: 2, recommendationTag: null },
+                        { text: 'Иногда (несколько раз в неделю)', value: 1, recommendationTag: 'DIGEST_DISCOMF' },
+                        { text: 'Часто (постоянно/почти каждый день)', value: 0, recommendationTag: 'DIGEST_DISCOMF' }
+                    ]
+                },
+                {
+                    id: 'q5',
+                    questionText: 'Как часто у Вас случаются проблемы со стулом (запоры - реже 1 раза в день, или диарея)?',
+                    type: 'single',
+                    category: 'DIGESTION',
+                    answers: [
+                        { text: 'Никогда или крайне редко (стул ежедневно)', value: 3, recommendationTag: null },
+                        { text: 'Редко (до 1 раза в неделю)', value: 2, recommendationTag: null },
+                        { text: 'Иногда (2-3 раза в неделю)', value: 1, recommendationTag: 'DIGEST_CONSTIP' },
+                        { text: 'Часто (постоянно/почти каждый день)', value: 0, recommendationTag: 'DIGEST_CONSTIP' }
+                    ]
+                },
+                // --- БЛОК: ИММУНИТЕТ И ВНИМАНИЕ ---
+                {
+                    id: 'q6',
+                    questionText: 'Как часто Вы болеете простудными заболеваниями (чаще 2-3 раз в год) или имеете проблемы с кожей?',
+                    type: 'single',
+                    category: 'IMMUNITY',
+                    answers: [
+                        { text: 'Никогда или крайне редко', value: 3, recommendationTag: null },
+                        { text: 'Редко (1-2 раза в год)', value: 2, recommendationTag: null },
+                        { text: 'Иногда (3-4 раза в год или есть кожные проблемы)', value: 1, recommendationTag: 'IMMUNITY' },
+                        { text: 'Часто (постоянно/почти каждый день)', value: 0, recommendationTag: 'IMMUNITY' }
+                    ]
+                },
+                {
+                    id: 'q7',
+                    questionText: 'Насколько часто Вы отмечаете снижение концентрации внимания или "туман в голове"?',
+                    type: 'single',
+                    category: 'HEAD',
+                    answers: [
+                        { text: 'Никогда или крайне редко', value: 3, recommendationTag: null },
+                        { text: 'Редко (несколько раз в месяц)', value: 2, recommendationTag: null },
+                        { text: 'Иногда (несколько раз в неделю)', value: 1, recommendationTag: 'ENERGY' },
+                        { text: 'Часто (постоянно/почти каждый день)', value: 0, recommendationTag: 'ENERGY' }
+                    ]
+                },
+
+                // --- БЛОК: ФАКТОРЫ РИСКА (Да/Нет) ---
+
+                {
+                    id: 'q8',
+                    questionText: 'Есть ли у Вас проблемы с желчным пузырем (камни, песок, удален или сильный загиб)?',
+                    type: 'single',
+                    category: 'RISK',
+                    answers: [
+                        { text: 'Нет', value: 3, recommendationTag: null },
+                        { text: 'Да', value: 0, recommendationTag: 'BILIARY' } // Даем 0 баллов за наличие проблемы
+                    ]
+                },
+                {
+                    id: 'q9',
+                    questionText: 'Выпиваете ли Вы менее 1,5 литра чистой воды в день?',
+                    type: 'single',
+                    category: 'LIFESTYLE',
+                    answers: [
+                        { text: 'Нет, пью более 1,5 л', value: 3, recommendationTag: null },
+                        { text: 'Да, пью менее 1,5 л', value: 0, recommendationTag: 'WATER_LIFESTYLE' }
+                    ]
+                },
+                {
+                    id: 'q10',
+                    questionText: 'У Вас низкий уровень физической активности (менее 30 мин 3-4 раза в неделю)?',
+                    type: 'single',
+                    category: 'LIFESTYLE',
+                    answers: [
+                        { text: 'Нет, активность достаточная', value: 3, recommendationTag: null },
+                        { text: 'Да, активность низкая', value: 0, recommendationTag: 'WATER_LIFESTYLE' }
+                    ]
+                },
+                {
+                    id: 'qGen1',
+                    questionText: 'Ваше имя: (необязательно)',
+                    type: 'text', // Текстовое поле
+                    category: 'GENERAL',
+                    optional: true
+                },
+                {
+                    id: 'qGen2',
+                    questionText: 'Сколько Вам лет: (необязательно)',
+                    type: 'text', // Числовое поле
+                    category: 'GENERAL',
+                    optional: true
+                },
+                {
+                    id: 'qGenAge',
+                    questionText: 'Дата рождения: (необязательно)',
+                    type: 'text', // Числовое поле
+                    category: 'GENERAL',
+                    optional: true
+                },
+                {
+                    id: 'qGen3',
+                    questionText: 'Ваш вес (кг): (необязательно)',
+                    type: 'text', // Числовое поле
+                    category: 'GENERAL',
+                    optional: true
+                },
+                {
+                    id: 'qGen4',
+                    questionText: 'Какую основную задачу по здоровью Вы хотели бы решить? (необязательно)',
+                    type: 'text', // Текстовое поле
+                    category: 'GENERAL',
+                    optional: true
+                }
+            ];
+
+            // Global score configuration, linking score ranges to template IDs
+            const globalScoreConfig = [
+                // Sorted descending by minPercentage
+                {
+                    minPercentage: 66,
+                    colorClass: 'text-green-600',
+                    templateId: 'global-rec-high'
+                },
+                {
+                    minPercentage: 33,
+                    colorClass: 'text-yellow-600',
+                    templateId: 'global-rec-medium'
+                },
+                // Default/Lowest range
+                {
+                    minPercentage: 0,
+                    colorClass: 'text-red-600',
+                    templateId: 'global-rec-low'
+                }
+            ];
+
+
+            // === 2. ELEMENT REFERENCES ===
+        const questionsArea = document.getElementById('questions-area');
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const submitButton = document.getElementById('submit-quiz');
+        const resetButton = document.getElementById('reset-quiz');
+        const errorMessage = document.getElementById('error-message');
+        const finalScoreDisplay = document.getElementById('final-score');
+        const globalRecommendationDisplay = document.getElementById('global-recommendation');
+        const recommendationsList = document.getElementById('recommendations-list');
+        const suggestionsContainer = document.getElementById('specific-recommendations-section');
+        const templateArea = document.getElementById('template-area');
+        const answersList = document.getElementById('answers-list');
+        const detailedAnswersSection = document.getElementById('detailed-answers-section');
+        const noProblemsMessage = document.getElementById('no-problems-message');
+        
+        // New element references for sharing
+        const copyResultsButton = document.getElementById('copy-results');
+        // printResultsButton - REMOVED
+        const shareStatus = document.getElementById('share-status');
+
+        // Global variable to store raw answers after submission for use in sharing
+        let cachedRawAnswers = [];
+
+        // === 3. RENDERING FUNCTIONS ===
+
+        // Function to render all quiz questions
+        function renderQuiz() {
+            const questionType2inputType = {
+                'single': 'radio',
+                'multi': 'checkbox',
+                'text': 'text'
+            };
+            questionsArea.innerHTML = '';
+            quizData.forEach(q => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-block p-4 bg-gray-50 rounded-lg border border-gray-200';
+                questionElement.id = q.id;
+
+                const title = `<h3 class="text-lg font-semibold text-gray-800 mb-3">${q.questionText}</h3>`;
+                let answersHtml = '';
+
+                if (q.type == 'text') {
+                    answersHtml += `
+                        <input type="${questionType2inputType[q.type]}" name="${q.id}" class="w-full p-3 border border-gray-300 rounded-md text-gray-700 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Введите ваш ответ здесь">
+                    `;
+                } else if (q.type == 'single' || q.type == 'multi') {
+                    q.answers.forEach((a) => {
+                        const inputType = questionType2inputType[q.type] || 'text';
+                        // FIX: ADD data-answer-text attribute to store the selected text
+                        const sanitizedText = a.text.replace(/"/g, '&quot;');
+                        
+                        answersHtml += `
+                            <label class="answer-option block mb-2 cursor-pointer">
+                                <input type="${inputType}" name="${q.id}" data-points="${a.value}" data-answer-text="${sanitizedText}" ${a.recommendationTag ? `data-tag="${a.recommendationTag}"` : ''} class="hidden">
+                                <div class="answer-label p-3 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out">
+                                    ${a.text}
+                                </div>
+                            </label>
+                        `;
+                    });
+                }
+
+                questionElement.innerHTML = title + answersHtml;
+                questionsArea.appendChild(questionElement);
+            });
+            addCustomInputListeners(); 
+        }
+
+        // Helper to add custom listeners for visual styling on select/deselect
+        function addCustomInputListeners() {
+            document.querySelectorAll('.answer-option input[type="radio"], .answer-option input[type="checkbox"]').forEach(input => {
+                const labelDiv = input.closest('label').querySelector('.answer-label');
+
+                const updateStyle = () => {
+                    if (input.checked) {
+                        // Style for checked state
+                        labelDiv.classList.add('bg-indigo-100', 'border-indigo-500', 'ring-2', 'ring-indigo-500');
+                        labelDiv.classList.remove('bg-gray-50', 'border-gray-300');
+                    } else {
+                        // Style for unchecked state
+                        labelDiv.classList.remove('bg-indigo-100', 'border-indigo-500', 'ring-2', 'ring-indigo-500');
+                        labelDiv.classList.add('bg-gray-50', 'border-gray-300');
+                    }
+                };
+
+                // Initial update and on change
+                updateStyle();
+                input.addEventListener('change', updateStyle);
+
+                // For radio buttons, uncheck all others when one is selected
+                if (input.type === 'radio') {
+                    input.addEventListener('change', () => {
+                        if (input.checked) {
+                            document.querySelectorAll(`input[name="${input.name}"][type="radio"]`).forEach(otherInput => {
+                                if (otherInput !== input) {
+                                    otherInput.closest('label').querySelector('.answer-label').classList.remove('bg-indigo-100', 'border-indigo-500', 'ring-2', 'ring-indigo-500');
+                                    otherInput.closest('label').querySelector('.answer-label').classList.add('bg-gray-50', 'border-gray-300');
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+
+        // === 4. LOGIC FUNCTIONS ===
+
+        // Collects all raw answers given by the user for backend submission AND local display
+        function collectRawAnswers() {
+            const rawAnswers = [];
+            quizData.forEach(q => {
+                let answers = [];
+
+                if (q.type === 'text') {
+                    const textInput = document.querySelector(`input[name="${q.id}"][type="text"]`);
+                    const textValue = textInput ? textInput.value.trim() : '';
+
+                    if (textValue) {
+                        // Для текстовых ответов, сам текст является ответом
+                        answers.push({
+                            text: textValue,
+                            points: 0, 
+                            tag: null
+                        });
+                    }
+
+                } else if (q.type === 'single' || q.type === 'multi') {
+                    // Для radio/checkbox ищем выбранные элементы
+                    const selected = document.querySelectorAll(`input[name="${q.id}"]:checked`);
+                    
+                    answers = Array.from(selected).map(input => ({
+                        // Текст ответа берется из data-answer-text
+                        text: input.getAttribute('data-answer-text'), 
+                        points: parseInt(input.getAttribute('data-points'), 10),
+                        tag: input.getAttribute('data-tag') || null
+                    }));
+                }
+                
+                rawAnswers.push({
+                    questionId: q.id,
+                    questionText: q.questionText,
+                    category: q.category,
+                    type: q.type,
+                    optional: !!q.optional,
+                    answers: answers
+                });
+            });
+            return rawAnswers;
+        }
+
+
+        // Validates that all questions have at least one answer selected
+        function validateQuiz() {
+            let isValid = true;
+            quizData.forEach(q => {
+                const questionBlock = document.getElementById(q.id);
+                // Reset border class for all questions
+                if (questionBlock) questionBlock.classList.remove('border-red-400', 'border-2');
+                
+                // Only validate if the question is NOT optional
+                if (!q.optional) {
+                    switch (q.type) {
+                        case 'text':
+                            const textInput = document.querySelector(`input[name="${q.id}"]`);
+                            if (!textInput || !textInput.value.trim()) {
+                                isValid = false;
+                                if (textInput) textInput.classList.add('border-red-400', 'border-2'); // Highlight problem input
+                            } else {
+                                textInput.classList.remove('border-red-400', 'border-2');
+                            }
+                            break;
+                        case 'single':
+                        case 'multi':
+                            // Check if any element with the question's name is checked
+                            const selected = document.querySelectorAll(`input[name="${q.id}"]:checked`);
+                            if (selected.length === 0) {
+                                isValid = false;
+                                if (questionBlock) questionBlock.classList.add('border-red-400', 'border-2'); // Highlight problem block
+                            }
+                            break;
+                    }
+                }
+            });
+            return isValid;
+        }
+
+        // Calculates total score, max possible score, and collects unique problem tags
+        // --- UPDATED to accept raw answers as input instead of reading from DOM ---
+        function calculateResults(rawAnswers) {
+            let totalScore = 0;
+            const uniqueRecommendations = new Set();
+            let maxPossibleScore = 0;
+
+            rawAnswers.forEach(rawQ => {
+                // Find original question data for max score calculation
+                const qData = quizData.find(q => q.id === rawQ.questionId);
+                
+                if (!qData) return; // Skip if question data is missing
+
+                let questionMaxScore = 0;
+
+                // Calculate max possible score for the question
+                if (qData.type === 'single') {
+                    // For single-select, max score is the maximum value among all possible answers
+                    qData.answers.forEach(a => { questionMaxScore = Math.max(questionMaxScore, a.value); });
+                } else if (qData.type === 'multi') {
+                    // For multi-select, max score is the sum of all positive values
+                    qData.answers.forEach(a => { questionMaxScore += a.value > 0 ? a.value : 0; });
+                }
+                // Text fields (type 'text') do not contribute to max score (questionMaxScore remains 0)
+
+                maxPossibleScore += questionMaxScore;
+
+                // Sum selected answers and collect tags from the raw answers
+                // rawQ.answers contains the parsed data from the user's selection/input
+                rawQ.answers.forEach(answer => {
+                    // Only add points and tags if the answer has them (i.e., not a text field)
+                    if (answer.points > 0 || answer.points < 0) {
+                        totalScore += answer.points;
+                    }
+
+                    if (answer.tag) {
+                        uniqueRecommendations.add(answer.tag);
+                    }
+                });
+            });
+
+            return { totalScore, maxPossibleScore, recommendations: Array.from(uniqueRecommendations) };
+        }
+        // --- END OF calculateResults UPDATE ---
+
+        // Displays the calculated results on the screen
+        function displayResults(results) {
+            quizContainer.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+
+            const scorePercentage = (results.totalScore / results.maxPossibleScore) * 100;
+
+            // 1. Global Recommendation Logic (using globalScoreConfig)
+            const globalRecConfig = globalScoreConfig
+                .sort((a, b) => b.minPercentage - a.minPercentage) 
+                .find(config => scorePercentage >= config.minPercentage);
+
+            finalScoreDisplay.classList.remove('text-green-600', 'text-yellow-600', 'text-red-600', 'text-gray-600');
+            
+            if (globalRecConfig) {
+                finalScoreDisplay.classList.add(globalRecConfig.colorClass);
+                
+                const templateElement = document.getElementById(globalRecConfig.templateId);
+                globalRecommendationDisplay.innerHTML = templateElement ? templateElement.innerHTML : 'Template error.';
+            } else {
+                finalScoreDisplay.classList.add('text-gray-600');
+                globalRecommendationDisplay.textContent = 'Calculation error.';
+            }
+
+            finalScoreDisplay.textContent = `${results.totalScore} / ${results.maxPossibleScore} (${scorePercentage.toFixed(0)}%)`;
+
+            // 2. Display Detailed Answers (HTML)
+            displayDetailedAnswers(cachedRawAnswers);
+
+            // 3. Display Specific Recommendations
+            recommendationsList.innerHTML = '';
+            
+            if (results.recommendations.length > 0) {
+                suggestionsContainer.classList.remove('hidden');
+                noProblemsMessage.classList.add('hidden');
+                
+                results.recommendations.forEach(tag => {
+                    const templateId = 'rec-' + tag;
+                    const recElement = document.getElementById(templateId);
+
+                    const listItem = document.createElement('li');
+                    listItem.className = 'p-3 bg-red-50 border-l-4 border-red-500 rounded-lg text-gray-700';
+
+                    if (recElement) {
+                        listItem.innerHTML = recElement.innerHTML; 
+                    } else {
+                        listItem.textContent = 'Unknown recommendation tag: ' + tag;
+                    }
+                    recommendationsList.appendChild(listItem);
+                });
+            } else {
+                suggestionsContainer.classList.add('hidden');
+                noProblemsMessage.classList.remove('hidden');
+            }
+        }
+
+        function displayDetailedAnswers(rawAnswers) {
+            answersList.innerHTML = '';
+            
+            rawAnswers.forEach((q, index) => {
+                const answerText = q.answers.map(a => a.text).join('; ');
+
+                const listItem = document.createElement('li');
+                listItem.className = 'p-3 border-b border-gray-100 last:border-b-0';
+                
+                if (q.answers.length > 0) {
+                    listItem.innerHTML = `
+                        <p class="font-semibold text-gray-800">#${index + 1}: ${q.questionText}</p>
+                        <p class="mt-1 text-gray-600 italic">Ответ: ${answerText}</p>
+                    `;
+                } else {
+                    const statusText = q.optional ? 'Пропущен (необязательный)' : 'Не выбран / Пусто';
+                    listItem.innerHTML = `
+                        <p class="font-semibold text-gray-800">#${index + 1}: ${q.questionText}</p>
+                        <p class="mt-1 text-red-500 italic">Ответ: ${statusText}</p>
+                    `;
+                }
+                answersList.appendChild(listItem);
+            });
+        }
+        
+        // Creates a clean, formatted text string of the results for clipboard
+        function generateResultsText() {
+            const scoreText = finalScoreDisplay.textContent;
+            const globalRecHtml = globalRecommendationDisplay.innerHTML;
+
+            // Extract main global recommendation text from the template (removing HTML tags)
+            const globalRecContainer = document.createElement('div');
+            globalRecContainer.innerHTML = globalRecHtml;
+            const globalRecTitle = globalRecContainer.querySelector('h3') ? globalRecContainer.querySelector('h3').textContent : 'Общая рекомендация';
+            const globalRecParagraph = globalRecContainer.querySelector('p') ? globalRecContainer.querySelector('p').textContent : '';
+
+            let resultText = `--- ОТЧЕТ О ПРОХОЖДЕНИИ ОПРОСНИКА ---\n`;
+            resultText += `Дата и время: ${new Date().toLocaleString('ru-RU')}\n`;
+            resultText += `\n--- ИНДЕКС САМОЧУВСТВИЯ ---\n`;
+            resultText += `Общий балл: ${scoreText}\n`;
+            resultText += `\n${globalRecTitle}\n`;
+            resultText += `${globalRecParagraph}\n`;
+
+            // 1. Detailed Answers Section (NEW)
+            resultText += `\n\n--- ПОДРОБНЫЕ ОТВЕТЫ ---\n`;
+            cachedRawAnswers.forEach((q, index) => {
+                // Join all selected/entered answer texts
+                const answerText = q.answers.map(a => a.text).join('; ');
+
+                resultText += `\nВопрос #${index + 1} (${q.type}): ${q.questionText.trim()}\n`;
+
+                if (q.answers.length > 0) {
+                    resultText += `   Ответ: ${answerText}\n`;
+                } else {
+                    const statusText = q.optional ? 'Пропущен (необязательный)' : 'Не выбран / Оставлен пустым';
+                    resultText += `   Ответ: ${statusText}\n`;
+                }
+            });
+
+
+            // 2. Specific Recommendations Section
+            resultText += `\n\n--- СПЕЦИФИЧЕСКИЕ РЕКОМЕНДАЦИИ ---\n`;
+
+            if (recommendationsList.children.length > 0) {
+                
+                Array.from(recommendationsList.children).forEach((li, index) => {
+                    const strongText = li.querySelector('strong') ? li.querySelector('strong').textContent : `Пункт ${index + 1}:`;
+                    resultText += `\n${strongText}\n`;
+                    // Convert list items to clean bullet points
+                    const listItems = Array.from(li.querySelectorAll('ul li')).map(item => `   • ${item.textContent.trim()}`).join('\n');
+                    const generalText = li.querySelector('p') ? li.querySelector('p').textContent : '';
+                    resultText += `${generalText}\n`;
+                    if (listItems) {
+                        resultText += `${listItems}\n`;
+                    }
+                });
+            } else {
+                 resultText += noProblemsMessage.textContent;
+            }
+
+            return resultText;
+        }
+
+        // Copies the generated text to the clipboard
+        function copyResultsToClipboard() {
+            const textToCopy = generateResultsText();
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.style.position = 'fixed';
+            tempTextArea.style.opacity = '0';
+            tempTextArea.value = textToCopy;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showShareStatus('Результаты скопированы в буфер обмена! Просто вставьте их в мессенджер.');
+                } else {
+                    // Updated error message as PDF print is removed
+                    showShareStatus('Ошибка копирования. Используйте сочетание клавиш Ctrl+C / Cmd+C.', true);
+                }
+            } catch (err) {
+                console.error('Fallback: Copy command failed', err);
+                // Updated error message as PDF print is removed
+                showShareStatus('Ошибка копирования. Используйте сочетание клавиш Ctrl+C / Cmd+C.', true);
+            }
+            document.body.removeChild(tempTextArea);
+        }
+
+        // printResults() function REMOVED
+
+
+        // Display temporary success/error messages after sharing attempts
+        function showShareStatus(message, isError = false) {
+            shareStatus.textContent = message;
+            shareStatus.classList.remove('hidden', 'text-green-600', 'text-red-500');
+            shareStatus.classList.add(isError ? 'text-red-500' : 'text-green-600');
+
+            setTimeout(() => {
+                shareStatus.classList.add('hidden');
+            }, 5000);
+        }
+
+
+        // === 5. EVENT HANDLERS ===
+
+        // Quiz submission handler
+        submitButton.addEventListener('click', async () => {
+            if (validateQuiz()) {
+                errorMessage.classList.add('hidden');
+                
+                // 1. Collect answers once
+                const rawAnswers = collectRawAnswers();
+                cachedRawAnswers = rawAnswers; 
+                
+                // 2. Calculate results using collected answers
+                const results = calculateResults(rawAnswers);
+
+                // 3. Display results to user (Client side)
+                displayResults(results);
+
+            } else {
+                errorMessage.classList.remove('hidden');
+                // Scroll to the first unanswered question
+                const firstInvalid = document.querySelector('.question-block.border-red-400, input.border-red-400');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+
+        // Copy Results Handler
+        copyResultsButton.addEventListener('click', copyResultsToClipboard);
+
+        // Print Results Handler REMOVED
+
+
+        // Quiz reset handler
+        resetButton.addEventListener('click', () => {
+            resultsContainer.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            // Assuming submissionStatus is visible, hide it.
+            const submissionStatus = document.getElementById('submission-status');
+            if (submissionStatus) submissionStatus.classList.add('hidden');
+            window.location.reload(); 
+        });
+        
+        // Initialization on window load
+        window.onload = renderQuiz;
+
+        </script>
+</body>
+
+</html>
