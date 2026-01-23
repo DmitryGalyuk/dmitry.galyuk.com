@@ -1,0 +1,32 @@
+{
+  "http://127.0.0.1:5500": {
+    "name": "Dmitry Galyuk",
+    "regLink": "https://coral.club/6190205.html",
+    "contacts": {
+      "tg": "https://t.me/dmitry_galyuk",
+      "wa": "https://wa.me/48453548301",
+      "vb": "viber://chat?number=+48453548301",
+      "ig": "https://www.instagram.com/galyukdmitry"
+    }
+  },
+  "https://dmitry.galyuk.com": {
+    "name": "Dmitry Galyuk",
+    "regLink": "https://coral.club/6190205.html",
+    "contacts": {
+      "tg": "https://t.me/dmitry_galyuk",
+      "wa": "https://wa.me/48453548301",
+      "vb": "viber://chat?number=+48453548301",
+      "ig": "https://www.instagram.com/galyukdmitry"
+    }
+  },
+  "https://elena.galyuk.com": {
+    "name": "Elena Galyuk",
+    "regLink": "https://coral.club/6190205.html",
+    "contacts": {
+      "tg": "https://t.me/elena_galyuk",
+      "wa": "https://wa.me/48453548300",
+      "vb": "viber://chat?number=+48453548300",
+      "ig": "https://www.instagram.com/galyuk.elena.health"
+    }
+  }
+}
