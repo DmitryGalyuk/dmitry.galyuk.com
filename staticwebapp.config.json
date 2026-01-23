@@ -3,7 +3,16 @@
     {
       "route": "/en",
       "rewrite": "/index.html"
+    },
+    {
+      "route": "test",
+      "rewrite": "/survey.html"
+    },
+    {
+      "route": "/checkpoint",
+      "redirect": "/survey.html"
     }
+
   ],
   "navigationFallback": {
     "rewrite": "/index.html"
