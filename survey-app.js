@@ -43,8 +43,8 @@ const Elements = {
     progressBar: document.getElementById('progress-bar'),
     progressText: document.getElementById('progress-text'),
     distributorInfoSection: document.getElementById('distributor-info-section'),
-    distributorName: document.getElementById('distributor-name'),
-    distributorRegLink: document.getElementById('distributor-reg-link'),
+    // distributorName: document.getElementById('distributor-name'),
+    // distributorRegLink: document.getElementById('distributor-reg-link'),
     distributorContacts: document.getElementById('distributor-contacts'),
 };
 
@@ -528,8 +528,8 @@ function displayDistributorInfo() {
     if (distributor) {
         state.currentDistributor = distributor;
         Elements.distributorInfoSection.classList.remove('hidden');
-        Elements.distributorName.textContent = distributor.name;
-        Elements.distributorRegLink.href = distributor.regLink;
+        // Elements.distributorName.textContent = distributor.name;
+        // Elements.distributorRegLink.href = distributor.regLink;
 
         Elements.distributorContacts.innerHTML = '';
         if (distributor.contacts) {

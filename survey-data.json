@@ -89,12 +89,6 @@
         { "text": "Более 1,5 литров", "value": 3, "triggers": [] },
         { "text": "Менее 1,5 литров", "value": 0, "triggers": ["ВОДА"] }
       ]
-    },
-    {
-      "id": "запрос",
-      "questionText": "Какую основную задачу по здоровью Вы хотели бы решить?",
-      "type": "input",
-      "optional": true
     }
   ],
   "recommendations": {
