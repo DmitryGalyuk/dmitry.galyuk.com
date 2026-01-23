@@ -11,6 +11,10 @@
     {
       "route": "/checkpoint",
       "redirect": "/survey.html"
+    },
+    {
+      "route": "/selfcheckbasic.html",
+      "redirect": "/survey.html"
     }
 
   ],

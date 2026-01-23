@@ -2,7 +2,8 @@
     "liveServer.settings.mount": [
         ["/en", "./index.html"],
         ["/test", "./survey.html"],
-        ["/checkpoint", "./survey.html"]
+        ["/checkpoint", "./survey.html"],
+        ["/selfcheckbasic.html", "./survey.html"]
     ],
     "liveServer.settings.donotShowInfoMsg": true,
     "liveServer.settings.donotVerifyTags": true
