@@ -7,17 +7,13 @@
 const LOCAL_STORAGE_KEY = 'health_test_state';
 const DEBUG_MODE_PARAM = '?debug=true';
 
-const SCORE_THRESHOLDS = [
-    { minPercentage: 0, maxPercentage: 10, level: 'critical', templateId: 'global-critical-template', colorClass: 'text-red-600', recommendation: 'Системное восстановление' },
-    { minPercentage: 11, maxPercentage: 22, level: 'medium', templateId: 'global-medium-template', colorClass: 'text-yellow-600', recommendation: 'Coral Detox Plus' },
-    { minPercentage: 23, maxPercentage: 33, level: 'good', templateId: 'global-good-template', colorClass: 'text-green-600', recommendation: 'Минимальная профилактика' }
-];
-
 const state = {
     currentScreen: 'welcome', // 'welcome', 'quiz', 'results'
     currentQuestionIndex: 0,
     answers: [],
     quizData: [],
+    recommendationData: {},
+    globalRecommendations: {},
     distributors: {},
     currentDistributor: null,
     contentMode: 'test', // 'test' (cold) or 'checkpoint' (club)
@@ -273,22 +269,32 @@ async function renderResultsScreen() {
     Elements.recommendationsList.innerHTML = '';
     Elements.qrCodeImg.src = '';
 
-    const { totalScore, maxPossibleScore, recommendations } = state.results;
-    const scorePercentage = (totalScore / maxPossibleScore) * 100;
+    const { totalScore, maxPossibleScore, scorePercentage, recommendations } = state.results;
 
-    const globalRecConfig = SCORE_THRESHOLDS
-        .sort((a, b) => b.minPercentage - a.minPercentage) // Sort descending by minPercentage
-        .find(config => scorePercentage >= config.minPercentage);
+    // Find the appropriate global recommendation based on upper range
+    const upperRanges = Object.keys(state.globalRecommendations).map(Number).sort((a, b) => a - b);
+    let selectedRange = null;
+    for (let range of upperRanges) {
+        if (scorePercentage <= range) {
+            selectedRange = range;
+            break;
+        }
+    }
+    if (!selectedRange) {
+        selectedRange = upperRanges[upperRanges.length - 1];
+    }
+
+    const recData = state.globalRecommendations[selectedRange.toString()][state.contentMode]; // 'test' or 'checkpoint'
+
+    // Set color class based on range
+    let colorClass = 'text-gray-600';
+    if (selectedRange <= 10) colorClass = 'text-red-600';
+    else if (selectedRange <= 22) colorClass = 'text-yellow-600';
+    else colorClass = 'text-green-600';
 
     Elements.finalScoreDisplay.classList.remove('text-green-600', 'text-yellow-600', 'text-red-600', 'text-gray-600');
-    if (globalRecConfig) {
-        Elements.finalScoreDisplay.classList.add(globalRecConfig.colorClass);
-        const templateElement = document.getElementById(globalRecConfig.templateId);
-        Elements.globalRecommendationDisplay.innerHTML = templateElement ? templateElement.innerHTML : 'Template error.';
-    } else {
-        Elements.finalScoreDisplay.classList.add('text-gray-600');
-        Elements.globalRecommendationDisplay.textContent = 'Calculation error.';
-    }
+    Elements.finalScoreDisplay.classList.add(colorClass);
+    Elements.globalRecommendationDisplay.innerHTML = recData ? `<h3>${recData.title}</h3><p>${recData.description}</p>` : 'Recommendation error.';
     Elements.finalScoreDisplay.textContent = `${totalScore} / ${maxPossibleScore} (${scorePercentage.toFixed(0)}%)`;
 
     // Display specific recommendations
@@ -453,7 +459,9 @@ function calculateResults(rawAnswers) {
         });
     });
 
-    return { totalScore, maxPossibleScore, recommendations: Array.from(uniqueRecommendations) };
+    const scorePercentage = (totalScore / maxPossibleScore) * 100;
+
+    return { totalScore, maxPossibleScore, scorePercentage, recommendations: Array.from(uniqueRecommendations) };
 }
 
 /**
@@ -461,11 +469,24 @@ function calculateResults(rawAnswers) {
  * @returns {string} - The formatted text for the QR code.
  */
 function generateQrCodeText() {
-    const { totalScore, maxPossibleScore, recommendations } = state.results;
-    const scorePercentage = (totalScore / maxPossibleScore) * 100;
-    const globalRecConfig = SCORE_THRESHOLDS.find(config => scorePercentage >= config.minPercentage);
-    const level = globalRecConfig ? globalRecConfig.level : 'unknown';
-    const globalRecommendationText = globalRecConfig ? globalRecConfig.recommendation : 'Не определено';
+    const { totalScore, maxPossibleScore, scorePercentage, recommendations } = state.results;
+
+    // Find the appropriate global recommendation based on upper range
+    const upperRanges = Object.keys(state.globalRecommendations).map(Number).sort((a, b) => a - b);
+    let selectedRange = null;
+    for (let range of upperRanges) {
+        if (scorePercentage <= range) {
+            selectedRange = range;
+            break;
+        }
+    }
+    if (!selectedRange) {
+        selectedRange = upperRanges[upperRanges.length - 1];
+    }
+
+    const recData = state.globalRecommendations[selectedRange.toString()][state.contentMode];
+    const level = selectedRange <= 10 ? 'critical' : selectedRange <= 22 ? 'medium' : 'good';
+    const globalRecommendationText = recData ? recData.title : 'Не определено';
 
     let qrText = `${new Date().toLocaleString('ru-RU')}\n`;
     qrText += `Total Score: ${totalScore} / ${maxPossibleScore} (${scorePercentage.toFixed(0)}%)\n`;
@@ -626,13 +647,14 @@ async function initApp() {
         loadJSON('distributors.json')
     ]);
 
-    if (!surveyData || !distributors || !surveyData.questions || !surveyData.recommendations) {
+    if (!surveyData || !distributors || !surveyData.questions || !surveyData.recommendations || !surveyData.globalRecommendations) {
         Elements.app.innerHTML = '<div class="flex-center"><p class="text-red-600 text-xl">Ошибка загрузки данных приложения. Пожалуйста, попробуйте позже.</p></div>';
         return;
     }
 
     state.quizData = surveyData.questions; // Assign the questions array
     state.recommendationData = surveyData.recommendations; // Store recommendations separately
+    state.globalRecommendations = surveyData.globalRecommendations; // Store global recommendations
     state.distributors = distributors;
 
     // Determine content mode
