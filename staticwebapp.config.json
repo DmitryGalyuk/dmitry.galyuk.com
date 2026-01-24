@@ -13,6 +13,10 @@
       "redirect": "/survey.html"
     },
     {
+      "route": "/checkpoint",
+      "rewrite": "/survey.html"
+    },
+    {
       "route": "/selfcheckbasic.html",
       "redirect": "/survey.html"
     }
