@@ -101,6 +101,26 @@ function clearState() {
 }
 
 /**
+ * Gets the selected range for global recommendations based on score percentage.
+ * @param {number} scorePercentage - The score percentage.
+ * @returns {number} - The selected range key.
+ */
+function getSelectedRange(scorePercentage) {
+    const upperRanges = Object.keys(state.globalRecommendations).map(Number).sort((a, b) => a - b);
+    let selectedRange = null;
+    for (let range of upperRanges) {
+        if (scorePercentage < range) {
+            selectedRange = range;
+            break;
+        }
+    }
+    if (!selectedRange) {
+        selectedRange = upperRanges[upperRanges.length - 1];
+    }
+    return selectedRange;
+}
+
+/**
  * Updates the visibility of screens based on the current state.
  */
 function updateView() {
@@ -272,25 +292,13 @@ async function renderResultsScreen() {
     const { totalScore, maxPossibleScore, scorePercentage, recommendations } = state.results;
 
     // Find the appropriate global recommendation based on upper range
-    const upperRanges = Object.keys(state.globalRecommendations).map(Number).sort((a, b) => a - b);
-    let selectedRange = null;
-    for (let range of upperRanges) {
-        if (scorePercentage <= range) {
-            selectedRange = range;
-            break;
-        }
-    }
-    if (!selectedRange) {
-        selectedRange = upperRanges[upperRanges.length - 1];
-    }
+    const selectedRange = getSelectedRange(scorePercentage);
 
-    const recData = state.globalRecommendations[selectedRange.toString()][state.contentMode]; // 'test' or 'checkpoint'
+    const rangeData = state.globalRecommendations[selectedRange.toString()];
+    const recData = rangeData[state.contentMode]; // 'test' or 'checkpoint'
 
     // Set color class based on range
-    let colorClass = 'text-gray-600';
-    if (selectedRange <= 10) colorClass = 'text-red-600';
-    else if (selectedRange <= 22) colorClass = 'text-yellow-600';
-    else colorClass = 'text-green-600';
+    const colorClass = 'text-' + rangeData.color + '-600';
 
     Elements.finalScoreDisplay.classList.remove('text-green-600', 'text-yellow-600', 'text-red-600', 'text-gray-600');
     Elements.finalScoreDisplay.classList.add(colorClass);
@@ -472,20 +480,11 @@ function generateQrCodeText() {
     const { totalScore, maxPossibleScore, scorePercentage, recommendations } = state.results;
 
     // Find the appropriate global recommendation based on upper range
-    const upperRanges = Object.keys(state.globalRecommendations).map(Number).sort((a, b) => a - b);
-    let selectedRange = null;
-    for (let range of upperRanges) {
-        if (scorePercentage <= range) {
-            selectedRange = range;
-            break;
-        }
-    }
-    if (!selectedRange) {
-        selectedRange = upperRanges[upperRanges.length - 1];
-    }
+    const selectedRange = getSelectedRange(scorePercentage);
 
-    const recData = state.globalRecommendations[selectedRange.toString()][state.contentMode];
-    const level = selectedRange <= 10 ? 'critical' : selectedRange <= 22 ? 'medium' : 'good';
+    const rangeData = state.globalRecommendations[selectedRange.toString()];
+    const recData = rangeData[state.contentMode];
+    const level = rangeData.level;
     const globalRecommendationText = recData ? recData.title : 'Не определено';
 
     let qrText = `${new Date().toLocaleString('ru-RU')}\n`;
