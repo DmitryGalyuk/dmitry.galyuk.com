@@ -13,6 +13,10 @@
       "rewrite": "/survey.html"
     },
     {
+      "route": "/opros",
+      "rewrite": "/survey.html"
+    },
+    {
       "route": "/selfcheckbasic.html",
       "redirect": "/survey.html"
     }

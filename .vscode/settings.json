@@ -3,6 +3,7 @@
         ["/en", "./index.html"],
         ["/test", "./survey.html"],
         ["/checkpoint", "./survey.html"],
+        ["/opros", "./survey.html"],
         ["/selfcheckbasic.html", "./survey.html"]
     ],
     "liveServer.settings.donotShowInfoMsg": true,

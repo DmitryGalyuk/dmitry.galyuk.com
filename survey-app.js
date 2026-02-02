@@ -657,9 +657,13 @@ async function initApp() {
     state.distributors = distributors;
 
     // Determine content mode
-    if (window.location.pathname.includes('/checkpoint')) {
+    if (window.location.pathname.startsWith('/checkpoint')) {
         state.contentMode = 'checkpoint';
-    } else {
+    } else if (window.location.pathname.startsWith('/opros')) {
+        state.contentMode = 'test';
+        state.distributors = {}; // Disable distributor info in test mode
+    }
+    else {
         state.contentMode = 'test'; // Default to cold mode
     }
 
