@@ -637,6 +637,18 @@ Elements.resetQuizButton.addEventListener('click', () => {
     window.location.reload(); // Simple way to reset everything
 });
 
+function setPageTitle() {
+    if (document.location.pathname.startsWith('/checkpoint')) {
+        document.title = 'Анкета повторной самодиагностики здоровья - ' 
+            + state.distributors[window.location.origin].name;
+    } else if (document.location.pathname.startsWith('/test')) {
+        document.title = 'Анкета самодиагностики здоровья - ' 
+            + state.distributors[window.location.origin].name;
+    } else {
+        document.title = 'Анкета самодиагностики здоровья';
+    }
+}
+
 // ========================================================================== \n// 6. Initialization \n// ========================================================================== \n
 document.addEventListener('DOMContentLoaded', initApp);
 
@@ -687,4 +699,6 @@ async function initApp() {
 
     // Initial view update
     updateView();
+
+    setPageTitle();
 }
