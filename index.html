@@ -19,6 +19,9 @@
     <meta name="twitter:title" content="">
     <meta name="twitter:description" content="">
     <meta name="twitter:image" content="">
+    <script>
+        document.documentElement.lang = window.location.pathname.startsWith('/en') ? 'en' : 'ru';
+    </script>
 </head>
 
 <body>
@@ -47,6 +50,7 @@
             </div>
             <img src="persons/dima_sofia.jpg" alt="Dmitry Galyuk" class="avatar">
         </div>
+        <div class="survey"><a href="/test" data-en="Health Self-Assessment" data-ru="Анкета Самодиагностики">Анкета Самодиагностики</a></div>
         <div class="socials">
             <a class="social telegram-link" target="_blank">
                 <img src="images/telegram.svg" class="social-logo" alt="Telegram">
@@ -150,5 +154,16 @@
 <script src="gallery.js"></script>
 <script src="google-analytics.js"></script>
 <script src="person.js"></script>
+<script>
+    translateLabels();
+
+    function translateLabels() {
+        let labels = document.querySelectorAll('[data-en][data-ru]');
+        let lang = document.documentElement.lang;
+        labels.forEach(label => {
+            label.textContent = label.dataset[lang];
+        });
+    }
+</script>
 
 </html>

@@ -82,23 +82,23 @@
             "name": "Дмитрий Галюк",
             "profession": "Системный подход к здоровью",
             "meta": {
-                "title": "Дмитрий Галюк - похудение",
-                "description": "Дмитрий Галюк - похудение, энергия, здоровый сон, системный подход",
-                "keywords": "Дмитрий Галюк, похудение, энергия, здоровый сон, системный подход",
+                "title": "Дмитрий Галюк - системный подход к здоровью",
+                "description": "Дмитрий Галюк - системный подход к здоровью: зуд, здоровье печени, пищеварение, аллергии",
+                "keywords": "Дмитрий Галюк, системный подход к здоровью: зуд, здоровье печени, пищеварение, аллергии",
                 "author": "Дмитрий Галюк",
-                "og:title": "Дмитрий Галюк - похудение",
-                "og:description": "Дмитрий Галюк - похудение, энергия, здоровый сон, системный подход",
+                "og:title": "Дмитрий Галюк - системный подход к здоровью",
+                "og:description": "Дмитрий Галюк - системный подход к здоровью: зуд, здоровье печени, пищеварение, аллергии",
                 "og:image": "dima_sofia.jpg",
                 "og:url": "https://dmitry.galyuk.com",
                 "twitter:card": "summary_large_image",
-                "twitter:title": "Дмитрий Галюк - похудение",
-                "twitter:description": "Дмитрий Галюк - похудение, энергия, здоровый сон, системный подход",
+                "twitter:title": "Дмитрий Галюк - системный подход к здоровью",
+                "twitter:description": "Дмитрий Галюк - зуд, здоровье печени, пищеварение, аллергии",
                 "twitter:image": "dima_sofia.jpg"
             },
             "services": [
-                "Похудение",
-                "Энергия",
-                "Здоровый сон"
+                "Зуд, здоровье печени",
+                "Пищеварение",
+                "Аллергии"
             ],
             "contacts": {
                 "phone": "+48 453 548 301",
@@ -118,22 +118,22 @@
             "profession": "Holistic health",
             "meta": {
                 "title": "Dmitry Galyuk - Holistic health",
-                "description": "Dmitry Galyuk - Holistic health, weight loss, energy, healthy sleep, systematic approach",
-                "keywords": "Dmitry Galyuk, Holistic health, weight loss, energy, healthy sleep, systematic approach",
+                "description": "Dmitry Galyuk - Systemic approach to health: itching, liver health, digestion, allergies",
+                "keywords": "Dmitry Galyuk, Systemic approach to health: itching, liver health, digestion, allergies",
                 "author": "Dmitry Galyuk",
                 "og:title": "Dmitry Galyuk - Holistic health",
-                "og:description": "Dmitry Galyuk - Holistic health, weight loss, energy, healthy sleep, systematic approach",
+                "og:description": "Dmitry Galyuk - Systemic approach to health: itching, liver health, digestion, allergies",
                 "og:image": "dima_sofia.jpg",
                 "og:url": "https://dmitry.galyuk.com/en",
                 "twitter:card": "summary_large_image",
                 "twitter:title": "Dmitry Galyuk - Holistic health",
-                "twitter:description": "Dmitry Galyuk - Holistic health, weight loss, energy, healthy sleep, systematic approach",
+                "twitter:description": "Dmitry Galyuk - Systemic approach to health: itching, liver health, digestion, allergies",
                 "twitter:image": "dima_sofia.jpg"
             },
             "services": [
-                "Weight loss",
-                "Energy",
-                "Healthy sleep"
+                "Itching, liver health",
+                "Digestion",
+                "Allergies"
             ],
             "contacts": {
                 "phone": "+48 453 548 301",
