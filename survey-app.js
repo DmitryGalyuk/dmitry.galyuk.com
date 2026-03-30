@@ -127,6 +127,7 @@ function updateView() {
     Elements.welcomeScreen.classList.add('hidden');
     Elements.quizContainer.classList.add('hidden');
     Elements.resultsContainer.classList.add('hidden');
+    Elements.resetQuizButton.classList.add('hidden');
 
     switch (state.currentScreen) {
         case 'welcome':
@@ -138,6 +139,7 @@ function updateView() {
             break;
         case 'results':
             Elements.resultsContainer.classList.remove('hidden');
+            Elements.resetQuizButton.classList.remove('hidden');
             renderResultsScreen();
             break;
     }
