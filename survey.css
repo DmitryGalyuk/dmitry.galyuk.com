@@ -436,6 +436,7 @@ body {
 
 .flex {
         display: flex;
+        flex-wrap: wrap;
 }
 
 .flex-col {

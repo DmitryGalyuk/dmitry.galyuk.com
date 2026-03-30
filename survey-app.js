@@ -333,29 +333,6 @@ async function renderResultsScreen() {
         Elements.noProblemsMessage.classList.remove('hidden');
     }
 
-    // Display detailed answers
-    /*
-    Elements.detailedAnswersSection.classList.add('hidden'); // Hide the detailed answers section as per user request
-    Elements.answersList.innerHTML = '';
-    state.answers.forEach((q, index) => {
-        const answerText = q.answers.map(a => a.text).join('; ');
-        const listItem = document.createElement('li');
-        listItem.className = 'p-3 border-b border-gray-100 last:border-b-0';
-        if (q.answers.length > 0) {
-            listItem.innerHTML = `
-                <p class="font-semibold text-gray-800">#${index + 1}: ${q.questionText}</p>
-                <p class="mt-1 text-gray-600 italic">Ответ: ${answerText}</p>
-            `;
-        } else {
-            const statusText = q.optional ? 'Пропущен (необязательный)' : 'Не выбран / Пусто';
-            listItem.innerHTML = `
-                <p class="font-semibold text-gray-800">#${index + 1}: ${q.questionText}</p>
-                <p class="mt-1 text-red-500 italic">Ответ: ${statusText}</p>
-            `;
-        }
-        Elements.answersList.appendChild(listItem);
-    });
-    */
 
     // Generate QR Code
     await generateQrCode();
@@ -363,7 +340,7 @@ async function renderResultsScreen() {
     // Display Distributor Info
     displayDistributorInfo();
 
-    clearState(); // Clear state after displaying results
+    // clearState(); // Clear state after displaying results
 }
 
 // ========================================================================== \n// 4. Logic Functions \n// ========================================================================== \n
@@ -532,6 +509,12 @@ function displayDistributorInfo() {
         // Elements.distributorRegLink.href = distributor.regLink;
 
         const lang = document.documentElement.lang || 'ru';
+
+		const regLink = document.getElementById('registration-link');
+		if (regLink && state.currentDistributor.regLink) {
+			regLink.href = state.currentDistributor.regLink;
+		}
+
         Elements.distributorContacts.innerHTML = '';
         if (distributor[lang].socials) {
             if (distributor[lang].socials.telegram) {
@@ -610,6 +593,7 @@ function getDistributorInfo(){
 async function handleSubmitQuiz() {
     if (validateCurrentQuestion()) {
         saveCurrentAnswer(); // Save the last answer
+        state.currentQuestionIndex++;
         Elements.errorMessage.classList.add('hidden');
         state.results = calculateResults(state.answers);
         saveState(); // Save results to state (optional, if you want to persist results beyond refresh)
@@ -687,10 +671,9 @@ async function initApp() {
         state.contentMode = 'test'; // Default to cold mode
     }
 
-    const isDebugMode = window.location.search.includes(DEBUG_MODE_PARAM);
     const hasSavedState = loadState();
 
-    if (isDebugMode && hasSavedState && state.answers.length === state.quizData.length) {
+    if (hasSavedState && state.answers.length === state.quizData.length) {
         // If debug mode and all questions answered, jump to results
         state.results = calculateResults(state.answers);
         navigateTo('results');

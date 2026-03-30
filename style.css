@@ -55,7 +55,7 @@ body {
   color: var(--contact-link-hover);
 }
 .card {
-  margin-top: calc(2rem + var(--lang-switcher-height));
+  /* margin-top: calc(2rem + var(--lang-switcher-height)); */
   background: var(--card-bg);
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
@@ -105,11 +105,62 @@ h1 {
   font-size: 1rem;
   text-align: left;
 }
+
+.steps {
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: var(--filter-inactive-color);
+    background-color: var(--filter-inactive-color);
+    width: fit-content;
+    padding: 0.2em 0.6em;
+    margin: 0.5rem;
+
+  }
+  .step {
+    gap: 0.5em;
+    width: 85%;
+    background-color: var(--background);
+    margin-bottom: 1.5rem;
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+  }
+  .step:nth-child(even) {
+    align-self: flex-end;
+    text-align: right;
+  }
+  .step:nth-child(odd) {
+    align-self: flex-start;
+    text-align: left;
+  }
+  
+}
+
+.imageButton {
+  border-radius: 0.5rem;
+  border: var(--filter-active-color);
+  background-color: var(--filter-active-color);
+  width: fit-content;
+  padding: 0.5em;
+  margin: 0.5rem;
+  cursor: pointer;
+  display: inline-flex;
+  gap: 0.5em;
+  align-items: center;
+  a {
+    font-weight: bold;
+    color: white;
+  }
+}
+
 .contacts {
   color: var(--main-text);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.2em;
   margin-top: 0.5em;
 }
@@ -163,6 +214,18 @@ h1 {
   vertical-align: middle;
   align-self: center;
 }
+.survey {
+  margin: 1rem;
+
+}
+
+.icon {
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    /* margin-right: 0.5em; */
+  }
+
 @media (max-width: 600px) {
   .card {
     max-width: 100vw;

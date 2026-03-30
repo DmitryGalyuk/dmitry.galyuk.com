@@ -37,6 +37,11 @@ async function updatePersonData() {
 			});
 		}
 
+		const regLink = document.getElementById('registration-link');
+		if (regLink && person.regLink) {
+			regLink.href = person.regLink;
+		}
+
 		// Contacts
 		const contactItems = document.querySelectorAll('.contact-item');
 		if (contactItems.length >= 2 && translation.contacts) {
