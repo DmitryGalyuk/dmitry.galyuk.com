@@ -556,9 +556,7 @@ function displayDistributorInfo() {
 }
 
 // ========================================================================== \n// 5. Event Handlers \n// ========================================================================== \n
-Elements.startQuizButton.addEventListener('click', () => {
-    navigateTo('quiz');
-});
+Elements.startQuizButton.addEventListener('click', resetQuiz);
 
 Elements.nextQuestionButton.addEventListener('click', () => {
     if (validateCurrentQuestion()) {
@@ -620,13 +618,16 @@ function showShareStatus(message, isError = false) {
     setTimeout(() => { Elements.shareStatus.classList.add('hidden'); }, 5000);
 }
 
-Elements.resetQuizButton.addEventListener('click', () => {
+function resetQuiz() {
     clearState();
     state.currentQuestionIndex = 0;
     state.answers = [];
     state.results = null;
-    window.location.reload(); // Simple way to reset everything
-});
+    navigateTo('quiz');
+    // window.location.reload(); // Simple way to reset everything
+}
+
+Elements.resetQuizButton.addEventListener('click', resetQuiz);
 
 function setPageTitle() {
     if (document.location.pathname.startsWith('/checkpoint')) {
