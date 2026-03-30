@@ -522,7 +522,8 @@ async function generateQrCode() {
  */
 function displayDistributorInfo() {
     const origin = window.location.origin;
-    const distributor = state.distributors[origin];
+    //const distributor = state.distributors[origin];
+    const distributor = getDistributorInfo();
 
     if (distributor) {
         state.currentDistributor = distributor;
@@ -530,35 +531,36 @@ function displayDistributorInfo() {
         // Elements.distributorName.textContent = distributor.name;
         // Elements.distributorRegLink.href = distributor.regLink;
 
+        const lang = document.documentElement.lang || 'ru';
         Elements.distributorContacts.innerHTML = '';
-        if (distributor.contacts) {
-            if (distributor.contacts.tg) {
+        if (distributor[lang].socials) {
+            if (distributor[lang].socials.telegram) {
                 const tgLink = document.createElement('a');
-                tgLink.href = distributor.contacts.tg;
+                tgLink.href = distributor[lang].socials.telegram;
                 tgLink.target = '_blank';
                 tgLink.className = 'flex items-center space-x-2 text-gray-600 hover:text-blue-500';
                 tgLink.innerHTML = `<img src="images/telegram.svg" alt="Telegram" class="w-6 h-6"/><span>Telegram</span>`;
                 Elements.distributorContacts.appendChild(tgLink);
             }
-            if (distributor.contacts.wa) {
+            if (distributor[lang].socials.whatsapp) {
                 const waLink = document.createElement('a');
-                waLink.href = distributor.contacts.wa;
+                waLink.href = distributor[lang].socials.whatsapp;
                 waLink.target = '_blank';
                 waLink.className = 'flex items-center space-x-2 text-gray-600 hover:text-green-500';
                 waLink.innerHTML = `<img src="images/whatsapp.svg" alt="WhatsApp" class="w-6 h-6"/><span>WhatsApp</span>`;
                 Elements.distributorContacts.appendChild(waLink);
             }
-            if (distributor.contacts.vb) {
+            if (distributor[lang].socials.viber) {
                 const vbLink = document.createElement('a');
-                vbLink.href = distributor.contacts.vb;
+                vbLink.href = distributor[lang].socials.viber;
                 vbLink.target = '_blank';
                 vbLink.className = 'flex items-center space-x-2 text-gray-600 hover:text-blue-700';
                 vbLink.innerHTML = `<img src="images/viber.svg" alt="Viber" class="w-6 h-6"/><span>Viber</span>`;
                 Elements.distributorContacts.appendChild(vbLink);
             }
-            if (distributor.contacts.ig) {
+            if (distributor[lang].socials.instagram) {
                 const igLink = document.createElement('a');
-                igLink.href = distributor.contacts.ig;
+                igLink.href = distributor[lang].socials.instagram;
                 igLink.target = '_blank';
                 igLink.className = 'flex items-center space-x-2 text-gray-600 hover:text-pink-500';
                 igLink.innerHTML = `<img src="images/instagram.svg" alt="Instagram" class="w-6 h-6"/><span>Instagram</span>`;
@@ -600,6 +602,11 @@ Elements.prevQuestionButton.addEventListener('click', () => {
 
 Elements.submitQuizButton.addEventListener('click', handleSubmitQuiz);
 
+function getDistributorInfo(){
+    const origin = window.location.host;
+    return Object.values(state.distributors).find(d => d.domains && d.domains.includes(origin));
+}
+
 async function handleSubmitQuiz() {
     if (validateCurrentQuestion()) {
         saveCurrentAnswer(); // Save the last answer
@@ -640,10 +647,10 @@ Elements.resetQuizButton.addEventListener('click', () => {
 function setPageTitle() {
     if (document.location.pathname.startsWith('/checkpoint')) {
         document.title = 'Анкета повторной самодиагностики здоровья - ' 
-            + state.distributors[window.location.origin].name;
+            + getDistributorInfo()[document.documentElement.lang].name;
     } else if (document.location.pathname.startsWith('/test')) {
         document.title = 'Анкета самодиагностики здоровья - ' 
-            + state.distributors[window.location.origin].name;
+            + getDistributorInfo()[document.documentElement.lang].name;
     } else {
         document.title = 'Анкета самодиагностики здоровья';
     }
@@ -653,9 +660,10 @@ function setPageTitle() {
 document.addEventListener('DOMContentLoaded', initApp);
 
 async function initApp() {
+    document.documentElement.lang = "ru"; // Set language for the document
     const [surveyData, distributors] = await Promise.all([
         loadJSON('survey-data.json'),
-        loadJSON('distributors.json')
+        loadJSON('contacts.json')
     ]);
 
     if (!surveyData || !distributors || !surveyData.questions || !surveyData.recommendations || !surveyData.globalRecommendations) {

@@ -6,7 +6,7 @@ async function updatePersonData() {
 	try {
 		const response = await fetch('/contacts.json');
 		const data = await response.json();
-		const person = data.find(p => p.domain === hostname);
+		const person = data.find(p => p.domains.includes(hostname));
 		if (!person) throw new Error('Person not found for domain: ' + hostname);
 		const translation = person[lang];
 		if (!translation) throw new Error('Translation not found for lang: ' + lang);

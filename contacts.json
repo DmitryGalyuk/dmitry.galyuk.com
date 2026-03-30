@@ -1,9 +1,10 @@
 [
     {
-        "domain": "elena.galyuk.com",
+        "domains": ["elena.galyuk.com"],
         "photo": "lena.jpeg",
         "ru": {
             "name": "Елена Галюк",
+            "regLink": "https://coral.club/6111685.html",
             "profession": "Нутрициолог",
             "meta": {
                 "title": "Нутрициолог Елена Галюк",
@@ -76,8 +77,9 @@
         }
     },
     {
-        "domain": "dmitry.galyuk.com",
+        "domains": ["dmitry.galyuk.com", "127.0.0.1:5500"],
         "photo": "dima_sofia.jpg",
+        "regLink": "https://coral.club/6190205.html",
         "ru": {
             "name": "Дмитрий Галюк",
             "profession": "Системный подход к здоровью",
