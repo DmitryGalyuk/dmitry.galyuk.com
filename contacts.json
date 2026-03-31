@@ -113,7 +113,8 @@
                 "viber": "viber://chat/?number=%2B48453548301",
                 "tiktok": "https://www.tiktok.com/@dmitry.galyuk",
                 "youtube": "https://www.youtube.com/@DmitryGalyuk"
-            }
+            },
+            "tgChannel": "https://t.me/tech_of_health"
         },
         "en": {
             "name": "Dmitry Galyuk",

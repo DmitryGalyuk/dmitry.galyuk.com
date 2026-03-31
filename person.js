@@ -37,10 +37,21 @@ async function updatePersonData() {
 			});
 		}
 
+		// Registration link
 		const regLink = document.getElementById('registration-link');
 		if (regLink && person.regLink) {
 			regLink.href = person.regLink;
 		}
+
+		// telegram channel link
+		const tgLink = document.getElementById('tgchannel-link');
+		const tgLinkSection = document.getElementById('tgchanneksection');
+		if (tgLink && person[lang].tgChannel) {
+			tgLink.href = person[lang].tgChannel;
+
+		}
+		tgLinkSection.style.display = (tgLink && person[lang].tgChannel) ? '' : 'none';
+
 
 		// Contacts
 		const contactItems = document.querySelectorAll('.contact-item');
