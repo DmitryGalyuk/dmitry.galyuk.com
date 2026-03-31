@@ -1,23 +1,42 @@
 /* Mobile-first styles for Health Navigator SPA */
 
+html {
+        color-scheme: light dark;
+}
+
 :root {
-        --color-primary: #4f46e5; /* Indigo 600 */
-        --color-primary-light: #e0e7ff; /* Indigo 100 */
-        --color-text-dark: #1f2937; /* Gray 900 */
-        --color-text-medium: #4b5563; /* Gray 700 */
-        --color-text-light: #6b7280; /* Gray 500 */
-        --color-background-light: #f9fafb; /* Gray 50 */
-        --color-border: #d1d5db; /* Gray 300 */
-        --color-success: #10b981; /* Green 500 */
-        --color-warning: #f59e0b; /* Yellow 500 */
-        --color-danger: #ef4444; /* Red 500 */
+        color-scheme: light dark;
+
+        --color-primary: light-dark(#4f46e5, #8b5cf6); /* Indigo 600 */
+        --color-primary-light: light-dark(#e0e7ff, #312e81); /* Indigo 100 */
+
+        --color-text-dark: light-dark(#1f2937, #e5e7eb); /* Gray 900 */
+        --color-text-medium: light-dark(#4b5563, #d1d5db); /* Gray 700 */
+        --color-text-light: light-dark(#6b7280, #9ca3af); /* Gray 500 */
+
+        --color-background: light-dark(#f9fafb, #0f172a); /* Gray 50 */
+        --color-background-light: light-dark(#ffffff, #111827); /* extra light variant */
+
+        --color-border: light-dark(#d1d5db, #374151); /* Gray 300 */
+
+        --color-success: light-dark(#10b981, #34d399); /* Green 500 */
+        --color-warning: light-dark(#f59e0b, #fbbf24); /* Yellow 500 */
+        --color-danger: light-dark(#ef4444, #f87171); /* Red 500 */
+
+        --color-on-primary: light-dark(#ffffff, #000000);
+        --color-secondary-bg: light-dark(#e5e7eb, #374151);
+        --color-secondary-hover: light-dark(#d1d5db, #4b5563);
+
+        --color-card: light-dark(#ffffff, #1f2937);
+        --color-card-shadow: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.08));
+        --color-field-border: light-dark(#e5e7eb, #4b5563);
 }
 
 body {
         font-family: 'Inter', sans-serif;
         margin: 0;
         padding: 0;
-        background-color: var(--color-background-light);
+        background-color: var(--color-background);
         color: var(--color-text-dark);
         line-height: 1.6;
         -webkit-font-smoothing: antialiased;
@@ -41,12 +60,12 @@ body {
 
 /* Question Block */
 .question-block {
-        background-color: #fff;
+        background-color: var(--color-card);
         border: 1px solid var(--color-border);
         border-radius: 0.5rem;
         padding: 1.5rem;
         margin-bottom: 1rem;
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        box-shadow: 0 1px 2px 0 var(--color-card-shadow);
 }
 
 .question-block h3 {
@@ -78,7 +97,7 @@ body {
 }
 
 .answer-label:hover {
-        background-color: var(--color-background-light);
+        background-color: var(--color-background);
 }
 
 .answer-option input:checked + .answer-label {
@@ -104,20 +123,20 @@ body {
 
 .btn-primary {
         background-color: var(--color-primary);
-        color: #fff;
+        color: var(--color-on-primary);
 }
 
 .btn-primary:hover {
-        background-color: #4338ca; /* Indigo 700 */
+        background-color: light-dark(#4338ca, #6366f1); /* Indigo 700 */
 }
 
 .btn-secondary {
-        background-color: #e5e7eb; /* Gray 200 */
+        background-color: var(--color-secondary-bg);
         color: var(--color-text-dark);
 }
 
 .btn-secondary:hover {
-        background-color: #d1d5db; /* Gray 300 */
+        background-color: var(--color-secondary-hover);
 }
 
 .btn-outline {
@@ -142,10 +161,10 @@ body {
 
 /* Results Container */
 .results-container {
-        background-color: #fff;
+        background-color: var(--color-card);
         border-radius: 0.5rem;
         padding: 1.5rem;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        box-shadow: 0 1px 3px 0 var(--color-card-shadow), 0 1px 2px 0 var(--color-card-shadow);
 }
 
 .results-container h2 {
@@ -196,7 +215,7 @@ body {
 .answers-list li {
         padding-top: 0.75rem;
         padding-bottom: 0.75rem;
-        border-bottom: 1px solid #e5e7eb; /* border-gray-100 */
+        border-bottom: 1px solid var(--color-border); /* border-gray-100 */
 }
 
 .answers-list li:last-child {
@@ -260,31 +279,31 @@ body {
 }
 
 .text-gray-800 {
-        color: #1f2937;
+        color: var(--color-text-dark);
 }
 
 .text-gray-700 {
-        color: #374151;
+        color: var(--color-text-medium);
 }
 
 .text-red-500 {
-        color: #ef4444;
+        color: var(--color-danger);
 }
 
 .bg-gray-50 {
-        background-color: #f9fafb;
+        background-color: var(--color-background);
 }
 
 .bg-indigo-100 {
-        background-color: #e0e7ff;
+        background-color: var(--color-primary-light);
 }
 
 .border-gray-300 {
-        border-color: #d1d5db;
+        border-color: var(--color-border);
 }
 
 .border-indigo-500 {
-        border-color: #6366f1;
+        border-color: var(--color-primary);
 }
 
 .rounded-lg {
@@ -342,15 +361,15 @@ body {
 }
 
 .text-white {
-        color: #fff;
+        color: var(--color-on-primary);
 }
 
 .bg-red-50 {
-        background-color: #fef2f2;
+        background-color: light-dark(#fef2f2, #4c1d22);
 }
 
 .border-red-500 {
-        border-color: #ef4444;
+        border-color: var(--color-danger);
 }
 
 .max-w-md {
@@ -375,7 +394,7 @@ body {
 }
 
 .bg-gray-200 {
-        background-color: #e5e7eb;
+        background-color: light-dark(#e5e7eb, #1f2937);
 }
 
 .rounded-full {
@@ -405,7 +424,7 @@ body {
         top: 50%;
         transform: translateY(-50%);
         font-size: 0.75rem;
-        color: #000; /* Or a darker color for contrast */
+        color: var(--color-primary)
         font-weight: 500;
 }
 

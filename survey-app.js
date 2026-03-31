@@ -523,7 +523,7 @@ function displayDistributorInfo() {
                 const tgLink = document.createElement('a');
                 tgLink.href = distributor[lang].socials.telegram;
                 tgLink.target = '_blank';
-                tgLink.className = 'flex items-center space-x-2 text-gray-600 hover:text-blue-500';
+                tgLink.className = 'flex items-center space-x-2 hover:text-blue-500';
                 tgLink.innerHTML = `<img src="images/telegram.svg" alt="Telegram" class="w-6 h-6"/><span>Telegram</span>`;
                 Elements.distributorContacts.appendChild(tgLink);
             }
@@ -531,7 +531,7 @@ function displayDistributorInfo() {
                 const waLink = document.createElement('a');
                 waLink.href = distributor[lang].socials.whatsapp;
                 waLink.target = '_blank';
-                waLink.className = 'flex items-center space-x-2 text-gray-600 hover:text-green-500';
+                waLink.className = 'flex items-center space-x-2 hover:text-green-500';
                 waLink.innerHTML = `<img src="images/whatsapp.svg" alt="WhatsApp" class="w-6 h-6"/><span>WhatsApp</span>`;
                 Elements.distributorContacts.appendChild(waLink);
             }
@@ -539,7 +539,7 @@ function displayDistributorInfo() {
                 const vbLink = document.createElement('a');
                 vbLink.href = distributor[lang].socials.viber;
                 vbLink.target = '_blank';
-                vbLink.className = 'flex items-center space-x-2 text-gray-600 hover:text-blue-700';
+                vbLink.className = 'flex items-center space-x-2 hover:text-blue-700';
                 vbLink.innerHTML = `<img src="images/viber.svg" alt="Viber" class="w-6 h-6"/><span>Viber</span>`;
                 Elements.distributorContacts.appendChild(vbLink);
             }
@@ -547,7 +547,7 @@ function displayDistributorInfo() {
                 const igLink = document.createElement('a');
                 igLink.href = distributor[lang].socials.instagram;
                 igLink.target = '_blank';
-                igLink.className = 'flex items-center space-x-2 text-gray-600 hover:text-pink-500';
+                igLink.className = 'flex items-center space-x-2 hover:text-pink-500';
                 igLink.innerHTML = `<img src="images/instagram.svg" alt="Instagram" class="w-6 h-6"/><span>Instagram</span>`;
                 Elements.distributorContacts.appendChild(igLink);
             }
