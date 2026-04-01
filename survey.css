@@ -44,7 +44,8 @@ body {
 }
 
 .container {
-        max-width: 100%;
+        max-width: 1000px;
+        width: 100%;
         padding: 1rem;
         margin: 0 auto;
 }
