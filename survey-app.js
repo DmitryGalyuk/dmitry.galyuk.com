@@ -5,7 +5,22 @@
 
 // ========================================================================== \n// 1. Global Variables and Constants \n// ========================================================================== \n
 const LOCAL_STORAGE_KEY = 'health_test_state';
-const DEBUG_MODE_PARAM = '?debug=true';
+
+function byId(id) {
+    return document.getElementById(id);
+}
+
+function setHidden(element, hidden) {
+    element.classList.toggle('hidden', hidden);
+}
+
+function addClasses(element, ...classes) {
+    element.classList.add(...classes);
+}
+
+function removeClasses(element, ...classes) {
+    element.classList.remove(...classes);
+}
 
 const state = {
     currentScreen: 'welcome', // 'welcome', 'quiz', 'results'
@@ -40,8 +55,7 @@ const Elements = {
     copyResultsButton: document.getElementById('copy-results'),
     shareStatus: document.getElementById('share-status'),
     resetQuizButton: document.getElementById('reset-quiz'),
-    progressBar: document.getElementById('progress-bar'),
-    progressText: document.getElementById('progress-text'),
+    progressTicks: document.getElementById('progress-ticks'),
     distributorInfoSection: document.getElementById('distributor-info-section'),
     // distributorName: document.getElementById('distributor-name'),
     // distributorRegLink: document.getElementById('distributor-reg-link'),
@@ -103,21 +117,39 @@ function clearState() {
 /**
  * Gets the selected range for global recommendations based on score percentage.
  * @param {number} scorePercentage - The score percentage.
- * @returns {number} - The selected range key.
+ * @returns {number|null} - The selected range key or null if unavailable.
  */
 function getSelectedRange(scorePercentage) {
-    const upperRanges = Object.keys(state.globalRecommendations).map(Number).sort((a, b) => a - b);
-    let selectedRange = null;
+    const upperRanges = Object.keys(state.globalRecommendations)
+        .map(Number)
+        .filter(Number.isFinite)
+        .sort((a, b) => a - b);
+
+    if (upperRanges.length === 0 || Number.isNaN(scorePercentage)) {
+        return null;
+    }
+
     for (let range of upperRanges) {
         if (scorePercentage < range) {
-            selectedRange = range;
-            break;
+            return range;
         }
     }
-    if (!selectedRange) {
-        selectedRange = upperRanges[upperRanges.length - 1];
-    }
-    return selectedRange;
+
+    return upperRanges[upperRanges.length - 1];
+}
+
+/**
+ * Finds the recommendation data for a given score.
+ */
+function getGlobalRecommendation(scorePercentage) {
+    const rangeKey = getSelectedRange(scorePercentage);
+    if (rangeKey === null) return null;
+
+    const rangeData = state.globalRecommendations[rangeKey.toString()];
+    if (!rangeData) return null;
+
+    const recData = rangeData[state.contentMode] || rangeData.test || rangeData.checkpoint;
+    return { rangeData, recData };
 }
 
 /**
@@ -171,10 +203,10 @@ function renderQuestion(index) {
 
     const q = state.quizData[index];
     const questionElement = document.createElement('div');
-    questionElement.className = 'question-block p-4 bg-gray-50 rounded-lg border border-gray-200';
+    questionElement.className = 'question-block';
     questionElement.id = q.id;
 
-    const title = `<h3 class="text-lg font-semibold text-gray-800 mb-3">${q.questionText}</h3>`;
+    const title = `<h3 class="question-title">${q.questionText}</h3>`;
     let answersHtml = '';
 
     const questionType2inputType = {
@@ -186,7 +218,7 @@ function renderQuestion(index) {
     if (q.type === 'input') {
         const existingAnswer = state.answers[index] && state.answers[index].answers[0] ? state.answers[index].answers[0].text : '';
         answersHtml += `
-            <input type="${questionType2inputType[q.type]}" name="${q.id}" class="w-full p-3 border border-gray-300 rounded-md text-gray-700 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Введите ваш ответ здесь" value="${existingAnswer}">
+            <input type="${questionType2inputType[q.type]}" name="${q.id}" class="text-input" placeholder="Введите ваш ответ здесь" value="${existingAnswer}">
         `;
     } else if (q.type === 'single' || q.type === 'multi') {
         q.answers.forEach((a) => {
@@ -194,9 +226,9 @@ function renderQuestion(index) {
             const sanitizedText = a.text.replace(/"/g, '&quot;');
             const isChecked = state.answers[index] && state.answers[index].answers.some(ans => ans.text === a.text);
             answersHtml += `
-                <label class="answer-option block mb-2 cursor-pointer">
+                <label class="answer-option">
                     <input type="${inputType}" name="${q.id}" data-points="${a.value}" data-answer-text="${sanitizedText}" ${a.triggers && a.triggers.length > 0 ? `data-triggers="${a.triggers.join(' ')}"` : ''} class="hidden" ${isChecked ? 'checked' : ''}>
-                    <div class="answer-label p-3 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out">
+                    <div class="answer-label">
                         ${a.text}
                     </div>\n                </label>
             `;
@@ -207,7 +239,7 @@ function renderQuestion(index) {
     Elements.questionsArea.appendChild(questionElement);
 
     addCustomInputListeners();
-    updateProgressBar();
+    updateProgressTicks();
     updateNavigationButtons();
 
     // Scroll to the top of the quiz container when a new question is rendered
@@ -222,13 +254,7 @@ function addCustomInputListeners() {
         const labelDiv = input.closest('label').querySelector('.answer-label');
 
         const updateStyle = () => {
-            if (input.checked) {
-                labelDiv.classList.add('bg-indigo-100', 'border-indigo-500', 'ring-2', 'ring-indigo-500');
-                labelDiv.classList.remove('bg-gray-50', 'border-gray-300');
-            } else {
-                labelDiv.classList.remove('bg-indigo-100', 'border-indigo-500', 'ring-2', 'ring-indigo-500');
-                labelDiv.classList.add('bg-gray-50', 'border-gray-300');
-            }
+            labelDiv.classList.toggle('selected', input.checked);
         };
 
         updateStyle(); // Apply initial style
@@ -237,8 +263,7 @@ function addCustomInputListeners() {
             if (input.type === 'radio') {
                 document.querySelectorAll(`input[name="${input.name}"][type="radio"]`).forEach(otherInput => {
                     if (otherInput !== input) {
-                        otherInput.closest('label').querySelector('.answer-label').classList.remove('bg-indigo-100', 'border-indigo-500', 'ring-2', 'ring-indigo-500');
-                        otherInput.closest('label').querySelector('.answer-label').classList.add('bg-gray-50', 'border-gray-300');
+                        otherInput.closest('label').querySelector('.answer-label').classList.remove('selected');
                     }
                 });
             }
@@ -257,15 +282,33 @@ function addCustomInputListeners() {
 }
 
 /**
- * Updates the progress bar and text.
+ * Updates the progress ticks and bar.
  */
-function updateProgressBar() {
-    const progress = state.currentQuestionIndex + 1;
-    const total = state.quizData.length;
-    const percentage = (progress / total) * 100;
+function updateProgressTicks() {
+    const ticks = Elements.progressTicks.children;
+    for (let i = 0; i < ticks.length; i++) {
+        ticks[i].classList.remove('completed', 'active');
+        if (i < state.currentQuestionIndex) {
+            ticks[i].classList.add('completed');
+        } else if (i === state.currentQuestionIndex) {
+            ticks[i].classList.add('active');
+        }
+    }
+}
 
-    Elements.progressBar.style.width = `${percentage}%`;
-    Elements.progressText.textContent = `${progress}/${total}`;
+/**
+ * Generates tick marks for each question.
+ */
+function generateProgressTicks() {
+    const total = state.quizData.length;
+    Elements.progressTicks.innerHTML = ''; // Clear existing ticks
+    for (let i = 0; i < total; i++) {
+        const tickDiv = document.createElement('div');
+        tickDiv.className = 'progress-tick';
+        Elements.progressTicks.appendChild(tickDiv);
+    }
+    Elements.progressTicks.style.setProperty('--total-questions', total);
+    updateProgressTicks();
 }
 
 /**
@@ -294,18 +337,20 @@ async function renderResultsScreen() {
     const { totalScore, maxPossibleScore, scorePercentage, recommendations } = state.results;
 
     // Find the appropriate global recommendation based on upper range
-    const selectedRange = getSelectedRange(scorePercentage);
-
-    const rangeData = state.globalRecommendations[selectedRange.toString()];
-    const recData = rangeData[state.contentMode]; // 'test' or 'checkpoint'
-
-    // Set color class based on range
-    const colorClass = 'text-' + rangeData.color + '-600';
-
-    Elements.finalScoreDisplay.classList.remove('text-green-600', 'text-yellow-600', 'text-red-600', 'text-gray-600');
-    Elements.finalScoreDisplay.classList.add(colorClass);
-    Elements.globalRecommendationDisplay.innerHTML = recData ? `<h3>${recData.title}</h3><p>${recData.description}</p>` : 'Recommendation error.';
-    Elements.finalScoreDisplay.textContent = `${totalScore} / ${maxPossibleScore} (${scorePercentage.toFixed(0)}%)`;
+    const globalRec = getGlobalRecommendation(scorePercentage);
+    if (!globalRec) {
+        Elements.globalRecommendationDisplay.textContent = 'Recommendation error.';
+        Elements.finalScoreDisplay.textContent = `${totalScore} / ${maxPossibleScore} (${Number.isFinite(scorePercentage) ? scorePercentage.toFixed(0) : 0}%)`;
+    } else {
+        const { rangeData, recData } = globalRec;
+        const statusClass = rangeData.level === 'high' ? 'score-status-danger' : rangeData.level === 'medium' ? 'score-status-warning' : 'score-status-good';
+        removeClasses(Elements.finalScoreDisplay, 'score-status-good', 'score-status-warning', 'score-status-danger', 'score-status-default');
+        addClasses(Elements.finalScoreDisplay, statusClass);
+        removeClasses(Elements.globalRecommendationDisplay, 'score-status-good', 'score-status-warning', 'score-status-danger', 'score-status-default');
+        addClasses(Elements.globalRecommendationDisplay, statusClass);
+        Elements.globalRecommendationDisplay.innerHTML = recData ? `<h3>${recData.title}</h3><p>${recData.description}</p>` : 'Recommendation error.';
+        Elements.finalScoreDisplay.textContent = `${totalScore} / ${maxPossibleScore} (${scorePercentage.toFixed(0)}%)`;
+    }
 
     // Display specific recommendations
     if (recommendations.length > 0) {
@@ -326,7 +371,7 @@ async function renderResultsScreen() {
             }
 
             const listItem = document.createElement('li');
-            listItem.className = 'p-3 bg-red-50 border-l-4 border-red-500 rounded-lg text-gray-700';
+            listItem.className = 'recommendation-item';
             listItem.innerHTML = `<p>${recommendationText}</p>`;
             Elements.recommendationsList.appendChild(listItem);
         }
@@ -349,24 +394,29 @@ async function renderResultsScreen() {
 /**
  * Collects the answers for the current question and saves them to the state.
  */
-function saveCurrentAnswer() {
-    const q = state.quizData[state.currentQuestionIndex];
-    let answers = [];
+function gatherQuestionAnswers(q) {
+    if (!q) return [];
 
     if (q.type === 'input') {
         const textInput = document.querySelector(`input[name="${q.id}"][type="text"]`);
         const textValue = textInput ? textInput.value.trim() : '';
-        if (textValue) {
-            answers.push({ text: textValue, points: 0, tag: null });
-        }
-    } else if (q.type === 'single' || q.type === 'multi') {
-        const selected = document.querySelectorAll(`input[name="${q.id}"]:checked`);
-        answers = Array.from(selected).map(input => ({
-            text: input.getAttribute('data-answer-text'),
-            points: parseInt(input.getAttribute('data-points'), 10),
-            tag: input.getAttribute('data-triggers') || null // Changed to 'data-triggers' to match the data
+        return textValue ? [{ text: textValue, points: 0, tag: null }] : [];
+    }
+
+    if (q.type === 'single' || q.type === 'multi') {
+        return Array.from(document.querySelectorAll(`input[name="${q.id}"]:checked`)).map(input => ({
+            text: input.getAttribute('data-answer-text') || '',
+            points: Number.parseInt(input.getAttribute('data-points'), 10) || 0,
+            tag: input.getAttribute('data-triggers') || null
         }));
     }
+
+    return [];
+}
+
+function saveCurrentAnswer() {
+    const q = state.quizData[state.currentQuestionIndex];
+    if (!q) return;
 
     state.answers[state.currentQuestionIndex] = {
         questionId: q.id,
@@ -374,7 +424,7 @@ function saveCurrentAnswer() {
         category: q.category,
         type: q.type,
         optional: !!q.optional,
-        answers: answers
+        answers: gatherQuestionAnswers(q)
     };
 }
 
@@ -384,35 +434,35 @@ function saveCurrentAnswer() {
  */
 function validateCurrentQuestion() {
     const q = state.quizData[state.currentQuestionIndex];
-    const questionBlock = document.getElementById(q.id);
-    if (questionBlock) questionBlock.classList.remove('border-red-400', 'border-2');
-    Elements.errorMessage.classList.add('hidden');
+    if (!q) return false;
 
-    if (!q.optional) {
-        switch (q.type) {
-            case 'input': {
-                const textInput = document.querySelector(`input[name="${q.id}"]`);
-                if (!textInput || !textInput.value.trim()) {
-                    if (textInput) textInput.classList.add('border-red-400', 'border-2');
-                    Elements.errorMessage.classList.remove('hidden');
-                    return false;
-                } else {
-                    textInput.classList.remove('border-red-400', 'border-2');
-                }
-                break;
-            }
-            case 'single':
-            case 'multi': {
-                const selected = document.querySelectorAll(`input[name="${q.id}"]:checked`);
-                if (selected.length === 0) {
-                    if (questionBlock) questionBlock.classList.add('border-red-400', 'border-2');
-                    Elements.errorMessage.classList.remove('hidden');
-                    return false;
-                }
-                break;
-            }
-        }
+    const questionBlock = document.getElementById(q.id);
+    if (questionBlock) removeClasses(questionBlock, 'question-invalid');
+    setHidden(Elements.errorMessage, true);
+
+    if (q.optional) {
+        return true;
     }
+
+    const answers = gatherQuestionAnswers(q);
+
+    if (q.type === 'input') {
+        const textInput = document.querySelector(`input[name="${q.id}"][type="text"]`);
+        if (!textInput || answers.length === 0) {
+            if (textInput) addClasses(textInput, 'input-invalid');
+            setHidden(Elements.errorMessage, false);
+            return false;
+        }
+        removeClasses(textInput, 'input-invalid');
+        return true;
+    }
+
+    if ((q.type === 'single' || q.type === 'multi') && answers.length === 0) {
+        if (questionBlock) addClasses(questionBlock, 'question-invalid');
+        setHidden(Elements.errorMessage, false);
+        return false;
+    }
+
     return true;
 }
 
@@ -459,12 +509,16 @@ function generateQrCodeText() {
     const { totalScore, maxPossibleScore, scorePercentage, recommendations } = state.results;
 
     // Find the appropriate global recommendation based on upper range
-    const selectedRange = getSelectedRange(scorePercentage);
+    const globalRec = getGlobalRecommendation(scorePercentage);
+    let level = 'N/A';
+    let globalRecommendationText = 'Не определено';
 
-    const rangeData = state.globalRecommendations[selectedRange.toString()];
-    const recData = rangeData[state.contentMode];
-    const level = rangeData.level;
-    const globalRecommendationText = recData ? recData.title : 'Не определено';
+    if (globalRec) {
+        level = globalRec.rangeData.level || 'N/A';
+        if (globalRec.recData) {
+            globalRecommendationText = globalRec.recData.title;
+        }
+    }
 
     let qrText = `${new Date().toLocaleString('ru-RU')}\n`;
     qrText += `Total Score: ${totalScore} / ${maxPossibleScore} (${scorePercentage.toFixed(0)}%)\n`;
@@ -496,12 +550,20 @@ async function generateQrCode() {
     }
 }
 
+function appendSocialLink(container, href, iconFilename, label) {
+    if (!href) return;
+    const link = document.createElement('a');
+    link.href = href;
+    link.target = '_blank';
+    link.className = 'social-link';
+    link.innerHTML = `<img src="images/${iconFilename}" alt="${label}" class="social-icon"/><span>${label}</span>`;
+    container.appendChild(link);
+}
+
 /**
  * Displays distributor information if available for the current origin.
  */
 function displayDistributorInfo() {
-    const origin = window.location.origin;
-    //const distributor = state.distributors[origin];
     const distributor = getDistributorInfo();
 
     if (distributor) {
@@ -518,40 +580,12 @@ function displayDistributorInfo() {
 		}
 
         Elements.distributorContacts.innerHTML = '';
-        if (distributor[lang].socials) {
-            if (distributor[lang].socials.telegram) {
-                const tgLink = document.createElement('a');
-                tgLink.href = distributor[lang].socials.telegram;
-                tgLink.target = '_blank';
-                tgLink.className = 'flex items-center space-x-2 hover:text-blue-500';
-                tgLink.innerHTML = `<img src="images/telegram.svg" alt="Telegram" class="w-6 h-6"/><span>Telegram</span>`;
-                Elements.distributorContacts.appendChild(tgLink);
-            }
-            if (distributor[lang].socials.whatsapp) {
-                const waLink = document.createElement('a');
-                waLink.href = distributor[lang].socials.whatsapp;
-                waLink.target = '_blank';
-                waLink.className = 'flex items-center space-x-2 hover:text-green-500';
-                waLink.innerHTML = `<img src="images/whatsapp.svg" alt="WhatsApp" class="w-6 h-6"/><span>WhatsApp</span>`;
-                Elements.distributorContacts.appendChild(waLink);
-            }
-            if (distributor[lang].socials.viber) {
-                const vbLink = document.createElement('a');
-                vbLink.href = distributor[lang].socials.viber;
-                vbLink.target = '_blank';
-                vbLink.className = 'flex items-center space-x-2 hover:text-blue-700';
-                vbLink.innerHTML = `<img src="images/viber.svg" alt="Viber" class="w-6 h-6"/><span>Viber</span>`;
-                Elements.distributorContacts.appendChild(vbLink);
-            }
-            if (distributor[lang].socials.instagram) {
-                const igLink = document.createElement('a');
-                igLink.href = distributor[lang].socials.instagram;
-                igLink.target = '_blank';
-                igLink.className = 'flex items-center space-x-2 hover:text-pink-500';
-                igLink.innerHTML = `<img src="images/instagram.svg" alt="Instagram" class="w-6 h-6"/><span>Instagram</span>`;
-                Elements.distributorContacts.appendChild(igLink);
-            }
-        }
+        const socials = distributor[lang]?.socials || {};
+
+        appendSocialLink(Elements.distributorContacts, socials.telegram, 'telegram.svg', 'Telegram');
+        appendSocialLink(Elements.distributorContacts, socials.whatsapp, 'whatsapp.svg', 'WhatsApp');
+        appendSocialLink(Elements.distributorContacts, socials.viber, 'viber.svg', 'Viber');
+        appendSocialLink(Elements.distributorContacts, socials.instagram, 'instagram.svg', 'Instagram');
     } else {
         Elements.distributorInfoSection.classList.add('hidden');
     }
@@ -615,8 +649,8 @@ function copyResultsToClipboard() {
 
 function showShareStatus(message, isError = false) {
     Elements.shareStatus.textContent = message;
-    Elements.shareStatus.classList.remove('hidden', 'text-green-600', 'text-red-500');
-    Elements.shareStatus.classList.add(isError ? 'text-red-500' : 'text-green-600');
+    Elements.shareStatus.classList.remove('hidden', 'status-success', 'status-error');
+    Elements.shareStatus.classList.add(isError ? 'status-error' : 'status-success');
     setTimeout(() => { Elements.shareStatus.classList.add('hidden'); }, 5000);
 }
 
@@ -632,12 +666,13 @@ function resetQuiz() {
 Elements.resetQuizButton.addEventListener('click', resetQuiz);
 
 function setPageTitle() {
+    const distributor = getDistributorInfo();
+    const distributorName = distributor?.[document.documentElement.lang]?.name || '';
+
     if (document.location.pathname.startsWith('/checkpoint')) {
-        document.title = 'Анкета повторной самодиагностики здоровья - ' 
-            + getDistributorInfo()[document.documentElement.lang].name;
+        document.title = `Анкета повторной самодиагностики здоровья${distributorName ? ' - ' + distributorName : ''}`;
     } else if (document.location.pathname.startsWith('/test')) {
-        document.title = 'Анкета самодиагностики здоровья - ' 
-            + getDistributorInfo()[document.documentElement.lang].name;
+        document.title = `Анкета самодиагностики здоровья${distributorName ? ' - ' + distributorName : ''}`;
     } else {
         document.title = 'Анкета самодиагностики здоровья';
     }
@@ -654,7 +689,7 @@ async function initApp() {
     ]);
 
     if (!surveyData || !distributors || !surveyData.questions || !surveyData.recommendations || !surveyData.globalRecommendations) {
-        Elements.app.innerHTML = '<div class="flex-center"><p class="text-red-600 text-xl">Ошибка загрузки данных приложения. Пожалуйста, попробуйте позже.</p></div>';
+        Elements.app.innerHTML = '<div class="flex-center"><p class="error-message">Ошибка загрузки данных приложения. Пожалуйста, попробуйте позже.</p></div>';
         return;
     }
 
@@ -662,6 +697,9 @@ async function initApp() {
     state.recommendationData = surveyData.recommendations; // Store recommendations separately
     state.globalRecommendations = surveyData.globalRecommendations; // Store global recommendations
     state.distributors = distributors;
+
+    // Generate progress tick marks
+    generateProgressTicks();
 
     // Determine content mode
     if (window.location.pathname.startsWith('/checkpoint')) {

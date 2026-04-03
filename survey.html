@@ -15,58 +15,55 @@
 <body>
     <div id="app" class="container">
         <!-- Welcome Screen -->
-        <section id="welcome-screen" class="flex-center flex-col p-4 text-center">
-            <h1 class="text-2xl font-bold text-gray-800 mb-4">Добро пожаловать в Анкету самодиагностики состояния
+        <section id="welcome-screen" class="layout-center layout-column section-padding text-center">
+            <h1 class="heading-primary spacing-4">Добро пожаловать в Анкету самодиагностики состояния
                 здоровья!</h1>
-            <p class="text-lg text-gray-700 mb-6">Пройдите короткий тест, чтобы получить персональные рекомендации по
+            <p class="body-text spacing-6">Пройдите короткий тест, чтобы получить персональные рекомендации по
                 улучшению вашего самочувствия.</p>
-            <button id="start-quiz-button" class="btn btn-primary w-full max-w-xs">Начать тест</button>
+            <button id="start-quiz-button" class="btn btn-primary btn-block max-width-medium">Начать тест</button>
         </section>
 
         <!-- Quiz Container -->
         <section id="quiz-container" class="hidden">
-            <div class="progress-bar-container relative w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div id="progress-bar" class="absolute top-0 left-0 h-full bg-indigo-600 rounded-full"
-                    style="width: 0%;"></div>
-                <span id="progress-text" class="progress-text">0/0</span>
+            <div id="progress-ticks" class="progress-ticks">
             </div>
-            <div id="questions-area" class="space-y-4">
+            <div id="questions-area" class="content-list">
                 <!-- Questions will be rendered here by JavaScript -->
             </div>
-            <p id="error-message" class="error-message hidden mt-4">Пожалуйста, ответьте на все обязательные вопросы,
+            <p id="error-message" class="error-message hidden spacing-4">Пожалуйста, ответьте на все обязательные вопросы,
                 прежде чем продолжить.</p>
-            <button id="prev-question-button" class="btn btn-secondary w-full mt-4 mb-2">Предыдущий вопрос</button>
-            <button id="next-question-button" class="btn btn-primary w-full mb-4">Следующий вопрос</button>
-            <button id="submit-quiz" class="btn btn-primary w-full mt-4 mb-4 hidden">Завершить тест</button>
+            <button id="prev-question-button" class="btn btn-secondary btn-block spacing-4">Предыдущий вопрос</button>
+            <button id="next-question-button" class="btn btn-primary btn-block spacing-4">Следующий вопрос</button>
+            <button id="submit-quiz" class="btn btn-primary btn-block spacing-4 hidden">Завершить тест</button>
         </section>
 
         <!-- Results Container -->
-        <section id="results-container" class="hidden results-container p-4 mt-4 mb-8">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">Ваши результаты и рекомендации</h2>
-            <p class="score-display mb-4"><span class="font-bold">Итоговый балл:</span> <span id="final-score"
-                    class="text-gray-600"></span></p>
+        <section id="results-container" class="hidden results-container section-padding spacing-4">
+            <h2 class="heading-secondary spacing-4">Ваши результаты и рекомендации</h2>
+            <p class="score-display spacing-4"><span class="strong-text">Итоговый балл:</span> <span id="final-score"
+                    class="score-status-default"></span></p>
 
-            <div id="global-recommendation-section" class="mb-6">
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">Общая рекомендация:</h3>
+            <div id="global-recommendation-section" class="spacing-6">
+                <h3 class="heading-secondary spacing-2">Общая рекомендация:</h3>
                 <div id="global-recommendation"
-                    class="p-3 bg-indigo-50 border-l-4 border-indigo-500 rounded-lg text-gray-700">
+                    class="recommendation-card">
                     <!-- Global recommendation text will be inserted here -->
                 </div>
             </div>
 
-            <div id="specific-recommendations-section" class="mb-6">
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">Специальные рекомендации:</h3>
-                <ul id="recommendations-list" class="space-y-3 recommendation-list">
+            <div id="specific-recommendations-section" class="spacing-6">
+                <h3 class="heading-secondary spacing-2">Специальные рекомендации:</h3>
+                <ul id="recommendations-list" class="content-list recommendation-list">
                     <!-- Specific recommendations will be inserted here -->
                 </ul>
             </div>
             <p id="no-problems-message"
-                class="no-problems-message p-3 bg-green-50 border-l-4 border-green-500 rounded-lg hidden">Поздравляем!
+                class="no-problems-message spacing-3 recommendation-card hidden">Поздравляем!
                 Ваш уровень здоровья не вызывает опасений. Продолжайте поддерживать свой образ жизни.</p>
 
             <div id="distributor-info-section"
-                class="mt-6 mb-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-lg text-gray-700 hidden">
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">Что дальше?</h3>
+                class="distributor-section hidden">
+                <h3 class="heading-secondary spacing-2">Что дальше?</h3>
 
                 <div class="steps">
                     <div class="empty step" style="display: none;"></div>
@@ -119,22 +116,22 @@
                 <p>Скопируйте результаты с помощью кнопки "Скопировать"
                     или сделайте снимок экрана с QR-кодом
                     и перешлите мне в один из контактов.</p>
-                <div id="qr-code-section" class="mt-6 mb-6 text-center">
-                    <div class="flex justify-center items-center p-4 bg-white rounded-lg shadow-md">
+                <div id="qr-code-section" class="spacing-6 text-center">
+                    <div class="qr-container">
                         <img id="qr-code-img" src="" alt="QR Code with Results"
-                            class="w-48 h-48 border border-gray-200 rounded-md"><!-- QR code will be rendered here -->
+                            class="qr-image"><!-- QR code will be rendered here -->
                     </div>
 
 
                 </div>
 
-                <button id="copy-results" class="btn btn-outline w-full mt-4 mb-2">Скопировать результаты</button>
-                <p id="share-status" class="text-center text-sm mt-2 hidden">Статус копирования/отправки</p>
-                <div id="distributor-contacts" class="flex gap-4 mt-3">
+                <button id="copy-results" class="btn btn-outline btn-block spacing-4">Скопировать результаты</button>
+                <p id="share-status" class="status-text caption-text spacing-2 hidden">Статус копирования/отправки</p>
+                <div id="distributor-contacts" class="contact-list spacing-3">
                     <!-- Contact icons will go here -->
                 </div>
             </section>
-            <button id="reset-quiz" class="btn btn-secondary w-full mt-4">Начать тест заново</button>
+            <button id="reset-quiz" class="btn btn-secondary btn-block spacing-4">Начать тест заново</button>
 
     </div>
     </div>
