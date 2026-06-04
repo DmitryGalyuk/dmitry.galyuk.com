@@ -71,7 +71,7 @@ function renderFilterButtons(galleryData, lang) {
             const filter = button.getAttribute("data-filter");
             handleFiltering(filter);
 
-            gtag('event', 'gallery_filter', {
+            gtag('event', 'gallery_filter_click', {
                 'filterId': filter // чтобы понимать, на какую именно нажали
             });
         });

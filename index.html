@@ -26,9 +26,9 @@
 
 <body>
     <!-- <div class="lang-switcher" style="position: absolute; top: 1.5rem; right: 2rem; z-index: 10;">
-        <a href="/" class="lang-link" id="lang-ru">Русский</a>
+        <a data-track="langRU_click" href="/" class="lang-link" id="lang-ru">Русский</a>
         <span style="margin: 0 0.5em;">|</span>
-        <a href="/en" class="lang-link" id="lang-en">English</a>
+        <a data-track="langEN_click" href="/en" class="lang-link" id="lang-en">English</a>
     </div> -->
     <div class="card">
         <div class="info-row">
@@ -47,7 +47,7 @@
                     восстановления.</p>
                 <span class="imageButton">
                     <img src="images/survey.svg" alt="Survey Icon" class="icon">
-                    <a href="/test" data-en="Health Self-Assessment" data-ru="Анкета Самодиагностики">Анкета
+                    <a data-track="survey_click" href="/test" data-en="Health Self-Assessment" data-ru="Анкета Самодиагностики">Анкета
                         Самодиагностики</a>
                 </span>
             </div>
@@ -60,7 +60,7 @@
                         src="https://dmitrypublicsitestorage.blob.core.windows.net/public-dmitry/Концепция здоровья_ Как восстановить ресурсы организма_ Пошаговая система оздоровления.mp4"
                         type="video/mp4">
                     Ваш браузер не поддерживает встроенные видео.
-                    <a href="https://youraccount.blob.core.windows.net/videos/concept.mp4">Скачайте видео</a>, чтобы
+                    <a data-track="conceptvideo_click" href="https://youraccount.blob.core.windows.net/videos/concept.mp4">Скачайте видео</a>, чтобы
                     посмотреть его.
                 </video>
             </div>
@@ -79,7 +79,7 @@
                 </p>
                 <span class="imageButton">
                     <img src="images/new-user.svg" alt="Зарегистрироваться в Coral Club" class="icon">
-                    <a href="https://coral.club/6190205.html" id="registration-link" class="reg-link"
+                    <a data-track="registration_click" href="https://coral.club/6190205.html" id="registration-link" class="reg-link"
                         target="_blank">Получить клубный номер Coral&nbsp;Club</a>
                 </span>
             </div>
@@ -89,7 +89,7 @@
                     инструкции я объясню, как построить питание так, чтобы оно работало на вас, а не против вас.</p>
                 <span class="imageButton">
                     <img src="images/nutrition.png" alt="Инструкция по питанию" class="icon">
-                    <a href="/NutritionGuide.pdf" id="nutrition-guide-link" class="guide-link">Инструкция по питанию</a>
+                    <a data-track="guide_click" href="/NutritionGuide.pdf" id="nutrition-guide-link" class="guide-link">Инструкция по питанию</a>
                 </span> 
             </div>
             <div class="tgchannel step" id="tgchanneksection">
@@ -97,26 +97,26 @@
                 <p>Присоединяйтесь к моему Telegram-каналу, где я делюсь практическими советами по здоровью</p>
                 <span class="imageButton">
                     <img src="images/telegram.svg" alt="Telegram Channel" class="icon">
-                    <a href="https://t.me/tech_of_health" id="tgchannel-link" class="tg-link"
+                    <a data-track="telegramChannel_click" href="https://t.me/tech_of_health" id="tgchannel-link" class="tg-link"
                         target="_blank">Telegram-канал</a>
                 </span>
             </div>
         </div>
         <div class="socials">
 
-            <a class="social telegram-link" target="_blank">
+            <a data-track="telegram_click" class="social telegram-link" target="_blank">
                 <img src="images/telegram.svg" class="social-logo" alt="Telegram">
             </a>
-            <a class="social whatsapp-link" target="_blank">
+            <a data-track="whatsapp_click" class="social whatsapp-link" target="_blank">
                 <img src="images/whatsapp.svg" class="social-logo" alt="Whatsapp">
             </a>
-            <a class="social viber-link" target="_blank">
+            <a data-track="viber_click" class="social viber-link" target="_blank">
                 <img src="images/viber.svg" class="social-logo" alt="Viber">
             </a>
-            <a class="social instagram-link" target="_blank">
+            <a data-track="instagram_click" class="social instagram-link" target="_blank">
                 <img src="images/instagram.svg" class="social-logo" alt="Instagram">
             </a>
-            <a class="social tiktok-link" target="_blank">
+            <a data-track="tiktok_click" class="social tiktok-link" target="_blank">
                 <span class="social-logo" style="fill: currentColor;"><svg
                         viewBox="62.370000000000005 70.49 675.3000000000001 675.3000000000001"
                         xmlns="http://www.w3.org/2000/svg">
@@ -158,7 +158,7 @@
 
                     </svg></span>
             </a>
-            <a class="social youtube-link" target="_blank">
+            <a data-track="youtube_click" class="social youtube-link" target="_blank">
                 <span class="yt-icon-shape style-scope yt-icon yt-spec-icon-shape">
                     <div style="width: 100%; height: 100%; display: block; fill: currentcolor;"><svg
                             xmlns="http://www.w3.org/2000/svg" id="yt-ringo2-svg_yt10" width="93" height="20"
@@ -203,11 +203,11 @@
         <div class="contacts">
             <span class="contact-item">
                 <img src="images/phone.svg" alt="Phone" class="contact-icon">
-                <a href="tel:+48453548301" class="contact-link">+48 453 548 301</a>
+                <a data-track="phone_click" href="tel:+48453548301" class="contact-link">+48 453 548 301</a>
             </span>
             <span class="contact-item">
                 <img src="images/email.svg" alt="Email" class="contact-icon">
-                <a href="mailto:dmitry@galyuk.com" class="contact-link">dmitry@galyuk.com</a>
+                <a data-track="email_click" href="mailto:dmitry@galyuk.com" class="contact-link">dmitry@galyuk.com</a>
             </span>
         </div>
     </div>
