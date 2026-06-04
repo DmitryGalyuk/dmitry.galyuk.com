@@ -64,6 +64,21 @@
             "tag": "brain",
             "ru": "мозг",
             "en": "brain"
+        },
+        {
+            "tag": "headache",
+            "ru": "мигрень",
+            "en": "headache"
+        },
+        {
+            "tag": "swelling",
+            "ru": "отёки",
+            "en": "swelling"
+        },
+        {
+            "tag": "womenhealth",
+            "ru": "женское здоровье",
+            "en": "women health"
         }
     ],
     "results": [
@@ -159,7 +174,7 @@
     },
     {
         "videoid": "_68qGedTmSI",
-        "alt-ru": "Павел Степанович Аленкович. 44 года.Диабет первого типа и подагра остались в прошлом. Кто-то скажет это невозможно? Но невозможное возможно, если мы возьмём ответственность за свое здоровье в свои руки. Концепция здоровья Coral Club и осознанное пищевое поведение творят чудеса. Вы знаете, кому отправить этот отзыв. Кому-то он может спасти жизнь! 2023 год",
+        "alt-ru": "Павел Степанович Аленкович. 44 года. Диабет первого типа и подагра остались в прошлом. Кто-то скажет это невозможно? Но невозможное возможно, если мы возьмём ответственность за свое здоровье в свои руки. Концепция здоровья Coral Club и осознанное пищевое поведение творят чудеса. Вы знаете, кому отправить этот отзыв. Кому-то он может спасти жизнь! 2023 год",
         "alt-en": "Pavel Stepanovich Alenkovich, 44 years old. Type 1 diabetes and gout are a thing of the past. Some may say it's impossible, but the impossible is possible when we take responsibility for our health into our own hands. The Coral Club Health Concept and conscious eating habits work wonders. You know who to share this review with; it might save someone's life! 2023.",
         "tag": "diabetes gout"
     },
@@ -180,7 +195,26 @@
         "alt-ru": "Ребёнок 5 лет, задержка речевого развития. Сочетание противопаразитарной программы и mental force -- ребёнок заговорил.",
         "alt-en": "A 5-year-old child with speech development delay. The combination of the antiparasitic program and mental force helped the child to speak.",
         "tag": "brain"
-    }
+    },
+    {
+        "videoid": "TpHkTVNFJu4",
+        "alt-ru": "Результат Мирры. После первого месяца наладили водный режим и микроэлементы - ушли бесконечные мигрени и головные боли, восстановился цикл.",
+        "alt-en": "Mirra's result. After the first month, we established a water regimen and trace elements - the endless migraines and headaches are gone, the cycle is restored.",
+        "tag": "headache"
+    },
+    {
+        "videoid": "BZqZRH_j6ec",
+        "alt-ru": "Результат Анфисы: ушли отёки, пятно на руке, улучшились показатели по женскому здоровью - фиброаденома уменьшилась в два раза.",
+        "alt-en": "Anfisa's result: swelling and the spot on her hand disappeared, and her women's health indicators improved - the fibroadenoma reduced by half.",
+        "tag": "swelling womenhealth skin"
+    },
+    {
+        "videoid": "gmPKJqQvJs8",
+        "alt-ru": "Эдуард Микаелян, 53 года. Капитан дальнего плавания. После прохождения программы 90 дней ушли перепады давления, головные боли, ломота в костях, в спине, гепатоз печени ушёл на 90%, появилось больше энергии. Хорошо проходит адаптация на суше после плавания. Во время пребывания в море (4 месяца) чувствовал себя хорошо. Не принимал никаких лекарственных препаратов, только программы «Кардиопэк», Корал-майн и фандетокс.",
+        "alt-en": "Eduard Mikaelyan, 53 years old. Long-distance captain. After completing the 90-day program, blood pressure fluctuations, headaches, bone and back pain disappeared, liver fatty degeneration reduced by 90%, and he gained more energy. He adapts well on land after sailing. During his time at sea (4 months), he felt good. He did not take any medications, only the 'Cardiopec', Coral-Mine, and Fandetox programs.",
+        "tag": "energy fatty-liver headache"
+     }
+
 ]
 
 }
