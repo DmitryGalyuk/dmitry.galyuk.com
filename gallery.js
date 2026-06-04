@@ -70,6 +70,10 @@ function renderFilterButtons(galleryData, lang) {
         button.addEventListener("pointerup", () => {
             const filter = button.getAttribute("data-filter");
             handleFiltering(filter);
+
+            gtag('event', 'gallery_filter', {
+                'filterId': filter // чтобы понимать, на какую именно нажали
+            });
         });
     });
 
@@ -120,6 +124,10 @@ function openDialog(content, hash, caption = "") {
 
     dialog.appendChild(wrapper);
     dialog.showModal(); // Show the dialog as a modal
+
+    gtag('event', 'result_click', {
+        'resultId': hash // чтобы понимать, на какую именно нажали
+    });
 
     // Update the URL hash
     history.pushState(null, "", `#${hash}`);
